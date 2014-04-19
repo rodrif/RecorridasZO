@@ -10,6 +10,14 @@
     <string name="button_confirmar">OK</string>
     <string name="direccion">Direccion</string>
     <string name="mapa">Mapa</string>
+
     <string name="title_activity_ver_persona">VerPersona</string>
+
+    <string name="title_activity_formulario">FormularioActivity</string>
+    <string name="title_activity_formulario_fragment">FormularioFragment</string>
+    <string name="boton_ok">OK</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="comentario">Comentario</string>
 
 </resources>

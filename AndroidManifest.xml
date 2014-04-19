@@ -42,6 +42,14 @@
             android:name="com.recorridaszo.recorridaszo.VerPersona"
             android:label="@string/title_activity_ver_persona" >
         </activity>
+        <activity
+            android:name="com.recorridaszo.recorridaszo.FormularioActivity"
+            android:label="@string/title_activity_formulario" >
+        </activity>
+        <activity
+            android:name="com.recorridaszo.recorridaszo.FormularioFragment"
+            android:label="@string/title_activity_formulario_fragment" >
+        </activity>
     </application>
 
 </manifest>
