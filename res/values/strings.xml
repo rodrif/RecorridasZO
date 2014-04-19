@@ -19,5 +19,7 @@
     <string name="nombre">Nombre</string>
     <string name="apellido">Apellido</string>
     <string name="comentario">Comentario</string>
+    
+    <string name="editar">Editar</string>
 
 </resources>

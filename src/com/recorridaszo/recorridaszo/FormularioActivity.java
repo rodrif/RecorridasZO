@@ -1,10 +1,10 @@
 package com.recorridaszo.recorridaszo;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
-public class FormularioActivity extends Activity {
+public class FormularioActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +18,4 @@ public class FormularioActivity extends Activity {
 		getMenuInflater().inflate(R.menu.formulario, menu);
 		return true;
 	}
-
 }

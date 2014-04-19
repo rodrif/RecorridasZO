@@ -131,5 +131,4 @@ public class MapaActivity extends FragmentActivity {
 		mapa.addMarker(new MarkerOptions().position(point).draggable(true)
 				.title("Sin datos"));
 	}
-
 }
