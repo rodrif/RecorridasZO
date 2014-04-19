@@ -1,31 +1,25 @@
 package com.recorridaszo.recorridaszo;
 
 import java.util.List;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapaActivity extends FragmentActivity {
@@ -35,6 +29,7 @@ public class MapaActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
+		final Context ctx = this;
 
 		mapa = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
@@ -44,7 +39,16 @@ public class MapaActivity extends FragmentActivity {
 				dibujarMarcador(point);
 			}
 		});
-
+		
+		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
+		    public boolean onMarkerClick(Marker marker) {
+				Log.d(Utils.APPTAG, "Lanzando VerPersona activity");
+				Intent intent = new Intent(ctx, VerPersona.class);
+				startActivity(intent);
+		        return true;
+		    }
+		});
+		
 		CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(
 				-34.6209083, -58.4587529), 10);
 		mapa.moveCamera(camUpd);
@@ -124,8 +128,8 @@ public class MapaActivity extends FragmentActivity {
 	 * Dibuja un marcador en el mapa
 	 */
 	private void dibujarMarcador(LatLng point) {
-		mapa.addMarker(new MarkerOptions().position(point)
-				.title("Titulo"));
+		mapa.addMarker(new MarkerOptions().position(point).draggable(true)
+				.title("Sin datos"));
 	}
 
 }

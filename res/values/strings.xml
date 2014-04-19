@@ -3,12 +3,13 @@
 
     <string name="app_name">RecorridasZO</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>    
-    
-    <!-- Mapa activity -->  
-    <string name="button_buscar">Buscar</string>        
+    <string name="hello_world">Hello world!</string>
+
+    <!-- Mapa activity -->
+    <string name="button_buscar">Buscar</string>
     <string name="button_confirmar">OK</string>
     <string name="direccion">Direccion</string>
     <string name="mapa">Mapa</string>
+    <string name="title_activity_ver_persona">VerPersona</string>
 
 </resources>
