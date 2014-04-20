@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -13,15 +12,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONObject;
-
-import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
+
 
 public class ManejadorBD {
 	String id;
-	String name;
+	String lista;
 	InputStream is=null;
 	String result=null;
 	String line=null;
@@ -38,7 +36,7 @@ public class ManejadorBD {
 		return INSTANCE;
 	}
 
-	public void select() {
+	public JSONArray select() {
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
 		nameValuePairs.add(new BasicNameValuePair("id", id));
@@ -71,12 +69,15 @@ public class ManejadorBD {
 
 		try {
 			JSONObject json_data = new JSONObject(result);
-			name = (json_data.getString("nombre"));
+			lista = (json_data.getString("info"));
 			Log.e("pass 3", "connection success ");
-			Log.d("ZO", "nombre: "+name);
+			JSONArray json_list = new JSONArray(lista);			
+			Log.d("ZO", json_list.get(0).toString());
+			return json_list;
 		} catch (Exception e) {			
 			Log.e("Fail 3", e.toString());
 		}
+		return null;
 	}
 	
 }
