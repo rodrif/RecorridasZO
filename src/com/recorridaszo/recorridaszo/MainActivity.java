@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import java.sql.Connection;
 
+import com.recorridaszo.BDLocal.ManejadorBDLocal;
+
 public class MainActivity extends FragmentActivity {
 	Connection conexionMySQL;
 
@@ -13,7 +15,8 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		ManejadorBD.getInstance().select();
+		ManejadorBDLocal ml = new ManejadorBDLocal(this);
+		ml.conectarsePrueba();
 	}
 
 	@Override

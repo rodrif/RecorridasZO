@@ -24,4 +24,14 @@
         android:onClick="onClickEditar"
         android:text="@string/editar" />
 
+    <Button
+        android:id="@+id/buttonEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonEditar"
+        android:layout_alignBottom="@+id/buttonEditar"
+        android:layout_marginLeft="70dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="@string/eliminar" />
+
 </RelativeLayout>
