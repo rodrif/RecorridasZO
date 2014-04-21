@@ -3,7 +3,7 @@ package com.recorridaszo.recorridaszo;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Persona {
-	private int id;
+	private int id; //TODO: ver como se va a usar
 	private String nombre;
 	private String apellido;
 	private String direccion;
@@ -22,4 +22,23 @@ public class Persona {
 		return this.nombre;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public LatLng getUbicacion() {
+		return ubicacion;
+	}
 }

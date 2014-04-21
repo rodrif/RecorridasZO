@@ -1,12 +1,7 @@
 package com.recorridaszo.recorridaszo;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -74,7 +69,7 @@ public class MapaActivity extends FragmentActivity {
 
 	public void onBotonBuscarClick(View view) {
 	}
-
+/*
 	protected class GetLatLngTask extends AsyncTask<String, Void, String> {
 		private Address ad;
 
@@ -125,7 +120,7 @@ public class MapaActivity extends FragmentActivity {
 
 		}
 	}
-
+*/
 	/**
 	 * Dibuja un marcador en el mapa
 	 */
