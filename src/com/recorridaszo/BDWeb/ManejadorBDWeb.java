@@ -1,4 +1,4 @@
-package com.recorridaszo.recorridaszo;
+package com.recorridaszo.BDWeb;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -17,22 +17,22 @@ import org.json.JSONObject;
 import android.util.Log;
 
 
-public class ManejadorBD {
+public class ManejadorBDWeb {
 	String id;
 	String lista;
 	InputStream is=null;
 	String result=null;
 	String line=null;
 
-	private static ManejadorBD INSTANCE = new ManejadorBD();
+	private static ManejadorBDWeb INSTANCE = new ManejadorBDWeb();
 
 	// El constructor privado no permite que se genere un constructor por
 	// defecto.
 	// (con mismo modificador de acceso que la definición de la clase)
-	private ManejadorBD() {
+	private ManejadorBDWeb() {
 	}
 
-	public static ManejadorBD getInstance() {
+	public static ManejadorBDWeb getInstance() {
 		return INSTANCE;
 	}
 

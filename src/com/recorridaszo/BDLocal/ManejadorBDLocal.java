@@ -1,9 +1,12 @@
 package com.recorridaszo.BDLocal;
 
+import com.recorridaszo.recorridaszo.Persona;
+import com.recorridaszo.recorridaszo.Utils;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 
 public class ManejadorBDLocal {
 	private Context contexto;
@@ -39,7 +42,7 @@ public class ManejadorBDLocal {
 	}
 
 	public Cursor selectTodo() {
-		String[] campos = new String[] { "codigo", "nombre" };
+		String[] campos = Utils.camposBD;
 
 		// Abrimos la base de datos 'DBUsuarios' en modo escritura
 		PersonasSQLiteHelper psdbh = new PersonasSQLiteHelper(contexto,
@@ -47,16 +50,37 @@ public class ManejadorBDLocal {
 
 		SQLiteDatabase db = psdbh.getWritableDatabase();
 
-		Cursor c = db.query("Personas", campos, null, null, null, null, null);
+		Cursor c = db.query(Utils.TPersonas, campos, null, null, null, null, null);
 
 		return c;
 	}
-	
+
 	public void borrarTodo() {
-		db.delete("Personas", null, null);
+		db.delete(Utils.TPersonas, null, null);
 	}
-	
+
 	public SQLiteDatabase getDB() {
 		return this.db;
+	}
+
+	public int guardarPersona(Persona persona) {
+		if (db != null) {
+			// Creamos el registro a insertar como objeto ContentValues
+			ContentValues nuevoRegistro = new ContentValues();
+			nuevoRegistro.put("id", persona.getId());
+			nuevoRegistro.put("nombre", persona.getNombre());
+			nuevoRegistro.put("apellido", persona.getApellido());
+			nuevoRegistro.put("direccion", persona.getDireccion());
+			nuevoRegistro.put("descripcion", persona.getDescripcion());
+			nuevoRegistro.put("latitud", persona.getUbicacion().latitude);
+			nuevoRegistro.put("longitud", persona.getUbicacion().longitude);
+			nuevoRegistro.put("ultMod", persona.getUltMod());
+			
+			// Insertamos el registro en la base de datos
+			db.insert(Utils.TPersonas, null, nuevoRegistro);
+			return 0;
+		} else {
+			return -1;
+		}
 	}
 }

@@ -1,13 +1,14 @@
 package com.recorridaszo.recorridaszo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
-import java.sql.Connection;
+import android.view.View;
 
 
 public class MainActivity extends FragmentActivity {
-	Connection conexionMySQL;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,5 +22,11 @@ public class MainActivity extends FragmentActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public void onBotonMapaClick(View view) {
+		Log.d(Utils.APPTAG, "Lanzando mapa activity");
+		Intent intentMapa = new Intent(this, MapaActivity.class);
+		startActivity(intentMapa);
 	}
 }

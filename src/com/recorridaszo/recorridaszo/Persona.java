@@ -9,6 +9,7 @@ public class Persona {
 	private String direccion;
 	private String descripcion;
 	private LatLng ubicacion;
+	private String ultMod;
 
 	public Persona(String nombre, String apellido) {
 		this.nombre = nombre;
@@ -40,5 +41,9 @@ public class Persona {
 
 	public LatLng getUbicacion() {
 		return ubicacion;
+	}
+	
+	public String getUltMod() {
+		return ultMod;
 	}
 }
