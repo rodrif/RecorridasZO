@@ -31,6 +31,10 @@ public class Persona {
 	public Persona(String nombre, String apellido, LatLng latLng) {
 		this(-1, nombre, apellido, "", "", "", latLng, "");
 	}
+	
+	public Persona(LatLng latLng) {
+		this(-1, "", "", "", "", "", latLng, "");
+	}
 
 	public String getNombre() {
 		return this.nombre;

@@ -63,8 +63,11 @@ public class ManejadorBDLocal {
 					.cargarContentValues(persona);
 
 			// Insertamos el registro en la base de datos
-			db.insert(Utils.TPersonas, null, nuevoRegistro);
-			return 0;
+			long res = db.insert(Utils.TPersonas, null, nuevoRegistro);
+			
+			if(res != -1)
+				return 0;
+			return -1;
 		} else {
 			return -1;
 		}
@@ -82,4 +85,6 @@ public class ManejadorBDLocal {
 
 		return persona;
 	}
+	
+	
 }
