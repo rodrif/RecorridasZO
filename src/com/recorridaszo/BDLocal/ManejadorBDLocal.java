@@ -1,6 +1,8 @@
 package com.recorridaszo.BDLocal;
 
-import com.recorridaszo.recorridaszo.Persona;
+import com.google.android.gms.maps.model.LatLng;
+import com.recorridaszo.persona.CargadorPersona;
+import com.recorridaszo.persona.Persona;
 import com.recorridaszo.recorridaszo.Utils;
 
 import android.content.ContentValues;
@@ -9,7 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class ManejadorBDLocal {
-	private Context contexto;
 	private SQLiteDatabase db;
 
 	private static ManejadorBDLocal INSTANCE = new ManejadorBDLocal();
@@ -25,9 +26,7 @@ public class ManejadorBDLocal {
 	}
 
 	public void conectarse(Context contexto) {
-		this.contexto = contexto;
-
-		// Abrimos la base de datos 'DBUsuarios' en modo escritura
+		// Abrimos la base de datos 'DBPersonas' en modo escritura
 		PersonasSQLiteHelper psdbh = new PersonasSQLiteHelper(contexto,
 				"DBPersonas", null, 1);
 
@@ -37,20 +36,14 @@ public class ManejadorBDLocal {
 	public void desconectarse() {
 		// Cerramos la base de datos
 		db.close();
-		this.contexto = null;
 		this.db = null;
 	}
 
 	public Cursor selectTodo() {
 		String[] campos = Utils.camposBD;
 
-		// Abrimos la base de datos 'DBUsuarios' en modo escritura
-		PersonasSQLiteHelper psdbh = new PersonasSQLiteHelper(contexto,
-				"DBPersonas", null, 1);
-
-		SQLiteDatabase db = psdbh.getWritableDatabase();
-
-		Cursor c = db.query(Utils.TPersonas, campos, null, null, null, null, null);
+		Cursor c = db.query(Utils.TPersonas, campos, null, null, null, null,
+				null);
 
 		return c;
 	}
@@ -66,21 +59,27 @@ public class ManejadorBDLocal {
 	public int guardarPersona(Persona persona) {
 		if (db != null) {
 			// Creamos el registro a insertar como objeto ContentValues
-			ContentValues nuevoRegistro = new ContentValues();
-			nuevoRegistro.put("id", persona.getId());
-			nuevoRegistro.put("nombre", persona.getNombre());
-			nuevoRegistro.put("apellido", persona.getApellido());
-			nuevoRegistro.put("direccion", persona.getDireccion());
-			nuevoRegistro.put("descripcion", persona.getDescripcion());
-			nuevoRegistro.put("latitud", persona.getUbicacion().latitude);
-			nuevoRegistro.put("longitud", persona.getUbicacion().longitude);
-			nuevoRegistro.put("ultMod", persona.getUltMod());
-			
+			ContentValues nuevoRegistro = CargadorPersona
+					.cargarContentValues(persona);
+
 			// Insertamos el registro en la base de datos
 			db.insert(Utils.TPersonas, null, nuevoRegistro);
 			return 0;
 		} else {
 			return -1;
 		}
+	}
+
+	public Persona obtenerPersona(LatLng latLng) {
+		String[] campos = Utils.camposBD;
+		String[] args = new String[] { String.valueOf(latLng.latitude),
+				String.valueOf(latLng.longitude) };
+
+		Cursor c = db.query("Personas", campos, "latitud=? AND longitud=?",
+				args, null, null, null);
+
+		Persona persona = CargadorPersona.cargarPersona(c);
+
+		return persona;
 	}
 }
