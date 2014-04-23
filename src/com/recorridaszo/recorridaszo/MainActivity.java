@@ -1,5 +1,7 @@
 package com.recorridaszo.recorridaszo;
 
+import com.recorridaszo.BDWeb.ManejadorBDWeb;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -29,4 +31,10 @@ public class MainActivity extends FragmentActivity {
 		Intent intentMapa = new Intent(this, MapaActivity.class);
 		startActivity(intentMapa);
 	}
+	
+	public void onBotonActualizarClick(View view) {
+		Log.d(Utils.APPTAG, "Lanzando Actualizar");
+		ManejadorBDWeb.getInstance().obtenerActualizacion();
+	}
+	
 }

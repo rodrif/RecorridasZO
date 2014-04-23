@@ -14,6 +14,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.recorridaszo.persona.CargadorPersona;
+import com.recorridaszo.persona.Persona;
+
 import android.util.Log;
 
 
@@ -79,5 +84,64 @@ public class ManejadorBDWeb {
 		}
 		return null;
 	}
+
+	public void obtenerActualizacion() {
+//		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+//		nameValuePairs.add(new BasicNameValuePair("id", id));
+
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost("http://pruebazo.atwebpages.com/actualizar.php");
+//			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity entity = response.getEntity();
+			is = entity.getContent();
+			Log.e("pass 1", "connection success ");
+		} catch (Exception e) {
+			Log.e("Fail 1", e.toString());
+		}
+
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					is, "iso-8859-1"), 8);
+			StringBuilder sb = new StringBuilder();
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			is.close();
+			result = sb.toString();
+			
+			////////////////////////////////////////
+			JSONArray jArray = new JSONArray(result);
+			JSONObject json_data=null;
+			int id= 0;
+			String direccion= "";
+			String nombre="";
+			String apellido ="";
+			Persona personaTemp = null;
+				         
+	        for(int i=0;i<jArray.length();i++){
+	                json_data = jArray.getJSONObject(i);
+	                id= json_data.getInt("id");
+	                nombre=json_data.getString("nombre");
+	                apellido=json_data.getString("apellido");
+	                //direccion=json_data.getString("direccion");
+	                //nombre=json_data.getString("");
+	                Log.d("ZO", "nombrehttp: "+nombre);
+	                
+	                personaTemp = new Persona(id, nombre, apellido, "NS",
+	    					"NS", "NS", new LatLng(0,0), "NS");
+	                
+	                CargadorPersona.cargarContentValues(personaTemp);
+	        }
+	        ///////////////////////////////////////////////////
+
+			Log.d("pass 2", "connection success ");
+		} catch (Exception e) {
+			Log.e("Fail 2", e.toString());
+		}
+
+	}	
 	
 }
