@@ -16,9 +16,11 @@
     <string name="title_activity_formulario">FormularioActivity</string>
     <string name="title_activity_formulario_fragment">FormularioFragment</string>
     <string name="boton_ok">OK</string>
+    <string name="labelNombre">Nombre: </string>
     <string name="nombre">Nombre</string>
     <string name="apellido">Apellido</string>
     <string name="comentario">Comentario</string>
+    <string name="sinDato">Sin Dato</string>
     
     <string name="editar">Editar</string>
     <string name="eliminar">Eliminar</string>

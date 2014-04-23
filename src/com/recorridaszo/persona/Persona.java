@@ -75,4 +75,36 @@ public class Persona {
 	public String getUltMod() {
 		return ultMod;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setUbicacion(LatLng ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+
+	public void setUltMod(String ultMod) {
+		this.ultMod = ultMod;
+	}
 }

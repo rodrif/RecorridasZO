@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.persona.Persona;
 
+
 public class MapaActivity extends FragmentActivity {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
@@ -30,7 +30,6 @@ public class MapaActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
-		this.ml = ManejadorBDLocal.getInstance();
 
 		mapa = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
@@ -65,6 +64,7 @@ public class MapaActivity extends FragmentActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		this.ml = ManejadorBDLocal.getInstance();
 		ml.conectarse(this);
 		cargarMarcadores();
 	}
@@ -114,6 +114,8 @@ public class MapaActivity extends FragmentActivity {
 
 	public void clickEnMapa(LatLng point) {
 		Persona nuevaPersona = new Persona(point);
+		nuevaPersona.setNombre("NombredePrueba");//TODO: borrar
+		
 		if (ml.guardarPersona(nuevaPersona) != 0) {
 			Log.d(Utils.APPTAG, "error al guardar una persona en la BDLocal");
 		} else {
@@ -122,9 +124,11 @@ public class MapaActivity extends FragmentActivity {
 		dibujarMarcador(-1, point);
 	}
 
-	public void clickEnMarcador(Marker marker) { // TODO: pasarle lat y long
+	public void clickEnMarcador(Marker marker) {
 		Log.d(Utils.APPTAG, "Lanzando VerPersona activity");
 		Intent intent = new Intent(this, VerPersona.class);
+		intent.putExtra(Utils.KEY_LATITUD, marker.getPosition().latitude);
+		intent.putExtra(Utils.KEY_LONGITUD, marker.getPosition().longitude);
 		startActivity(intent);
 	}
 
@@ -148,7 +152,7 @@ public class MapaActivity extends FragmentActivity {
 		Marker marcador = mapa.addMarker(new MarkerOptions().position(point)
 				.draggable(false).title("Sin datos"));
 
-		if (id == -1) { //si es una perosona nueva, no gauardada en la BDWeb
+		if (id == -1) { // si es una perosona nueva, no gauardada en la BDWeb
 			marcador.setIcon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 		} else {
@@ -156,5 +160,5 @@ public class MapaActivity extends FragmentActivity {
 					.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 		}
 	}
-	
+
 }
