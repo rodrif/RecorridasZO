@@ -1,14 +1,14 @@
 package com.recorridaszo.BDLocal;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.recorridaszo.persona.CargadorPersona;
-import com.recorridaszo.persona.Persona;
-import com.recorridaszo.recorridaszo.Utils;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.recorridaszo.persona.CargadorPersona;
+import com.recorridaszo.persona.Persona;
+import com.recorridaszo.recorridaszo.Utils;
 
 public class ManejadorBDLocal {
 	private SQLiteDatabase db;
