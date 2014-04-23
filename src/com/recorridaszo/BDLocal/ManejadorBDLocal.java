@@ -86,5 +86,9 @@ public class ManejadorBDLocal {
 		return persona;
 	}
 	
-	
+	public void eliminarPersona(LatLng latLng) {
+		String[] args = new String[] { String.valueOf(latLng.latitude),
+				String.valueOf(latLng.longitude) };
+		db.delete("Personas", "latitud=? AND longitud=?", args);
+	}
 }

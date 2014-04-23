@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class VerPersona extends FragmentActivity {
 	private ManejadorBDLocal ml;
+	LatLng latLng; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class VerPersona extends FragmentActivity {
 		this.ml = ManejadorBDLocal.getInstance();
 		double latitud = getIntent().getExtras().getDouble(Utils.KEY_LATITUD);
 		double longitud = getIntent().getExtras().getDouble(Utils.KEY_LONGITUD);
-		LatLng latLng = new LatLng(latitud, longitud);
+		this.latLng = new LatLng(latitud, longitud);
 
 		ml.conectarse(this);
 		Persona persona = ml.obtenerPersona(latLng);
@@ -52,5 +53,10 @@ public class VerPersona extends FragmentActivity {
 		Log.d(Utils.APPTAG, "Lanzando Formulario activity");
 		Intent intent = new Intent(this, FormularioActivity.class);
 		startActivity(intent);
+	}
+	
+	public void onClickEliminar(View v) {
+		ml.eliminarPersona(this.latLng);
+		finish();
 	}
 }

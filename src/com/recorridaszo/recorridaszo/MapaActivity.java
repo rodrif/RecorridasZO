@@ -50,12 +50,15 @@ public class MapaActivity extends FragmentActivity {
 		CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(
 				-34.6209083, -58.4587529), 10);
 		mapa.moveCamera(camUpd);
+		
+		Log.d(Utils.APPTAG, "onCreate MapaActivity");
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		ml.desconectarse();
+		Log.d(Utils.APPTAG, "onpause MapaActivity");
 	}
 
 	/*
@@ -67,6 +70,7 @@ public class MapaActivity extends FragmentActivity {
 		this.ml = ManejadorBDLocal.getInstance();
 		ml.conectarse(this);
 		cargarMarcadores();
+		Log.d(Utils.APPTAG, "onResume MapaActivity");
 	}
 
 	public void onBotonOkClick(View view) {
@@ -133,6 +137,7 @@ public class MapaActivity extends FragmentActivity {
 	}
 
 	public void cargarMarcadores() {
+		this.mapa.clear();
 		Cursor c = ml.selectTodo();
 
 		if (c.moveToFirst()) {
