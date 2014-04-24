@@ -1,5 +1,7 @@
 package com.recorridaszo.BDLocal;
 
+import java.util.Iterator;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.persona.CargadorPersona;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.persona.Personas;
 import com.recorridaszo.recorridaszo.Utils;
 
 public class ManejadorBDLocal {
@@ -91,4 +94,33 @@ public class ManejadorBDLocal {
 				String.valueOf(latLng.longitude) };
 		db.delete("Personas", "latitud=? AND longitud=?", args);
 	}
+	
+	private Personas obtenerPersonasSegunEstado(String estado) {
+		Personas personas = new Personas();		
+		Cursor c = this.selectTodo();		
+		Personas todasPersonas = CargadorPersona.cargarPersonas(c);
+
+		for (Iterator<Persona> it = todasPersonas.iterator(); it.hasNext(); ) {
+			Persona p = it.next();
+			
+			if(p.getEstado().equals(estado)) {
+				personas.addPersona(p);
+			}
+		}
+		
+		return personas;	
+	}
+	
+	public Personas obtenerPersonasNuevas() {
+		return this.obtenerPersonasSegunEstado(Utils.EST_NUEVO);
+	}
+	
+	public Personas obtenerPersonasModificadas() {
+		return this.obtenerPersonasSegunEstado(Utils.EST_MODIFICADO);
+	}
+	
+	public Personas obtenerPersonasBorradas() {
+		return this.obtenerPersonasSegunEstado(Utils.EST_BORRADO);
+	}
+
 }

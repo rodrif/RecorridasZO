@@ -131,7 +131,7 @@ public class ManejadorBDWeb {
 	                Log.d("ZO", "nombrehttp: "+nombre);
 	                
 	                personaTemp = new Persona(id, nombre, apellido, "NS",
-	    					"NS", "NS", new LatLng(0,0), "NS");
+	    					"NS", "NS", new LatLng(0,0), "NS", "NS");
 	                
 	                CargadorPersona.cargarContentValues(personaTemp);
 	        }

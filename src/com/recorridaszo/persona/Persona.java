@@ -10,10 +10,12 @@ public class Persona {
 	private String zona;
 	private String descripcion;
 	private LatLng ubicacion;
-	private String ultMod; // TODO: ver si solo va en la BD
+	private String ultMod;
+	private String estado;
 
 	public Persona(int id, String nombre, String apellido, String direccion,
-			String zona, String descripcion, LatLng ubicacion, String ultMod) {
+			String zona, String descripcion, LatLng ubicacion, String ultMod,
+			String estado) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -22,18 +24,19 @@ public class Persona {
 		this.descripcion = descripcion;
 		this.ubicacion = ubicacion;
 		this.ultMod = ultMod;
+		this.estado = estado;
 	}
 
 	public Persona(String nombre, String apellido) {
-		this(-1, nombre, apellido, "", "", "", null, "");
+		this(-1, nombre, apellido, "", "", "", null, "", "");
 	}
 
 	public Persona(String nombre, String apellido, LatLng latLng) {
-		this(-1, nombre, apellido, "", "", "", latLng, "");
+		this(-1, nombre, apellido, "", "", "", latLng, "", "");
 	}
-	
+
 	public Persona(LatLng latLng) {
-		this(-1, "", "", "", "", "", latLng, "");
+		this(-1, "", "", "", "", "", latLng, "", "");
 	}
 
 	public String getNombre() {
@@ -76,6 +79,10 @@ public class Persona {
 		return ultMod;
 	}
 	
+	public String getEstado() {
+		return estado;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -106,5 +113,9 @@ public class Persona {
 
 	public void setUltMod(String ultMod) {
 		this.ultMod = ultMod;
+	}
+	
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 }

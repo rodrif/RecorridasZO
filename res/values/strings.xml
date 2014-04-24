@@ -7,7 +7,7 @@
 
     <!-- Mapa activity -->
     <string name="button_buscar">Buscar</string>
-    <string name="button_confirmar">Guardar</string>
+    <string name="button_guardar">Guardar</string>
     <string name="mapa">Mapa</string>
     <string name="title_activity_ver_persona">VerPersona</string>
     <string name="title_activity_formulario">FormularioActivity</string>

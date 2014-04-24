@@ -11,11 +11,11 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/buttonConfirmar"
+            android:id="@+id/buttonGuardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onBotonOkClick"
-            android:text="@string/button_confirmar" />
+            android:onClick="onBotonGuardarClick"
+            android:text="@string/button_guardar" />
 
         <EditText
             android:id="@+id/editText1"

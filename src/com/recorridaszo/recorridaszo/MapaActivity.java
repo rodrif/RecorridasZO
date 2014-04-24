@@ -73,7 +73,8 @@ public class MapaActivity extends FragmentActivity {
 		Log.d(Utils.APPTAG, "onResume MapaActivity");
 	}
 
-	public void onBotonOkClick(View view) {
+	public void onBotonGuardarClick(View view) {
+		//TODO: Subir los datos a la BDWeb
 	}
 
 	public void onBotonBuscarClick(View view) {
@@ -118,7 +119,7 @@ public class MapaActivity extends FragmentActivity {
 
 	public void clickEnMapa(LatLng point) {
 		Persona nuevaPersona = new Persona(point);
-		nuevaPersona.setNombre("NombredePrueba");//TODO: borrar
+		nuevaPersona.setNombre("NombredePrueba");//REVISAR: borrar
 		
 		if (ml.guardarPersona(nuevaPersona) != 0) {
 			Log.d(Utils.APPTAG, "error al guardar una persona en la BDLocal");
