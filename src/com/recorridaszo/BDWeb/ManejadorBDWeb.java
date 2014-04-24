@@ -144,9 +144,10 @@ public class ManejadorBDWeb {
 
 	}
 	
-	public void borrar(int id) {
+	public void borrar(Personas personas) {		
+		JSONArray jsonArray = personas.toJsonArray();
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("id", Integer.toString(id)));
+		nameValuePairs.add(new BasicNameValuePair("lista", jsonArray.toString()));
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
