@@ -21,10 +21,12 @@ public class CargadorPersona {
 		}
 	}
 	
+	//para un cursor con una o mas personas
 	public static Personas cargarPersonas(Cursor c) {
-		Personas personas = new Personas();
+		Personas personas = new Personas();		
 		
 		if(c.getCount() > 0) {
+			c.moveToFirst();
 			do {
 				Persona persona = obtenerPersonaPosAct(c);
 				personas.addPersona(persona);
