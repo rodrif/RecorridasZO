@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.persona.CargadorPersona;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.persona.Personas;
 
 import android.util.Log;
 
