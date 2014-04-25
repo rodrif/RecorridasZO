@@ -1,12 +1,8 @@
 package com.recorridaszo.recorridaszo;
 
-<<<<<<< HEAD
 import java.util.List;
-
 import android.content.Context;
-=======
 import android.app.Activity;
->>>>>>> 432ba913bc59866fd2c2e1f42f9b6bdf91da84a6
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Address;
@@ -91,7 +87,6 @@ public class MapaActivity extends FragmentActivity {
 	}
 
 	public void onBotonBuscarClick(View view) {
-<<<<<<< HEAD
 		GetLatLngTask miTarea = new GetLatLngTask(this);
 		EditText et = (EditText)findViewById(R.id.editText1);
 		String direccion = et.getText().toString();
@@ -143,46 +138,7 @@ public class MapaActivity extends FragmentActivity {
 					toast1.show();
 		  } 
 		  }
-=======
-	}
 
-	/*
-	 * protected class GetLatLngTask extends AsyncTask<String, Void, String> {
-	 * private Address ad;
-	 * 
-	 * // Store the context passed to the AsyncTask when the system //
-	 * instantiates it. Context localContext;
-	 * 
-	 * // Constructor called by the system to instantiate the task public
-	 * GetLatLngTask(Context context) {
-	 * 
-	 * // Required by the semantics of AsyncTask super();
-	 * 
-	 * // Set a Context for the background task localContext = context; }
-	 * 
-	 * @Override protected String doInBackground(String... params) {
-	 * 
-	 * Geocoder geocoder = new Geocoder(localContext);
-	 * 
-	 * // Create a list to contain the result address List<Address> addresses =
-	 * null;
-	 * 
-	 * // Try to get an address for the current location. try { addresses =
-	 * geocoder.getFromLocationName(params[0] + ", argentina", 1); 
-	 * = addresses.get(0);
-	 * 
-	 * } catch (Exception exception1) { exception1.printStackTrace(); return
-	 * "direccion invalida"; } // If the reverse geocode returned an address if
-	 * (addresses != null && addresses.size() > 0) { // Return the text return
-	 * params[0];
-	 * 
-	 * // If there aren't any addresses, post a message } return "fallo"; }
-	 * 
-	 * @Override protected void onPostExecute(String address) {
-	 * 
-	 * } }
-	 */
->>>>>>> 432ba913bc59866fd2c2e1f42f9b6bdf91da84a6
 
 	public void clickEnMapa(LatLng point) {
 	/*	Log.d(Utils.APPTAG, "Lanzando Formulario activity");
