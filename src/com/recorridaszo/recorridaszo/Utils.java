@@ -15,6 +15,8 @@ public final class Utils {
 	public static final String EST_BORRADO = "Borrado";
 	public static final String EST_MODIFICADO = "Modificado";
 	public static final String EST_NUEVO = "Nuevo";
+	public static final int ZOOM_CERCA = 15;
+	public static final int ZOOM_LEJOS = 10;
 	public static final String KEY_LATITUD = "com.recorridaszo.recorridaszo.KEY_LATITUD";
 	public static final String KEY_LONGITUD = "com.recorridaszo.recorridaszo.KEY_LONGITUD";
 	public static final String WEB_INSERTAR = "http://pruebazo.atwebpages.com/insertar.php";
