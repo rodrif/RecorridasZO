@@ -1,5 +1,6 @@
 package com.recorridaszo.recorridaszo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class MapaActivity extends FragmentActivity {
 		CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(
 				-34.6209083, -58.4587529), 10);
 		mapa.moveCamera(camUpd);
-		
+
 		Log.d(Utils.APPTAG, "onCreate MapaActivity");
 	}
 
@@ -74,7 +75,7 @@ public class MapaActivity extends FragmentActivity {
 	}
 
 	public void onBotonGuardarClick(View view) {
-		//TODO: Subir los datos a la BDWeb
+		// TODO: Subir los datos a la BDWeb
 	}
 
 	public void onBotonBuscarClick(View view) {
@@ -102,7 +103,7 @@ public class MapaActivity extends FragmentActivity {
 	 * null;
 	 * 
 	 * // Try to get an address for the current location. try { addresses =
-	 * geocoder.getFromLocationName(params[0] + ", argentina", 1); // REVISAR ad
+	 * geocoder.getFromLocationName(params[0] + ", argentina", 1); 
 	 * = addresses.get(0);
 	 * 
 	 * } catch (Exception exception1) { exception1.printStackTrace(); return
@@ -118,15 +119,15 @@ public class MapaActivity extends FragmentActivity {
 	 */
 
 	public void clickEnMapa(LatLng point) {
-		Persona nuevaPersona = new Persona(point);
-		nuevaPersona.setNombre("NombredePrueba");//REVISAR: borrar
+	/*	Log.d(Utils.APPTAG, "Lanzando Formulario activity");
+		Intent intent = new Intent(this, FormularioActivity.class);
+		intent.putExtra(Utils.KEY_LATITUD, point.latitude);
+		intent.putExtra(Utils.KEY_LONGITUD, point.longitude);
+		startActivityForResult(intent, Utils.REQ_CODE_FORMULARIO);*/ //FIXME
 		
-		if (ml.guardarPersona(nuevaPersona) != 0) {
-			Log.d(Utils.APPTAG, "error al guardar una persona en la BDLocal");
-		} else {
-			Log.d(Utils.APPTAG, "persona guardada en la BDLocal");
-		}
-		dibujarMarcador(-1, point);
+		Persona persona = new Persona("NombrePrueba", "ApellidoPrueba");
+		ml.guardarPersona(persona);
+		dibujarMarcador(-1, point);		
 	}
 
 	public void clickEnMarcador(Marker marker) {
@@ -164,6 +165,29 @@ public class MapaActivity extends FragmentActivity {
 		} else {
 			marcador.setIcon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+
+		// Choose what to do based on the request code
+		switch (requestCode) {
+
+		case Utils.REQ_CODE_FORMULARIO: // nueva Persona creada
+			Log.d(Utils.APPTAG, "onActivityResult Formulario Activity");
+
+			if (resultCode == Activity.RESULT_OK) {
+				Log.d(Utils.APPTAG, "Result OK");
+
+				Double latitud = intent.getExtras()
+						.getDouble(Utils.KEY_LATITUD);
+				Double longitud = intent.getExtras().getDouble(
+						Utils.KEY_LONGITUD);
+				dibujarMarcador(-1, new LatLng(latitud, longitud));
+			}
+			break;
 		}
 	}
 
