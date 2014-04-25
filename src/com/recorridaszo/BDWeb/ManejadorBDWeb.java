@@ -26,7 +26,6 @@ import android.util.Log;
 
 
 public class ManejadorBDWeb {
-	String id;
 	String lista;
 	InputStream is=null;
 	String result=null;
@@ -75,7 +74,7 @@ public class ManejadorBDWeb {
 			JSONArray jArray = new JSONArray(result);
 			JSONObject json_data=null;
 			int id= 0;
-			String direccion= "";
+			//String direccion= "";
 			String nombre="";
 			String apellido ="";
 			Persona personaTemp = null;
@@ -135,7 +134,7 @@ public class ManejadorBDWeb {
 	}
 
 	
-	public void insertar(Persona persona) {		
+	public String insertar(Persona persona) {		
 		JSONObject jsonObject = persona.toJson();
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("persona", jsonObject.toString()));
@@ -163,10 +162,11 @@ public class ManejadorBDWeb {
 				sb.append(line + "\n");
 			}
 			is.close();
-			result = sb.toString();
+			result = sb.toString();			
 			Log.d(Utils.APPTAG, "jsonString: "+result);
 		}catch (Exception e) {
 			Log.e("Fail 2", e.toString());
 		}
+		return result;
 	}	
 }
