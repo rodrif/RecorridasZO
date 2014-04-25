@@ -1,6 +1,12 @@
 package com.recorridaszo.persona;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
+import com.recorridaszo.recorridaszo.Utils;
 
 public class Persona {
 	private int id; // -1 si es una persona no guardada en la BDWeb
@@ -27,6 +33,11 @@ public class Persona {
 		this.estado = estado;
 	}
 
+	public Persona(String nombre, String apellido, String direccion,
+			String zona, String descripcion, LatLng ubicacion) {
+		this(-1, nombre, apellido, direccion, zona, descripcion, ubicacion, "", "");
+	}
+	
 	public Persona(String nombre, String apellido) {
 		this(-1, nombre, apellido, "", "", "", null, "", "");
 	}
@@ -117,5 +128,23 @@ public class Persona {
 	
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public JSONObject toJson() {
+		JSONObject json = new JSONObject();
+		try {
+			json.put("nombre", this.nombre);
+			json.put("apellido", this.apellido);
+			json.put("direccion", this.direccion);
+			json.put("descripcion", this.descripcion);
+			json.put("latitud", this.ubicacion.latitude);
+			json.put("longitud", this.ubicacion.longitude);
+			json.put("zona", this.zona);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			Log.e(Utils.APPTAG, "Error al convertir a json");
+		}
+		
+		return json;
 	}
 }

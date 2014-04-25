@@ -1,6 +1,8 @@
 package com.recorridaszo.recorridaszo;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
+import com.recorridaszo.persona.Persona;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +40,13 @@ public class MainActivity extends FragmentActivity {
 	
 	public void onBotonBorrarClick(View view) {
 		Log.d(Utils.APPTAG, "Lanzando Borrar");
-		ManejadorBDWeb.getInstance().borrar(1);
+//		ManejadorBDWeb.getInstance().borrar(1);
 	}
+	
+	public void onBotonInsertarClick(View view) {
+		Log.d(Utils.APPTAG, "Lanzando Insertar");
+		Persona unaPersona = new Persona("F.Juan", "Roque","dir","Lujan","desc2",new LatLng(0.0, 0.0));
+		ManejadorBDWeb.getInstance().insertar(unaPersona);
+	}	
 	
 }

@@ -10,6 +10,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.persona.CargadorPersona;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
+import com.recorridaszo.recorridaszo.Utils;
 
 import android.util.Log;
 
@@ -176,5 +178,40 @@ public class ManejadorBDWeb {
 			Log.e("Fail 2", e.toString());
 		}
 	}
+
 	
+	public void insertar(Persona persona) {		
+		JSONObject jsonObject = persona.toJson();
+		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("persona", jsonObject.toString()));
+		Log.d(Utils.APPTAG, "jsonString Mandado a servidor: "+ jsonObject.toString());
+
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost("http://pruebazo.atwebpages.com/insertar.php");
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//			StringEntity se = new StringEntity(jsonObject.toString());
+//			httppost.setEntity(se);
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity entity = response.getEntity();
+			is = entity.getContent();
+			Log.d(Utils.APPTAG, "connection success ");
+		} catch (Exception e) {
+			Log.e("Fail 1", e.toString());
+		}
+		
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					is, "iso-8859-1"), 8);
+			StringBuilder sb = new StringBuilder();
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			is.close();
+			result = sb.toString();
+			Log.d(Utils.APPTAG, "jsonString: "+result);
+		}catch (Exception e) {
+			Log.e("Fail 2", e.toString());
+		}
+	}	
 }
