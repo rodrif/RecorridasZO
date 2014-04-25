@@ -32,6 +32,8 @@ import com.recorridaszo.persona.Persona;
 public class MapaActivity extends FragmentActivity {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
+	private Address direccion; 
+	boolean dirEncontrada;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +57,14 @@ public class MapaActivity extends FragmentActivity {
 			}
 		});
 
-		CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(
-				-34.6209083, -58.4587529), 10);
-		mapa.moveCamera(camUpd);
-
+		centrarCamara(-34.6209083, -58.4587529, Utils.ZOOM_LEJOS);
 		Log.d(Utils.APPTAG, "onCreate MapaActivity");
+	}
+	
+	private void centrarCamara(double Lat, double Lng, int zoom){
+		CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(
+				Lat, Lng), zoom);
+		mapa.moveCamera(camUpd);		
 	}
 
 	@Override
@@ -106,7 +111,7 @@ public class MapaActivity extends FragmentActivity {
 		 }
 		  
 		 @Override protected String doInBackground(String... params) {
-		  
+		 dirEncontrada = false; 
 		 Geocoder geocoder = new Geocoder(localContext);
 		  
 		 // Create a list to contain the result address 
@@ -119,22 +124,27 @@ public class MapaActivity extends FragmentActivity {
 		 		
 		  
 		 } catch (Exception exception1) { 
-			 exception1.printStackTrace(); 	
+			 exception1.printStackTrace();
 			 return "direccion invalida";
 		 }
 		 // If the reverse geocode returned an address 
 		 if (addresses != null && addresses.size() > 0) { // Return the text 
-			 return  params[0];
+			 direccion = addresses.get(0);
+			 dirEncontrada = true;			 
+			 return  params[0];			 
 		 }
 		 
-		 // If there aren't any addresses, post a message } 
-		 return "fallo"; }
+		 // If there aren't any addresses, post a message 
+		 return "direccion invalida";
+		 }
 		  
 		  @Override protected void onPostExecute(String address) {
 				Toast toast1 =
 						Toast.makeText(getApplicationContext(),
 								address, Toast.LENGTH_SHORT);
 					toast1.show();
+			if(dirEncontrada)		
+				centrarCamara(direccion.getLatitude(), direccion.getLongitude(), Utils.ZOOM_CERCA);		
 		  } 
 		  }
 
