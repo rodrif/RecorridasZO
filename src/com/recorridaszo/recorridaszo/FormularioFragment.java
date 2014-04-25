@@ -35,7 +35,7 @@ public class FormularioFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle state) {
 		super.onActivityCreated(state);
-/*
+
 		Button botonOk = (Button) getActivity().findViewById(R.id.buttonOk);
 		botonOk.setOnClickListener(new OnClickListener() {
 			@Override
@@ -50,6 +50,8 @@ public class FormularioFragment extends Fragment {
 		double longitud = getActivity().getIntent().getExtras()
 				.getDouble(Utils.KEY_LONGITUD);
 		this.latLng = new LatLng(latitud, longitud);
+		
+		Log.d(Utils.APPTAG, "latitud recibida: " + latLng.latitude);
 
 		ml.conectarse(getActivity());
 		Persona persona = ml.obtenerPersona(latLng);
@@ -60,21 +62,23 @@ public class FormularioFragment extends Fragment {
 
 		if (persona != null) { // se quiere editar
 			nombre.setText(persona.getNombre());
-			apellido.setText(persona.getNombre());
-		}*/ //FIXME
+			apellido.setText(persona.getApellido());
+		}
 	}
 
 	public void clickEnBotonOK(View view) {
-/*		Log.d(Utils.APPTAG, "Formulario fragment boton Ok apretado");
+		Log.d(Utils.APPTAG, "Formulario fragment boton Ok apretado");
 		Intent i = new Intent();
 		i.putExtra(Utils.KEY_LATITUD, latLng.latitude);
 		i.putExtra(Utils.KEY_LONGITUD, latLng.longitude);
+		
+		Log.d(Utils.APPTAG, "latitud guardada: " + latLng.latitude);
 
 		Persona persona = new Persona(nombre.getText().toString(), apellido
-				.getText().toString());
+				.getText().toString(), this.latLng);
 		ml.guardarPersona(persona);
 
-		getActivity().setResult(Activity.RESULT_OK, i);*/ //FIXME
+		getActivity().setResult(Activity.RESULT_OK, i);
 		getActivity().finish();
 	}
 }

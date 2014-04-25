@@ -150,15 +150,11 @@ public class MapaActivity extends FragmentActivity {
 
 
 	public void clickEnMapa(LatLng point) {
-	/*	Log.d(Utils.APPTAG, "Lanzando Formulario activity");
+		Log.d(Utils.APPTAG, "Lanzando Formulario activity");
 		Intent intent = new Intent(this, FormularioActivity.class);
 		intent.putExtra(Utils.KEY_LATITUD, point.latitude);
 		intent.putExtra(Utils.KEY_LONGITUD, point.longitude);
-		startActivityForResult(intent, Utils.REQ_CODE_FORMULARIO);*/ //FIXME
-		
-		Persona persona = new Persona("NombrePrueba", "ApellidoPrueba");
-		ml.guardarPersona(persona);
-		dibujarMarcador(-1, point);		
+		startActivityForResult(intent, Utils.REQ_CODE_FORMULARIO);
 	}
 
 	public void clickEnMarcador(Marker marker) {
@@ -207,7 +203,7 @@ public class MapaActivity extends FragmentActivity {
 		switch (requestCode) {
 
 		case Utils.REQ_CODE_FORMULARIO: // nueva Persona creada
-			Log.d(Utils.APPTAG, "onActivityResult Formulario Activity");
+			Log.d(Utils.APPTAG, "onActivityResult Formulario Activity desde MapaActivity");
 
 			if (resultCode == Activity.RESULT_OK) {
 				Log.d(Utils.APPTAG, "Result OK");
