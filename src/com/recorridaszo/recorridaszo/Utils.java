@@ -21,7 +21,7 @@ public final class Utils {
 	public static final String WEB_BORRAR = "http://pruebazo.atwebpages.com/borrar.php";
 	public static final String WEB_ACTUALIZAR = "http://pruebazo.atwebpages.com/actualizar.php";
 	public static final String WEB_CARGAR_PERSONAS_PRUEBA = "http://pruebazo.atwebpages.com/inicializar.php";
-	
+	public final static int REQ_CODE_FORMULARIO = 9000;
 
 	public static String getDateTime() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(

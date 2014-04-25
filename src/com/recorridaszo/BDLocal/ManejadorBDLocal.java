@@ -38,25 +38,29 @@ public class ManejadorBDLocal {
 
 	public void desconectarse() {
 		// Cerramos la base de datos
-		db.close();
+		if (db != null)
+			db.close();
 		this.db = null;
 	}
 
 	public Cursor selectTodo() {
-		String[] campos = Utils.camposBD;
+		if (db != null) {
+			String[] campos = Utils.camposBD;
 
-		Cursor c = db.query(Utils.TPersonas, campos, null, null, null, null,
-				null);
+			Cursor c = db.query(Utils.TPersonas, campos, null, null, null,
+					null, null);
 
-		return c;
+			return c;
+		}
+		return null;
 	}
 
-	public void borrarTodo() {
-		db.delete(Utils.TPersonas, null, null);
-	}
-
-	public SQLiteDatabase getDB() {
-		return this.db;
+	public int borrarTodo() {
+		if (db != null) {
+			db.delete(Utils.TPersonas, null, null);
+			return 0;
+		}
+		return -1;
 	}
 
 	public int guardarPersona(Persona persona) {
@@ -67,58 +71,66 @@ public class ManejadorBDLocal {
 
 			// Insertamos el registro en la base de datos
 			long res = db.insert(Utils.TPersonas, null, nuevoRegistro);
-			
-			if(res != -1)
+
+			if (res != -1)
 				return 0;
 			return -1;
-		} else {
-			return -1;
 		}
+		return -1;
 	}
 
 	public Persona obtenerPersona(LatLng latLng) {
-		String[] campos = Utils.camposBD;
-		String[] args = new String[] { String.valueOf(latLng.latitude),
-				String.valueOf(latLng.longitude) };
+		if (db != null) {
+			String[] campos = Utils.camposBD;
+			String[] args = new String[] { String.valueOf(latLng.latitude),
+					String.valueOf(latLng.longitude) };
 
-		Cursor c = db.query("Personas", campos, "latitud=? AND longitud=?",
-				args, null, null, null);
+			Cursor c = db.query("Personas", campos, "latitud=? AND longitud=?",
+					args, null, null, null);
 
-		Persona persona = CargadorPersona.cargarPersona(c);
+			Persona persona = CargadorPersona.cargarPersona(c);
 
-		return persona;
-	}
-	
-	public void eliminarPersona(LatLng latLng) {
-		String[] args = new String[] { String.valueOf(latLng.latitude),
-				String.valueOf(latLng.longitude) };
-		db.delete("Personas", "latitud=? AND longitud=?", args);
-	}
-	
-	private Personas obtenerPersonasSegunEstado(String estado) {
-		Personas personas = new Personas();		
-		Cursor c = this.selectTodo();		
-		Personas todasPersonas = CargadorPersona.cargarPersonas(c);
-
-		for (Iterator<Persona> it = todasPersonas.iterator(); it.hasNext(); ) {
-			Persona p = it.next();
-			
-			if(p.getEstado().equals(estado)) {
-				personas.addPersona(p);
-			}
+			return persona;
 		}
-		
-		return personas;	
+		return null;
 	}
-	
+
+	public int eliminarPersona(LatLng latLng) {
+		if (db != null) {
+			String[] args = new String[] { String.valueOf(latLng.latitude),
+					String.valueOf(latLng.longitude) };
+			db.delete("Personas", "latitud=? AND longitud=?", args);
+			return 0;
+		}
+		return -1;
+	}
+
+	private Personas obtenerPersonasSegunEstado(String estado) {
+		if (db != null) {
+			Personas personas = new Personas();
+			Cursor c = this.selectTodo();
+			Personas todasPersonas = CargadorPersona.cargarPersonas(c);
+
+			for (Iterator<Persona> it = todasPersonas.iterator(); it.hasNext();) {
+				Persona p = it.next();
+
+				if (p.getEstado().equals(estado)) {
+					personas.addPersona(p);
+				}
+			}
+			return personas;
+		}
+		return null;
+	}
+
 	public Personas obtenerPersonasNuevas() {
 		return this.obtenerPersonasSegunEstado(Utils.EST_NUEVO);
 	}
-	
+
 	public Personas obtenerPersonasModificadas() {
 		return this.obtenerPersonasSegunEstado(Utils.EST_MODIFICADO);
 	}
-	
+
 	public Personas obtenerPersonasBorradas() {
 		return this.obtenerPersonasSegunEstado(Utils.EST_BORRADO);
 	}

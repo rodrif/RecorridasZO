@@ -52,6 +52,8 @@ public class VerPersona extends FragmentActivity {
 	public void onClickEditar(View v) {
 		Log.d(Utils.APPTAG, "Lanzando Formulario activity");
 		Intent intent = new Intent(this, FormularioActivity.class);
+		intent.putExtra(Utils.KEY_LATITUD, this.latLng.latitude);
+		intent.putExtra(Utils.KEY_LONGITUD, this.latLng.longitude);
 		startActivity(intent);
 	}
 	
