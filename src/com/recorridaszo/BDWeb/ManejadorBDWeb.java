@@ -44,49 +44,6 @@ public class ManejadorBDWeb {
 		return INSTANCE;
 	}
 
-	public JSONArray select() {
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
-		nameValuePairs.add(new BasicNameValuePair("id", id));
-
-		try {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://pruebazo.atwebpages.com/pruebajson.php");
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Log.e("pass 1", "connection success ");
-		} catch (Exception e) {
-			Log.e("Fail 1", e.toString());
-		}
-
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
-			StringBuilder sb = new StringBuilder();
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-			is.close();
-			result = sb.toString();
-			Log.e("pass 2", "connection success ");
-		} catch (Exception e) {
-			Log.e("Fail 2", e.toString());
-		}
-
-		try {
-			JSONObject json_data = new JSONObject(result);
-			lista = (json_data.getString("info"));
-			Log.e("pass 3", "connection success ");
-			JSONArray json_list = new JSONArray(lista);			
-			Log.d("ZO", json_list.get(0).toString());
-			return json_list;
-		} catch (Exception e) {			
-			Log.e("Fail 3", e.toString());
-		}
-		return null;
-	}
 
 	public void obtenerActualizacion() {
 //		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -95,7 +52,7 @@ public class ManejadorBDWeb {
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://pruebazo.atwebpages.com/actualizar.php");
+			HttpPost httppost = new HttpPost(Utils.WEB_ACTUALIZAR);
 //			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
@@ -115,7 +72,6 @@ public class ManejadorBDWeb {
 			is.close();
 			result = sb.toString();
 			
-			////////////////////////////////////////
 			JSONArray jArray = new JSONArray(result);
 			JSONObject json_data=null;
 			int id= 0;
@@ -131,14 +87,13 @@ public class ManejadorBDWeb {
 	                apellido=json_data.getString("apellido");
 	                //direccion=json_data.getString("direccion");
 	                //nombre=json_data.getString("");
-	                Log.d("ZO", "nombrehttp: "+nombre);
+	                //FIXME
 	                
 	                personaTemp = new Persona(id, nombre, apellido, "NS",
 	    					"NS", "NS", new LatLng(0,0), "NS", "NS");
 	                
 	                CargadorPersona.cargarContentValues(personaTemp);
-	        }
-	        ///////////////////////////////////////////////////
+	        }	     
 
 			Log.d("pass 2", "connection success ");
 		} catch (Exception e) {
@@ -154,7 +109,7 @@ public class ManejadorBDWeb {
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://pruebazo.atwebpages.com/borrar.php");
+			HttpPost httppost = new HttpPost(Utils.WEB_BORRAR);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
@@ -188,7 +143,7 @@ public class ManejadorBDWeb {
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://pruebazo.atwebpages.com/insertar.php");
+			HttpPost httppost = new HttpPost(Utils.WEB_INSERTAR);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 //			StringEntity se = new StringEntity(jsonObject.toString());
 //			httppost.setEntity(se);

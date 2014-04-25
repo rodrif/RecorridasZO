@@ -17,6 +17,11 @@ public final class Utils {
 	public static final String EST_NUEVO = "Nuevo";
 	public static final String KEY_LATITUD = "com.recorridaszo.recorridaszo.KEY_LATITUD";
 	public static final String KEY_LONGITUD = "com.recorridaszo.recorridaszo.KEY_LONGITUD";
+	public static final String WEB_INSERTAR = "http://pruebazo.atwebpages.com/insertar.php";
+	public static final String WEB_BORRAR = "http://pruebazo.atwebpages.com/borrar.php";
+	public static final String WEB_ACTUALIZAR = "http://pruebazo.atwebpages.com/actualizar.php";
+	public static final String WEB_CARGAR_PERSONAS_PRUEBA = "http://pruebazo.atwebpages.com/inicializar.php";
+	
 
 	public static String getDateTime() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
