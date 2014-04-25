@@ -38,7 +38,7 @@ public class MainActivity extends FragmentActivity {
 	
 	public void onBotonBorrarClick(View view) {
 		Log.d(Utils.APPTAG, "Lanzando Borrar");
-		ManejadorBDWeb.getInstance().borrar(1);
+//TODO		ManejadorBDWeb.getInstance().borrar(1);
 	}
 	
 }
