@@ -47,7 +47,7 @@ public class MainActivity extends FragmentActivity {
 	public void onBotonInsertarClick(View view) {
 		Log.d(Utils.APPTAG, "Lanzando Insertar");
 		Persona unaPersona = new Persona("F.Juan", "Roque","dir","Lujan","desc2",new LatLng(0.0, 0.0));
-		ManejadorBDWeb.getInstance().insertar(unaPersona);
+		ManejadorBDWeb.getInstance().insertar(unaPersona, this);
 	}	
 	
 }

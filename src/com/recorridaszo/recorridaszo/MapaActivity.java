@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

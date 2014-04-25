@@ -22,6 +22,7 @@ import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.recorridaszo.Utils;
 
+import android.content.Context;
 import android.util.Log;
 
 
@@ -134,39 +135,9 @@ public class ManejadorBDWeb {
 	}
 
 	
-	public String insertar(Persona persona) {		
-		JSONObject jsonObject = persona.toJson();
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("persona", jsonObject.toString()));
-		Log.d(Utils.APPTAG, "jsonString Mandado a servidor: "+ jsonObject.toString());
-
-		try {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(Utils.WEB_INSERTAR);
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//			StringEntity se = new StringEntity(jsonObject.toString());
-//			httppost.setEntity(se);
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			Log.d(Utils.APPTAG, "connection success ");
-		} catch (Exception e) {
-			Log.e("Fail 1", e.toString());
-		}
-		
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);
-			StringBuilder sb = new StringBuilder();
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-			is.close();
-			result = sb.toString();			
-			Log.d(Utils.APPTAG, "jsonString: "+result);
-		}catch (Exception e) {
-			Log.e("Fail 2", e.toString());
-		}
-		return result;
+	public String insertar(Persona persona, Context ctx) {		
+		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null);
+		at.execute(ctx);
+		return "bien";
 	}	
 }
