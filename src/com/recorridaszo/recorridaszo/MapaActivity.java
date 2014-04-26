@@ -1,5 +1,7 @@
 package com.recorridaszo.recorridaszo;
 
+
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import android.content.Context;
@@ -33,7 +35,6 @@ import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 
-
 public class MapaActivity extends FragmentActivity {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
@@ -42,7 +43,7 @@ public class MapaActivity extends FragmentActivity {
 	boolean dirEncontrada;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {		
+	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
@@ -141,9 +142,12 @@ public class MapaActivity extends FragmentActivity {
 				addresses = geocoder.getFromLocationName(params[0]
 						+ ", argentina", 1);
 
-			} catch (Exception exception1) {
+			} catch (IOException exception1) {
 				exception1.printStackTrace();
-				return "direccion invalida";
+				return getString(R.string.servicio_no_disponible);
+			} catch (Exception exception2) {
+				exception2.printStackTrace();
+				return getString(R.string.direccion_invalida);
 			}
 			// If the reverse geocode returned an address
 			if (addresses != null && addresses.size() > 0) { // Return the text
@@ -153,7 +157,7 @@ public class MapaActivity extends FragmentActivity {
 			}
 
 			// If there aren't any addresses, post a message
-			return "direccion invalida";
+			return getString(R.string.direccion_invalida);
 		}
 
 		@Override

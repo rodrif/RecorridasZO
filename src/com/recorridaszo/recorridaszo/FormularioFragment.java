@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.persona.Persona;
@@ -24,6 +23,8 @@ public class FormularioFragment extends Fragment {
 	EditText descripcion;
 	EditText direccion;
 	EditText zona;
+	Persona persona;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,18 +56,21 @@ public class FormularioFragment extends Fragment {
 		this.latLng = new LatLng(latitud, longitud);
 		
 		ml.conectarse(getActivity());
-		Persona persona = ml.obtenerPersona(latLng);
-
-		nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
-		apellido = (EditText) getActivity().findViewById(R.id.eTApellido);
-		descripcion = (EditText) getActivity().findViewById(R.id.eTDescripcion);
-		zona = (EditText) getActivity().findViewById(R.id.eTZona);
-		direccion = (EditText) getActivity().findViewById(R.id.eTDireccion);
+		this.persona = ml.obtenerPersona(latLng);
+		this.nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
+		this.apellido = (EditText) getActivity().findViewById(
+				R.id.eTApellido);	
+		this.descripcion = (EditText) getActivity().findViewById(R.id.eTDescripcion);
+		this.zona = (EditText) getActivity().findViewById(R.id.eTZona);
+		this.direccion = (EditText) getActivity().findViewById(R.id.eTDireccion);
 
 		if (persona != null) { // se quiere editar
 			//FIXME solo se edita nombre y apellido???
 			nombre.setText(persona.getNombre());
 			apellido.setText(persona.getApellido());
+		}
+		else { // si es una persona nueva
+			this.persona = new Persona(this.latLng);
 		}
 		
 		Log.d(Utils.APPTAG, "nombre recibido: " + nombre.getText().toString());
@@ -78,10 +82,15 @@ public class FormularioFragment extends Fragment {
 		i.putExtra(Utils.KEY_LATITUD, latLng.latitude);
 		i.putExtra(Utils.KEY_LONGITUD, latLng.longitude);
 		
-		//FIXME la fecha habria que guardarla aca???
 		Persona persona = new Persona(nombre.getText().toString(), apellido
-				.getText().toString(),direccion.getText().toString(),zona.getText().toString(),
-				descripcion.getText().toString(),this.latLng);
+				.getText().toString(), this.latLng);
+		this.persona.setNombre(nombre.getText().toString());
+		this.persona.setApellido((nombre.getText().toString()));
+		this.persona.setUltMod(Utils.getDateTime());
+		if(this.persona.getEstado().equals(Utils.EST_ACTUALIZADO)) {
+			this.persona.setEstado(Utils.EST_MODIFICADO);
+		}
+
 		ml.guardarPersona(persona);
 		
 		Log.d(Utils.APPTAG, "nombre guardado: " + nombre.getText().toString());

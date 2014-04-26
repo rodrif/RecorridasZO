@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import com.recorridaszo.BDWeb.ManejadorBDWeb;
 
 
 public class MainActivity extends FragmentActivity {
