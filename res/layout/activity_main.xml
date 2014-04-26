@@ -17,14 +17,4 @@
         android:onClick="onBotonMapaClick"
         android:text="@string/mapa" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonMapa"
-        android:layout_alignLeft="@+id/buttonMapa"
-        android:layout_marginBottom="30dp"
-        android:onClick="onBotonActualizarClick"
-        android:text="Actualizacion" />
-
 </RelativeLayout>

@@ -28,11 +28,5 @@ public class MainActivity extends FragmentActivity {
 		Log.d(Utils.APPTAG, "Lanzando mapa activity");
 		Intent intentMapa = new Intent(this, MapaActivity.class);
 		startActivity(intentMapa);
-	}
-	
-	public void onBotonActualizarClick(View view) {
-		Log.d(Utils.APPTAG, "Lanzando Actualizar");
-		ManejadorBDWeb.getInstance().obtenerActualizacion();
-	}
-	
+	}	
 }
