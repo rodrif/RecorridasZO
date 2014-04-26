@@ -51,19 +51,19 @@ public class FormularioFragment extends Fragment {
 				.getDouble(Utils.KEY_LONGITUD);
 		this.latLng = new LatLng(latitud, longitud);
 		
-		Log.d(Utils.APPTAG, "latitud recibida: " + latLng.latitude);
-
 		ml.conectarse(getActivity());
 		Persona persona = ml.obtenerPersona(latLng);
 
 		nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
 		apellido = (EditText) getActivity().findViewById(
-				R.id.eTApellido);
+				R.id.eTApellido);		
 
 		if (persona != null) { // se quiere editar
 			nombre.setText(persona.getNombre());
 			apellido.setText(persona.getApellido());
 		}
+		
+		Log.d(Utils.APPTAG, "nombre recibido: " + nombre.getText().toString());
 	}
 
 	public void clickEnBotonOK(View view) {
@@ -72,11 +72,11 @@ public class FormularioFragment extends Fragment {
 		i.putExtra(Utils.KEY_LATITUD, latLng.latitude);
 		i.putExtra(Utils.KEY_LONGITUD, latLng.longitude);
 		
-		Log.d(Utils.APPTAG, "latitud guardada: " + latLng.latitude);
-
 		Persona persona = new Persona(nombre.getText().toString(), apellido
 				.getText().toString(), this.latLng);
 		ml.guardarPersona(persona);
+		
+		Log.d(Utils.APPTAG, "nombre guardado: " + nombre.getText().toString());
 
 		getActivity().setResult(Activity.RESULT_OK, i);
 		getActivity().finish();

@@ -69,6 +69,11 @@ public class ManejadorBDLocal {
 			ContentValues nuevoRegistro = CargadorPersona
 					.cargarContentValues(persona);
 
+			// si estaba en la BDLocal
+			if (obtenerPersona(persona.getUbicacion()) != null) {
+				eliminarPersona(persona.getUbicacion());
+			}
+			
 			// Insertamos el registro en la base de datos
 			long res = db.insert(Utils.TPersonas, null, nuevoRegistro);
 

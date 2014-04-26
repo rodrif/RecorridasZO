@@ -6,10 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-
-import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
-import com.recorridaszo.persona.Persona;
 
 
 public class MainActivity extends FragmentActivity {

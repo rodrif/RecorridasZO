@@ -26,17 +26,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
-import com.recorridaszo.persona.Persona;
 
 
 public class MapaActivity extends FragmentActivity {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
-	private Address direccion; 
+	private Address direccion;
 	boolean dirEncontrada;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
@@ -60,11 +59,11 @@ public class MapaActivity extends FragmentActivity {
 		centrarCamara(-34.6209083, -58.4587529, Utils.ZOOM_LEJOS);
 		Log.d(Utils.APPTAG, "onCreate MapaActivity");
 	}
-	
-	private void centrarCamara(double Lat, double Lng, int zoom){
-		CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(
-				Lat, Lng), zoom);
-		mapa.moveCamera(camUpd);		
+
+	private void centrarCamara(double Lat, double Lng, int zoom) {
+		CameraUpdate camUpd = CameraUpdateFactory.newLatLngZoom(new LatLng(Lat,
+				Lng), zoom);
+		mapa.moveCamera(camUpd);
 	}
 
 	@Override
@@ -92,62 +91,62 @@ public class MapaActivity extends FragmentActivity {
 
 	public void onBotonBuscarClick(View view) {
 		GetLatLngTask miTarea = new GetLatLngTask(this);
-		EditText et = (EditText)findViewById(R.id.editText1);
+		EditText et = (EditText) findViewById(R.id.editText1);
 		String direccion = et.getText().toString();
 		miTarea.execute(direccion);
-	}	 
-	
-	protected class GetLatLngTask extends AsyncTask<String, Void, String> {		  
-		 // Store the context passed to the AsyncTask when the system 
-		 //	 instantiates it. 
-		 Context localContext;
-		  
-		 // Constructor called by the system to instantiate the task public
-		 GetLatLngTask(Context context) {		  
-		 // Required by the semantics of AsyncTask super();
-		  
-		 // Set a Context for the background task 
-			 localContext = context; 
-		 }
-		  
-		 @Override protected String doInBackground(String... params) {
-		 dirEncontrada = false; 
-		 Geocoder geocoder = new Geocoder(localContext);
-		  
-		 // Create a list to contain the result address 
-		 List<Address> addresses =null;
-		  
-		 // Try to get an address for the current location. 
-		 try { 
-			 addresses =				 
-				geocoder.getFromLocationName(params[0] + ", argentina", 1);
-		 		
-		  
-		 } catch (Exception exception1) { 
-			 exception1.printStackTrace();
-			 return "direccion invalida";
-		 }
-		 // If the reverse geocode returned an address 
-		 if (addresses != null && addresses.size() > 0) { // Return the text 
-			 direccion = addresses.get(0);
-			 dirEncontrada = true;			 
-			 return  params[0];			 
-		 }
-		 
-		 // If there aren't any addresses, post a message 
-		 return "direccion invalida";
-		 }
-		  
-		  @Override protected void onPostExecute(String address) {
-				Toast toast1 =
-						Toast.makeText(getApplicationContext(),
-								address, Toast.LENGTH_SHORT);
-					toast1.show();
-			if(dirEncontrada)		
-				centrarCamara(direccion.getLatitude(), direccion.getLongitude(), Utils.ZOOM_CERCA);		
-		  } 
-		  }
+	}
 
+	protected class GetLatLngTask extends AsyncTask<String, Void, String> {
+		// Store the context passed to the AsyncTask when the system
+		// instantiates it.
+		Context localContext;
+
+		// Constructor called by the system to instantiate the task public
+		GetLatLngTask(Context context) {
+			// Required by the semantics of AsyncTask super();
+
+			// Set a Context for the background task
+			localContext = context;
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			dirEncontrada = false;
+			Geocoder geocoder = new Geocoder(localContext);
+
+			// Create a list to contain the result address
+			List<Address> addresses = null;
+
+			// Try to get an address for the current location.
+			try {
+				addresses = geocoder.getFromLocationName(params[0]
+						+ ", argentina", 1);
+
+			} catch (Exception exception1) {
+				exception1.printStackTrace();
+				return "direccion invalida";
+			}
+			// If the reverse geocode returned an address
+			if (addresses != null && addresses.size() > 0) { // Return the text
+				direccion = addresses.get(0);
+				dirEncontrada = true;
+				return params[0];
+			}
+
+			// If there aren't any addresses, post a message
+			return "direccion invalida";
+		}
+
+		@Override
+		protected void onPostExecute(String address) {
+			Toast toast1 = Toast.makeText(getApplicationContext(), address,
+					Toast.LENGTH_SHORT);
+			toast1.show();
+			if (dirEncontrada)
+				centrarCamara(direccion.getLatitude(),
+						direccion.getLongitude(), Utils.ZOOM_CERCA);
+		}
+	}
 
 	public void clickEnMapa(LatLng point) {
 		Log.d(Utils.APPTAG, "Lanzando Formulario activity");
@@ -203,7 +202,8 @@ public class MapaActivity extends FragmentActivity {
 		switch (requestCode) {
 
 		case Utils.REQ_CODE_FORMULARIO: // nueva Persona creada
-			Log.d(Utils.APPTAG, "onActivityResult Formulario Activity desde MapaActivity");
+			Log.d(Utils.APPTAG,
+					"onActivityResult Formulario Activity desde MapaActivity");
 
 			if (resultCode == Activity.RESULT_OK) {
 				Log.d(Utils.APPTAG, "Result OK");

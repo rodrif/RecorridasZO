@@ -19,8 +19,6 @@ import com.recorridaszo.persona.CargadorPersona;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.recorridaszo.Utils;
-
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 

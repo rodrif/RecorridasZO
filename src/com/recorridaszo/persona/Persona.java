@@ -35,19 +35,15 @@ public class Persona {
 
 	public Persona(String nombre, String apellido, String direccion,
 			String zona, String descripcion, LatLng ubicacion) {
-		this(-1, nombre, apellido, direccion, zona, descripcion, ubicacion, "", "");
+		this(-1, nombre, apellido, direccion, zona, descripcion, ubicacion, Utils.getDateTime(), Utils.EST_NUEVO);
 	}
 	
-	public Persona(String nombre, String apellido) {
-		this(-1, nombre, apellido, "", "", "", null, "", "");
-	}
-
 	public Persona(String nombre, String apellido, LatLng latLng) {
-		this(-1, nombre, apellido, "", "", "", latLng, "", "");
+		this(-1, nombre, apellido, "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
 	}
 
 	public Persona(LatLng latLng) {
-		this(-1, "", "", "", "", "", latLng, "", "");
+		this(-1, "", "", "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
 	}
 
 	public String getNombre() {

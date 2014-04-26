@@ -19,28 +19,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/nombre" />
+            android:hint="@string/nombre"
+            android:inputType="textCapWords|textPersonName" />
 
         <EditText
             android:id="@+id/eTApellido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/apellido" />
+            android:hint="@string/apellido"
+            android:inputType="textCapWords|textPersonName" />
 
         <EditText
             android:id="@+id/eTDireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/direccion" />
+            android:hint="@string/direccion"
+            android:inputType="textCapWords|textPostalAddress" />
 
         <EditText
             android:id="@+id/eTComentario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/comentario" />
+            android:hint="@string/comentario"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/buttonOk"
