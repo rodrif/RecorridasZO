@@ -21,6 +21,9 @@ public class FormularioFragment extends Fragment {
 	LatLng latLng;
 	EditText nombre;
 	EditText apellido;
+	EditText descripcion;
+	EditText direccion;
+	EditText zona;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,10 +58,13 @@ public class FormularioFragment extends Fragment {
 		Persona persona = ml.obtenerPersona(latLng);
 
 		nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
-		apellido = (EditText) getActivity().findViewById(
-				R.id.eTApellido);		
+		apellido = (EditText) getActivity().findViewById(R.id.eTApellido);
+		descripcion = (EditText) getActivity().findViewById(R.id.eTDescripcion);
+		zona = (EditText) getActivity().findViewById(R.id.eTZona);
+		direccion = (EditText) getActivity().findViewById(R.id.eTDireccion);
 
 		if (persona != null) { // se quiere editar
+			//FIXME solo se edita nombre y apellido???
 			nombre.setText(persona.getNombre());
 			apellido.setText(persona.getApellido());
 		}
@@ -72,8 +78,10 @@ public class FormularioFragment extends Fragment {
 		i.putExtra(Utils.KEY_LATITUD, latLng.latitude);
 		i.putExtra(Utils.KEY_LONGITUD, latLng.longitude);
 		
+		//FIXME la fecha habria que guardarla aca???
 		Persona persona = new Persona(nombre.getText().toString(), apellido
-				.getText().toString(), this.latLng);
+				.getText().toString(),direccion.getText().toString(),zona.getText().toString(),
+				descripcion.getText().toString(),this.latLng);
 		ml.guardarPersona(persona);
 		
 		Log.d(Utils.APPTAG, "nombre guardado: " + nombre.getText().toString());

@@ -110,7 +110,7 @@ public class MapaActivity extends FragmentActivity {
 
 	public void onBotonBuscarClick(View view) {
 		GetLatLngTask miTarea = new GetLatLngTask(this);
-		EditText et = (EditText) findViewById(R.id.editText1);
+		EditText et = (EditText) findViewById(R.id.eTZona);
 		String direccion = et.getText().toString();
 		miTarea.execute(direccion);
 	}
