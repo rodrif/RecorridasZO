@@ -93,7 +93,8 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			//String ultMod= "";
 			Persona personaTemp = null;
 			ManejadorBDLocal ml = ManejadorBDLocal.getInstance();
-				         
+			ml.conectarse(localContext);
+			
 	        for(int i=0;i<jArray.length();i++){
 	                json_data = jArray.getJSONObject(i);
 	                id= json_data.getInt("id");
@@ -110,6 +111,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	                		zona, descripcion, new LatLng(latitud,longitud), "NS", "NS");
 	                
 	                ml.guardarPersona(personaTemp);
+
 	        }	     
 
 			Log.d("pass 2", "connection success ");

@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.persona.CargadorPersona;
@@ -94,7 +95,8 @@ public class ManejadorBDLocal {
 					args, null, null, null);
 
 			Persona persona = CargadorPersona.cargarPersona(c);
-
+			Log.d(Utils.APPTAG, "latitud buscada: " + Double.toString(latLng.latitude));
+			Log.d(Utils.APPTAG, "longitud guardada: " + Double.toString(latLng.longitude));
 			return persona;
 		}
 		return null;
