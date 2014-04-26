@@ -21,6 +21,7 @@ public class FormularioFragment extends Fragment {
 	LatLng latLng;
 	EditText nombre;
 	EditText apellido;
+	Persona persona;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,15 +53,18 @@ public class FormularioFragment extends Fragment {
 		this.latLng = new LatLng(latitud, longitud);
 		
 		ml.conectarse(getActivity());
-		Persona persona = ml.obtenerPersona(latLng);
+		this.persona = ml.obtenerPersona(latLng);
 
-		nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
-		apellido = (EditText) getActivity().findViewById(
-				R.id.eTApellido);		
+		this.nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
+		this.apellido = (EditText) getActivity().findViewById(
+				R.id.eTApellido);	
 
-		if (persona != null) { // se quiere editar
+		if (this.persona != null) { // se quiere editar
 			nombre.setText(persona.getNombre());
 			apellido.setText(persona.getApellido());
+		}
+		else { // si es una persona nueva
+			this.persona = new Persona(this.latLng);
 		}
 		
 		Log.d(Utils.APPTAG, "nombre recibido: " + nombre.getText().toString());
@@ -74,6 +78,12 @@ public class FormularioFragment extends Fragment {
 		
 		Persona persona = new Persona(nombre.getText().toString(), apellido
 				.getText().toString(), this.latLng);
+		this.persona.setNombre(nombre.getText().toString());
+		this.persona.setApellido((nombre.getText().toString()));
+		this.persona.setUltMod(Utils.getDateTime());
+		if(this.persona.getEstado().equals(Utils.EST_ACTUALIZADO)) {
+			this.persona.setEstado(Utils.EST_MODIFICADO);
+		}
 		ml.guardarPersona(persona);
 		
 		Log.d(Utils.APPTAG, "nombre guardado: " + nombre.getText().toString());

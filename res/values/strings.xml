@@ -27,5 +27,7 @@
     <string name="sinDato">Sin Dato</string>
     <string name="editar">Editar</string>
     <string name="eliminar">Eliminar</string>
+    <string name="servicio_no_disponible">Servicio no disponible</string>
+    <string name="direccion_invalida">Dirección Inválida</string>
 
 </resources>
