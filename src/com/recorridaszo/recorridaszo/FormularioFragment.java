@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.persona.Persona;
@@ -21,7 +20,11 @@ public class FormularioFragment extends Fragment {
 	LatLng latLng;
 	EditText nombre;
 	EditText apellido;
+	EditText descripcion;
+	EditText direccion;
+	EditText zona;
 	Persona persona;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,12 +57,15 @@ public class FormularioFragment extends Fragment {
 		
 		ml.conectarse(getActivity());
 		this.persona = ml.obtenerPersona(latLng);
-
 		this.nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
 		this.apellido = (EditText) getActivity().findViewById(
 				R.id.eTApellido);	
+		this.descripcion = (EditText) getActivity().findViewById(R.id.eTDescripcion);
+		this.zona = (EditText) getActivity().findViewById(R.id.eTZona);
+		this.direccion = (EditText) getActivity().findViewById(R.id.eTDireccion);
 
-		if (this.persona != null) { // se quiere editar
+		if (persona != null) { // se quiere editar
+			//FIXME solo se edita nombre y apellido???
 			nombre.setText(persona.getNombre());
 			apellido.setText(persona.getApellido());
 		}
@@ -84,6 +90,7 @@ public class FormularioFragment extends Fragment {
 		if(this.persona.getEstado().equals(Utils.EST_ACTUALIZADO)) {
 			this.persona.setEstado(Utils.EST_MODIFICADO);
 		}
+
 		ml.guardarPersona(persona);
 		
 		Log.d(Utils.APPTAG, "nombre guardado: " + nombre.getText().toString());

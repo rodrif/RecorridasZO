@@ -39,11 +39,21 @@
             android:inputType="textCapWords|textPostalAddress" />
 
         <EditText
-            android:id="@+id/eTComentario"
+            android:id="@+id/eTZona"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/comentario"
+            android:hint="@string/zona" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/eTDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/descripcion"
             android:inputType="text" />
 
         <Button

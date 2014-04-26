@@ -1,6 +1,8 @@
 package com.recorridaszo.recorridaszo;
 
+
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import android.content.Context;
 import android.app.Activity;
@@ -12,6 +14,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -27,10 +31,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
+import com.recorridaszo.BDWeb.ManejadorBDWeb;
+import com.recorridaszo.persona.Persona;
+import com.recorridaszo.persona.Personas;
 
 public class MapaActivity extends FragmentActivity {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
+	private ManejadorBDWeb mw;
 	private Address direccion;
 	boolean dirEncontrada;
 
@@ -80,6 +88,7 @@ public class MapaActivity extends FragmentActivity {
 	public void onResume() {
 		super.onResume();
 		this.ml = ManejadorBDLocal.getInstance();
+		this.mw = ManejadorBDWeb.getInstance();
 		ml.conectarse(this);
 		cargarMarcadores();
 		Log.d(Utils.APPTAG, "onResume MapaActivity");
@@ -87,11 +96,22 @@ public class MapaActivity extends FragmentActivity {
 
 	public void onBotonGuardarClick(View view) {
 		// TODO: Subir los datos a la BDWeb
+		Personas pNuevas = ml.obtenerPersonasNuevas();
+		Iterator<Persona> it = pNuevas.iterator();
+		while (it.hasNext()) {
+			mw.insertar(it.next(), this);
+		}
+
+		Personas pModificadas = ml.obtenerPersonasModificadas();
+		it = pModificadas.iterator();
+		while (it.hasNext()) {
+			mw.insertar(it.next(), this);
+		}		
 	}
 
 	public void onBotonBuscarClick(View view) {
 		GetLatLngTask miTarea = new GetLatLngTask(this);
-		EditText et = (EditText) findViewById(R.id.editText1);
+		EditText et = (EditText) findViewById(R.id.eTZona);
 		String direccion = et.getText().toString();
 		miTarea.execute(direccion);
 	}
@@ -220,5 +240,35 @@ public class MapaActivity extends FragmentActivity {
 			break;
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_ACTUALIZAR, Menu.NONE, "Actualizar")
+	            .setIcon(android.R.drawable.ic_menu_preferences);
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA,
+	    		Menu.NONE, "Refrescar Pantalla")
+	            .setIcon(android.R.drawable.ic_menu_compass);
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE, "Borrar DBLocal")
+        .setIcon(android.R.drawable.ic_menu_compass);	    
+	    return true;
+	}	
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case Utils.MENU_MAPA_ACTUALIZAR:
+	            ml.borrarTodo();
+	            mw.obtenerPersonasDBWeb(this);	           
+	            //FIXME faltaria que se actualice sola la pantalla cuando termine la actualizacion
+	            return true;
+	        case Utils.MENU_MAPA_REFRESCAR_PANTALLA:
+	        	this.cargarMarcadores();
+	            return true;
+	        case Utils.MENU_MAPA_BORRARDBLOCAL:
+		        ml.borrarTodo();   
+	            return true;	            
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}	
 }
