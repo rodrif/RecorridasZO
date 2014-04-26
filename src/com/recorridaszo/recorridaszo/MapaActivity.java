@@ -1,5 +1,6 @@
 package com.recorridaszo.recorridaszo;
 
+import java.util.Iterator;
 import java.util.List;
 import android.content.Context;
 import android.app.Activity;
@@ -26,11 +27,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
+import com.recorridaszo.BDWeb.ManejadorBDWeb;
+import com.recorridaszo.persona.Persona;
+import com.recorridaszo.persona.Personas;
 
 
 public class MapaActivity extends FragmentActivity {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
+	private ManejadorBDWeb mw;
 	private Address direccion;
 	boolean dirEncontrada;
 
@@ -80,6 +85,7 @@ public class MapaActivity extends FragmentActivity {
 	public void onResume() {
 		super.onResume();
 		this.ml = ManejadorBDLocal.getInstance();
+		this.mw = ManejadorBDWeb.getInstance();
 		ml.conectarse(this);
 		cargarMarcadores();
 		Log.d(Utils.APPTAG, "onResume MapaActivity");
@@ -87,6 +93,18 @@ public class MapaActivity extends FragmentActivity {
 
 	public void onBotonGuardarClick(View view) {
 		// TODO: Subir los datos a la BDWeb
+		Personas pNuevas = ml.obtenerPersonasNuevas();
+		Iterator<Persona> it = pNuevas.iterator();
+		while (it.hasNext()) {
+			ManejadorBDWeb.getInstance().insertar(it.next(), this);
+		}
+
+		Personas pModificadas = ml.obtenerPersonasModificadas();
+		it = pModificadas.iterator();
+		while (it.hasNext()) {
+			ManejadorBDWeb.getInstance().insertar(it.next(), this);
+		}		
+		
 	}
 
 	public void onBotonBuscarClick(View view) {
