@@ -57,6 +57,7 @@ public class FormularioFragment extends Fragment {
 		
 		ml.conectarse(getActivity());
 		this.persona = ml.obtenerPersona(latLng);
+		
 		this.nombre = (EditText) getActivity().findViewById(R.id.eTNombre);
 		this.apellido = (EditText) getActivity().findViewById(
 				R.id.eTApellido);	
@@ -82,16 +83,18 @@ public class FormularioFragment extends Fragment {
 		i.putExtra(Utils.KEY_LATITUD, latLng.latitude);
 		i.putExtra(Utils.KEY_LONGITUD, latLng.longitude);
 		
-		Persona persona = new Persona(nombre.getText().toString(), apellido
-				.getText().toString(), this.latLng);
 		this.persona.setNombre(nombre.getText().toString());
 		this.persona.setApellido((nombre.getText().toString()));
+		this.persona.setDireccion(direccion.getText().toString());
+		this.persona.setZona(zona.getText().toString());
+		this.persona.setDescripcion(descripcion.getText().toString());
+		this.persona.setUbicacion(this.latLng);
 		this.persona.setUltMod(Utils.getDateTime());
 		if(this.persona.getEstado().equals(Utils.EST_ACTUALIZADO)) {
 			this.persona.setEstado(Utils.EST_MODIFICADO);
 		}
 
-		ml.guardarPersona(persona);
+		ml.guardarPersona(this.persona);
 		
 		Log.d(Utils.APPTAG, "nombre guardado: " + nombre.getText().toString());
 

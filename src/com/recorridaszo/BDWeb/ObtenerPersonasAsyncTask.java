@@ -82,6 +82,9 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			String descripcion= "";
 			double latitud= 0;
 			double longitud = 0;
+			String latitudS = "";
+			String longitudS = "";
+			
 			//String ultMod= "";
 			Persona personaTemp = null;
 			ManejadorBDLocal ml = ManejadorBDLocal.getInstance();
@@ -95,12 +98,13 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	                direccion=json_data.getString("direccion");
 	                zona=json_data.getString("zona");
 	                descripcion=json_data.getString("descripcion");
-	                latitud = json_data.getDouble("latitud");
-	                longitud = json_data.getDouble("longitud");
+	                latitudS = json_data.getString("latitud");
+	                longitudS = json_data.getString("longitud");
 	       
 	                //FIXME falta agregar los ultimos dos parametros
 	                personaTemp = new Persona(id, nombre, apellido, direccion,
-	                		zona, descripcion, new LatLng(latitud,longitud), "NS", "NS");
+	                		zona, descripcion, new LatLng(Double.parseDouble(latitudS),
+	                				Double.parseDouble(longitudS)), "NS", "NS");
 	                
 	                ml.guardarPersona(personaTemp);
 

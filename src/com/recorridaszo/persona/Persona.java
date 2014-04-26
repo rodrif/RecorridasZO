@@ -133,8 +133,8 @@ public class Persona {
 			json.put("apellido", this.apellido);
 			json.put("direccion", this.direccion);
 			json.put("descripcion", this.descripcion);
-			json.put("latitud", this.ubicacion.latitude);
-			json.put("longitud", this.ubicacion.longitude);
+			json.put("latitud", Double.toString(this.ubicacion.latitude));
+			json.put("longitud", Double.toString(this.ubicacion.longitude));
 			json.put("zona", this.zona);
 		} catch (JSONException e) {
 			e.printStackTrace();

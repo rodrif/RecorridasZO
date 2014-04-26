@@ -10,13 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/buttonGuardar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onBotonGuardarClick"
-            android:text="@string/button_guardar" />
-
         <EditText
             android:id="@+id/eTZona"
             android:layout_width="0dip"

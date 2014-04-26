@@ -20,6 +20,7 @@ public final class Utils {
 	public static final int MENU_MAPA_ACTUALIZAR = 1;
 	public static final int MENU_MAPA_REFRESCAR_PANTALLA = 2;
 	public static final int MENU_MAPA_BORRARDBLOCAL = 3;
+	public static final int MENU_MAPA_SUBIRALSERVER = 4;
 	public static final String KEY_LATITUD = "com.recorridaszo.recorridaszo.KEY_LATITUD";
 	public static final String KEY_LONGITUD = "com.recorridaszo.recorridaszo.KEY_LONGITUD";
 	public static final String WEB_INSERTAR = "http://pruebazo.atwebpages.com/insertar.php";

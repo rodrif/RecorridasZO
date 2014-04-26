@@ -94,8 +94,7 @@ public class MapaActivity extends FragmentActivity {
 		Log.d(Utils.APPTAG, "onResume MapaActivity");
 	}
 
-	public void onBotonGuardarClick(View view) {
-		// TODO: Subir los datos a la BDWeb
+	public void onBotonSubirClick() {
 		Personas pNuevas = ml.obtenerPersonasNuevas();
 		Iterator<Persona> it = pNuevas.iterator();
 		while (it.hasNext()) {
@@ -243,6 +242,8 @@ public class MapaActivity extends FragmentActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE, "Subir al servidor")
+        .setIcon(android.R.drawable.ic_menu_preferences);
 	    menu.add(Menu.NONE, Utils.MENU_MAPA_ACTUALIZAR, Menu.NONE, "Actualizar")
 	            .setIcon(android.R.drawable.ic_menu_preferences);
 	    menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA,
@@ -266,6 +267,9 @@ public class MapaActivity extends FragmentActivity {
 	            return true;
 	        case Utils.MENU_MAPA_BORRARDBLOCAL:
 		        ml.borrarTodo();   
+	            return true;
+	        case Utils.MENU_MAPA_SUBIRALSERVER:
+	        	this.onBotonSubirClick();   
 	            return true;	            
 	        default:
 	            return super.onOptionsItemSelected(item);

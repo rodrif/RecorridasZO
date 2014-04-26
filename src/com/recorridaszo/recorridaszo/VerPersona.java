@@ -37,6 +37,18 @@ public class VerPersona extends FragmentActivity {
 		nombre.setText(persona.getNombre());
 		TextView apellido = (TextView) findViewById(R.id.textViewApellido);
 		apellido.setText(persona.getApellido());
+		
+		TextView direccion = (TextView) findViewById(R.id.textViewDireccion);
+		direccion.setText(persona.getDireccion());
+		
+		TextView zona = (TextView) findViewById(R.id.textViewZona);
+		zona.setText(persona.getZona());
+		
+		TextView descripcion = (TextView) findViewById(R.id.textViewDescripcion);
+		descripcion.setText(persona.getDescripcion());
+		
+		
+		
 	}
 
 	@Override
