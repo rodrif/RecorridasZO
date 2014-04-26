@@ -27,24 +27,4 @@
         android:onClick="onBotonActualizarClick"
         android:text="Actualizacion" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_alignRight="@+id/buttonMapa"
-        android:layout_marginBottom="24dp"
-        android:onClick="onBotonBorrarClick"
-        android:text="Borrar" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonMapa"
-        android:layout_below="@+id/buttonMapa"
-        android:layout_marginTop="31dp"
-        android:onClick="onBotonInsertarClick"
-        android:text="Insertar" />
-
 </RelativeLayout>

@@ -38,16 +38,4 @@ public class MainActivity extends FragmentActivity {
 		ManejadorBDWeb.getInstance().obtenerActualizacion();
 	}
 	
-	public void onBotonBorrarClick(View view) {
-		Log.d(Utils.APPTAG, "Lanzando Borrar");
-
-//TODO		ManejadorBDWeb.getInstance().borrar(1);
-	}
-	
-	public void onBotonInsertarClick(View view) {
-		Log.d(Utils.APPTAG, "Lanzando Insertar");
-		Persona unaPersona = new Persona("F.Juan", "Roque","dir","Lujan","desc2",new LatLng(0.0, 0.0));
-		ManejadorBDWeb.getInstance().insertar(unaPersona, this);
-	}	
-	
 }

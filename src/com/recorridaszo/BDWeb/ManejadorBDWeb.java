@@ -20,6 +20,7 @@ import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.recorridaszo.Utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
@@ -29,6 +30,7 @@ public class ManejadorBDWeb {
 	InputStream is=null;
 	String result=null;
 	String line=null;
+	Object res;
 
 	private static ManejadorBDWeb INSTANCE = new ManejadorBDWeb();
 
@@ -126,16 +128,22 @@ public class ManejadorBDWeb {
 			}
 			is.close();
 			result = sb.toString();
-			Log.d("ZO", "id borrado: "+result);
+			Log.d(Utils.APPTAG, "id borrado: "+result);
 		}catch (Exception e) {
 			Log.e("Fail 2", e.toString());
 		}
 	}
 
 	
-	public String insertar(Persona persona, Context ctx) {		
+	public String insertar(Persona persona, Context ctx) {
 		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null);
 		at.execute(ctx);
 		return "bien";
+	}
+
+	public Persona buscar(LatLng latLng) {
+		Persona perResultado = null;
+//		BuscarAsyncTask at = new BuscarAsyncTask(perResultado, ctx, );//TODO
+		return perResultado;		
 	}	
 }
