@@ -135,6 +135,7 @@ public class Persona {
 			json.put("descripcion", this.descripcion);
 			json.put("latitud", Double.toString(this.ubicacion.latitude));
 			json.put("longitud", Double.toString(this.ubicacion.longitude));
+			json.put("ultMod", this.ultMod);
 			json.put("zona", this.zona);
 		} catch (JSONException e) {
 			e.printStackTrace();
