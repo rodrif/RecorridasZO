@@ -35,7 +35,7 @@ import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 
-public class MapaActivity extends FragmentActivity {
+public class MapaActivity extends FragmentActivity implements Actualizable{
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
 	private ManejadorBDWeb mw;
@@ -186,7 +186,7 @@ public class MapaActivity extends FragmentActivity {
 		startActivity(intent);
 	}
 
-	public void cargarMarcadores() {
+	public synchronized void cargarMarcadores() {
 		this.mapa.clear();
 		Cursor c = ml.selectTodo();
 
@@ -207,6 +207,7 @@ public class MapaActivity extends FragmentActivity {
 		Marker marcador = mapa.addMarker(new MarkerOptions().position(point)
 				.draggable(false).title("Sin datos"));
 
+		//FIXME una vez subido a la BDWeb tampoco cambia de color
 		if (id == -1) { // si es una perosona nueva, no gauardada en la BDWeb
 			marcador.setIcon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -259,8 +260,7 @@ public class MapaActivity extends FragmentActivity {
 	    switch (item.getItemId()) {
 	        case Utils.MENU_MAPA_ACTUALIZAR:
 	            ml.borrarTodo();
-	            mw.obtenerPersonasDBWeb(this);	           
-	            //FIXME faltaria que se actualice sola la pantalla cuando termine la actualizacion
+	            mw.obtenerPersonasDBWeb(this, this);	           
 	            return true;
 	        case Utils.MENU_MAPA_REFRESCAR_PANTALLA:
 	        	this.cargarMarcadores();
@@ -274,5 +274,10 @@ public class MapaActivity extends FragmentActivity {
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	}
+
+	@Override
+	public void Actualizar() {
+		this.cargarMarcadores();		
 	}	
 }

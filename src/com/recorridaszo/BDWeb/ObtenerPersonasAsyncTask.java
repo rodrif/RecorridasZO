@@ -3,6 +3,7 @@ package com.recorridaszo.BDWeb;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -10,14 +11,17 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.google.android.gms.maps.model.LatLng;
-import com.recorridaszo.BDLocal.ManejadorBDLocal;
-import com.recorridaszo.persona.Persona;
-import com.recorridaszo.recorridaszo.Utils;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.recorridaszo.BDLocal.ManejadorBDLocal;
+import com.recorridaszo.persona.Persona;
+import com.recorridaszo.recorridaszo.Actualizable;
+import com.recorridaszo.recorridaszo.Utils;
 
 public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	// Store the context passed to the AsyncTask when the system
@@ -26,14 +30,16 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	InputStream is;
 	String line;
 	String result;
+	Actualizable actualizable;
 
 	// Constructor called by the system to instantiate the task
-	public ObtenerPersonasAsyncTask(Context context) {
+	public ObtenerPersonasAsyncTask(Context context, Actualizable actualizable) {
 		// Required by the semantics of AsyncTask
 		super();
 
 		// Set a Context for the background task
 		this.localContext = context;
+		this.actualizable = actualizable;
 	}
 	
     @Override
@@ -80,8 +86,6 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			String direccion= "";
 			String zona= "";
 			String descripcion= "";
-			double latitud= 0;
-			double longitud = 0;
 			String latitudS = "";
 			String longitudS = "";
 			
@@ -128,5 +132,6 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 				Toast.makeText(this.localContext,
 						resultado, Toast.LENGTH_LONG);
 			toast.show();
+			this.actualizable.Actualizar();
 	}
 }
