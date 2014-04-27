@@ -132,11 +132,13 @@ public class Persona {
 			json.put("nombre", this.nombre);
 			json.put("apellido", this.apellido);
 			json.put("direccion", this.direccion);
+			json.put("zona", this.zona);
 			json.put("descripcion", this.descripcion);
 			json.put("latitud", Double.toString(this.ubicacion.latitude));
 			json.put("longitud", Double.toString(this.ubicacion.longitude));
+			json.put("estado", this.estado);
 			json.put("ultMod", this.ultMod);
-			json.put("zona", this.zona);
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 			Log.e(Utils.APPTAG, "Error al convertir a json");
