@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.recorridaszo.Actualizable;
 import com.recorridaszo.recorridaszo.Utils;
 
 
@@ -32,9 +33,11 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 	InputStream is;
 	String line;
 	String result;
+	Actualizable actualizable;
 
 	// Constructor called by the system to instantiate the task
-	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog) {
+	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog
+			,Actualizable actualizable) {
 		// Required by the semantics of AsyncTask
 		super();
 
@@ -43,7 +46,12 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 		this.persona = persona;
 		if(pDialog != null)
 			this.progressDialog = pDialog;
+		this.actualizable = actualizable;
 	}
+
+	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog) {
+		this(persona, context, pDialog, null);
+	}	
 	
     @Override
     protected void onPreExecute() {
@@ -107,5 +115,7 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 				Toast.makeText(this.localContext,
 						resultado, Toast.LENGTH_LONG);
 			toast.show();
+		if(this.actualizable != null)
+			this.actualizable.Actualizar();	
 	}
 }

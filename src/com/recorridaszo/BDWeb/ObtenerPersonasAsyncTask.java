@@ -41,7 +41,11 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 		this.localContext = context;
 		this.actualizable = actualizable;
 	}
+
 	
+	public ObtenerPersonasAsyncTask(Context context) {
+		this(context, null);
+	}	
     @Override
     protected void onPreExecute() {
 
@@ -118,7 +122,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 		} catch (Exception e) {
 			Log.e("Fail 2", e.toString());
 		}
-		return "Fin de bajada de personas";//FIXME
+		return "Fin de bajada de personas";
 	}
 
 	/**
@@ -132,6 +136,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 				Toast.makeText(this.localContext,
 						resultado, Toast.LENGTH_LONG);
 			toast.show();
-			this.actualizable.Actualizar();
+			if(this.actualizable != null)
+				this.actualizable.Actualizar();
 	}
 }

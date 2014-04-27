@@ -85,12 +85,12 @@ public class ManejadorBDWeb {
 	public String insertar(Persona persona, Context ctx) {
 		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null);
 		at.execute(ctx);
-		return "bien";//FIXME
+		return "bien";//FIXME pase lo que pase siempre retorna bien
 	}
 
 	public Persona buscar(LatLng latLng) {
 		Persona perResultado = null;
-//		BuscarAsyncTask at = new BuscarAsyncTask(perResultado, ctx, );//TODO
+//		BuscarAsyncTask at = new BuscarAsyncTask(perResultado, ctx, );//FIXME devolver bien el resultado
 		return perResultado;		
 	}	
 }
