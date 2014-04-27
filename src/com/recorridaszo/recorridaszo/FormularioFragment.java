@@ -66,9 +66,11 @@ public class FormularioFragment extends Fragment {
 		this.direccion = (EditText) getActivity().findViewById(R.id.eTDireccion);
 
 		if (persona != null) { // se quiere editar
-			//FIXME solo se edita nombre y apellido???
-			nombre.setText(persona.getNombre());
-			apellido.setText(persona.getApellido());
+			this.nombre.setText(persona.getNombre());
+			this.apellido.setText(persona.getApellido());
+			this.descripcion.setText(persona.getDescripcion());
+			this.zona.setText(persona.getZona());
+			this.direccion.setText(persona.getDireccion());
 		}
 		else { // si es una persona nueva
 			this.persona = new Persona(this.latLng);
