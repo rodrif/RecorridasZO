@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.recorridaszo.interfaces.ActualizablePersona;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.recorridaszo.R;
 import com.recorridaszo.utilitarios.Utils;
 
 
@@ -83,7 +84,8 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 			is = entity.getContent();
 			Log.d(Utils.APPTAG, "connection success ");
 		} catch (Exception e) {
-			Log.e("Fail 1", e.toString());
+			Log.e(Utils.APPTAG, "Fail 1: " + e.toString());
+			return localContext.getString(R.string.servicio_no_disponible);
 		}
 		
 		try {
@@ -101,10 +103,11 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 						
 			Log.d(Utils.APPTAG, "jsonString: "+result);
 		}catch (Exception e) {
-			Log.e("Fail 2", e.toString());
+			Log.e(Utils.APPTAG, "Fail 2: " + e.toString());
+			return localContext.getString(R.string.servicio_no_disponible);
 		}
-//		return result;
-		return "OK"; //REVISAR
+		
+		return "Subida correcta";	//TODO: desharcodear
 	}
 
 	/**
