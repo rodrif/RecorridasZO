@@ -74,10 +74,10 @@ public class ManejadorBDLocal {
 			if (obtenerPersona(persona.getUbicacion()) != null) {
 				eliminarPersona(persona.getUbicacion());
 			}
-			
+
 			// Insertamos el registro en la base de datos
 			long res = db.insert(Utils.TPersonas, null, nuevoRegistro);
-			Log.d(Utils.APPTAG, "Se guardo persona con id: " +persona.getId());
+			Log.d(Utils.APPTAG, "Se guardo persona con id: " + persona.getId());
 
 			if (res != -1)
 				return 0;
@@ -96,8 +96,10 @@ public class ManejadorBDLocal {
 					args, null, null, null);
 
 			Persona persona = CargadorPersona.cargarPersona(c);
-			Log.d(Utils.APPTAG, "latitud buscada: " + Double.toString(latLng.latitude));
-			Log.d(Utils.APPTAG, "longitud guardada: " + Double.toString(latLng.longitude));
+			Log.d(Utils.APPTAG,
+					"latitud buscada: " + Double.toString(latLng.latitude));
+			Log.d(Utils.APPTAG,
+					"longitud guardada: " + Double.toString(latLng.longitude));
 			return persona;
 		}
 		return null;
@@ -107,11 +109,22 @@ public class ManejadorBDLocal {
 		if (db != null) {
 			String[] args = new String[] { String.valueOf(latLng.latitude),
 					String.valueOf(latLng.longitude) };
-			//Actualizar, utilizando argumentos
-			ContentValues valores = new ContentValues();
-			valores.put("estado", Utils.EST_BORRADO);
-			db.update("Personas", valores, "latitud=? AND longitud=?", args);
-			return 0;
+
+			Persona persona = this.obtenerPersona(latLng);
+
+			if (persona != null) {
+				if (persona.getEstado().equals(Utils.EST_NUEVO)
+						|| persona.getEstado().equals(Utils.EST_BORRADO)) {
+					db.delete("Personas", "latitud=? AND longitud=?", args);
+				} else {
+					// Actualizar, utilizando argumentos
+					ContentValues valores = new ContentValues();
+					valores.put("estado", Utils.EST_BORRADO);
+					db.update("Personas", valores, "latitud=? AND longitud=?",
+							args);
+					return 0;
+				}
+			}
 		}
 		return -1;
 	}
