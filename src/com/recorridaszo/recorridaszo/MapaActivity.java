@@ -117,7 +117,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		while (it.hasNext()) {
 			mw.insertar(it.next(), this, this);
 		}		
-		//TODO falta subir las borradas
+
 	}
 
 	public void onBotonBuscarClick(View view) {
@@ -205,10 +205,11 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		if (c.moveToFirst()) {
 			do {
 //				int id = c.getInt(c.getColumnIndex("id"));
-				String str = c.getString(c.getColumnIndex("estado"));
+				String estado = c.getString(c.getColumnIndex("estado"));
 				double latitud = c.getDouble(c.getColumnIndex("latitud"));
 				double longitud = c.getDouble(c.getColumnIndex("longitud"));
-				dibujarMarcador(str, new LatLng(latitud, longitud));
+				if(!estado.equals(Utils.EST_BORRADO))
+					dibujarMarcador(estado, new LatLng(latitud, longitud));
 			} while (c.moveToNext());
 		}
 	}
