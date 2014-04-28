@@ -220,10 +220,16 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		} else if (str.equals(Utils.EST_ACTUALIZADO)){
 			 		marcador.setIcon(BitmapDescriptorFactory
 						.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));				
-			}else {
+			}else if (str.equals(Utils.EST_MODIFICADO)){
 				marcador.setIcon(BitmapDescriptorFactory
 						.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));				
+			}else{
+				marcador.setIcon(BitmapDescriptorFactory
+						.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+				Log.e(Utils.APPTAG, "Estado inexistente");
 			}
+		
+
 		}
 	
 
