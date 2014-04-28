@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.interfaces.Actualizable;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.recorridaszo.R;
 import com.recorridaszo.utilitarios.Utils;
 
 public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
@@ -69,7 +70,8 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			is = entity.getContent();
 			Log.e("pass 1", "connection success ");
 		} catch (Exception e) {
-			Log.e("Fail 1", e.toString());
+			Log.e(Utils.APPTAG, "Fail 1 (obtenerPersonasTask): " + e.toString());
+			return localContext.getString(R.string.error_coneccion);
 		}
 
 		try {
@@ -123,7 +125,8 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 
 			Log.d("pass 2", "connection success ");
 		} catch (Exception e) {
-			Log.e("Fail 2", e.toString());
+			Log.e(Utils.APPTAG, "Fail 1 (obtenerPersonasTask): " + e.toString());
+			return localContext.getString(R.string.error_coneccion);
 		}
 		return "Fin de bajada de personas";
 	}
