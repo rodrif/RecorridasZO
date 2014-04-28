@@ -72,7 +72,7 @@ public class ManejadorBDLocal {
 
 			// si estaba en la BDLocal
 			if (obtenerPersona(persona.getUbicacion()) != null) {
-				eliminarPersona(persona.getUbicacion());
+				actualizarPersona(persona);
 			}
 
 			// Insertamos el registro en la base de datos
@@ -86,6 +86,21 @@ public class ManejadorBDLocal {
 				return 0;
 			return -1;
 		}
+		return -1;
+	}
+	
+	public int actualizarPersona(Persona persona) {
+		if (db != null) {
+			String[] args = new String[] { String.valueOf(persona.getLatitud()),
+					String.valueOf(persona.getLongitud()) };
+			// Actualizar, utilizando argumentos
+			ContentValues valores = CargadorPersona.cargarContentValues(persona);			
+			db.update("Personas", valores, "latitud=? AND longitud=?",
+					args);
+			
+			return 0;
+		}		
+		
 		return -1;
 	}
 
