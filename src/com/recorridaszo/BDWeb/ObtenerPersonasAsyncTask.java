@@ -19,9 +19,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
+import com.recorridaszo.interfaces.Actualizable;
 import com.recorridaszo.persona.Persona;
-import com.recorridaszo.recorridaszo.Actualizable;
-import com.recorridaszo.recorridaszo.Utils;
+import com.recorridaszo.utilitarios.Utils;
 
 public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	// Store the context passed to the AsyncTask when the system

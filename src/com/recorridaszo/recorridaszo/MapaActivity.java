@@ -32,8 +32,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
+import com.recorridaszo.interfaces.Actualizable;
+import com.recorridaszo.interfaces.ActualizablePersona;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
+import com.recorridaszo.utilitarios.Utils;
 
 public class MapaActivity extends FragmentActivity implements Actualizable, 
 	ActualizablePersona{
@@ -106,7 +109,8 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		it = pModificadas.iterator();
 		while (it.hasNext()) {
 			mw.insertar(it.next(), this, this);
-		}		
+		}
+		//TODO falta subir las borradas
 	}
 
 	public void onBotonBuscarClick(View view) {

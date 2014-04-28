@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.recorridaszo.recorridaszo.Utils;
+import com.recorridaszo.utilitarios.Utils;
 
 public class Persona {
 	private int id; // -1 si es una persona no guardada en la BDWeb

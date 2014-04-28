@@ -19,11 +19,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.recorridaszo.interfaces.Actualizable;
+import com.recorridaszo.interfaces.ActualizablePersona;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
-import com.recorridaszo.recorridaszo.Actualizable;
-import com.recorridaszo.recorridaszo.ActualizablePersona;
-import com.recorridaszo.recorridaszo.Utils;
+import com.recorridaszo.utilitarios.Utils;
 
 
 public class ManejadorBDWeb {

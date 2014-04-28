@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.utilitarios.Utils;
 
 public class FormularioFragment extends Fragment {
 	private ManejadorBDLocal ml;
@@ -86,7 +87,7 @@ public class FormularioFragment extends Fragment {
 		i.putExtra(Utils.KEY_LONGITUD, latLng.longitude);
 		
 		this.persona.setNombre(nombre.getText().toString());
-		this.persona.setApellido((nombre.getText().toString()));
+		this.persona.setApellido((apellido.getText().toString()));
 		this.persona.setDireccion(direccion.getText().toString());
 		this.persona.setZona(zona.getText().toString());
 		this.persona.setDescripcion(descripcion.getText().toString());

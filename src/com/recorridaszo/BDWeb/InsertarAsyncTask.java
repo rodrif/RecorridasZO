@@ -18,9 +18,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.recorridaszo.interfaces.ActualizablePersona;
 import com.recorridaszo.persona.Persona;
-import com.recorridaszo.recorridaszo.ActualizablePersona;
-import com.recorridaszo.recorridaszo.Utils;
+import com.recorridaszo.utilitarios.Utils;
 
 
 public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {

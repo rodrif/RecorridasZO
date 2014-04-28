@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.persona.CargadorPersona;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
-import com.recorridaszo.recorridaszo.Utils;
+import com.recorridaszo.utilitarios.Utils;
 
 public class ManejadorBDLocal {
 	private SQLiteDatabase db;

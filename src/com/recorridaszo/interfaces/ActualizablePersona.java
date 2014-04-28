@@ -1,4 +1,4 @@
-package com.recorridaszo.recorridaszo;
+package com.recorridaszo.interfaces;
 
 import com.recorridaszo.persona.Persona;
 

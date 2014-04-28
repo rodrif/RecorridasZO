@@ -3,6 +3,8 @@ package com.recorridaszo.recorridaszo;
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.utilitarios.Utils;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
