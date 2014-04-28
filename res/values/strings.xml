@@ -29,4 +29,5 @@
     <string name="eliminar">Eliminar</string>
     <string name="servicio_no_disponible">Servicio no disponible</string>
     <string name="direccion_invalida">Dirección Inválida</string>
+    <string name="error_coneccion">Error de conección</string>
 </resources>
