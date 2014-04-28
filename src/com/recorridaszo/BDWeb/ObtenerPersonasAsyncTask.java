@@ -110,7 +110,8 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	                descripcion=json_data.getString("descripcion");
 	                latitudS = json_data.getString("latitud");
 	                longitudS = json_data.getString("longitud");
-	       
+	                estado = json_data.getString("estado");
+	                ultMod = json_data.getString("ultMod");
 
 	                personaTemp = new Persona(id, nombre, apellido, direccion,
 	                		zona, descripcion, new LatLng(Double.parseDouble(latitudS),
