@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.recorridaszo.Actualizable;
+import com.recorridaszo.recorridaszo.ActualizablePersona;
 import com.recorridaszo.recorridaszo.Utils;
 
 
@@ -82,8 +83,8 @@ public class ManejadorBDWeb {
 	}
 
 	
-	public String insertar(Persona persona, Context ctx) {
-		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null);
+	public String insertar(Persona persona, Context ctx, ActualizablePersona aPersona) {
+		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null,aPersona);
 		at.execute(ctx);
 		return "bien";//FIXME pase lo que pase siempre retorna bien
 	}

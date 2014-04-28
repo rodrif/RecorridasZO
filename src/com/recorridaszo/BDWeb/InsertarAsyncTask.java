@@ -19,7 +19,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import com.recorridaszo.persona.Persona;
-import com.recorridaszo.recorridaszo.Actualizable;
+import com.recorridaszo.recorridaszo.ActualizablePersona;
 import com.recorridaszo.recorridaszo.Utils;
 
 
@@ -33,11 +33,12 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 	InputStream is;
 	String line;
 	String result;
-	Actualizable actualizable;
+	ActualizablePersona actualizable;
+	
 
 	// Constructor called by the system to instantiate the task
 	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog
-			,Actualizable actualizable) {
+			,ActualizablePersona actualizable) {
 		// Required by the semantics of AsyncTask
 		super();
 
@@ -89,10 +90,14 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 					is, "iso-8859-1"), 8);
 			StringBuilder sb = new StringBuilder();
 			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+				sb.append(line);
 			}
 			is.close();
-			result = sb.toString();			
+			result = sb.toString();
+			
+			this.persona.setId(Integer.parseInt(result));
+			this.persona.setEstado(Utils.EST_ACTUALIZADO);
+						
 			Log.d(Utils.APPTAG, "jsonString: "+result);
 		}catch (Exception e) {
 			Log.e("Fail 2", e.toString());
@@ -116,6 +121,6 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 						resultado, Toast.LENGTH_LONG);
 			toast.show();
 		if(this.actualizable != null)
-			this.actualizable.Actualizar();	
+			this.actualizable.ActualizarPersona(this.persona);	
 	}
 }

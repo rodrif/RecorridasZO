@@ -77,6 +77,7 @@ public class ManejadorBDLocal {
 			
 			// Insertamos el registro en la base de datos
 			long res = db.insert(Utils.TPersonas, null, nuevoRegistro);
+			Log.d(Utils.APPTAG, "Se guardo persona con id: " +persona.getId());
 
 			if (res != -1)
 				return 0;

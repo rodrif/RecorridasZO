@@ -35,7 +35,8 @@ import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 
-public class MapaActivity extends FragmentActivity implements Actualizable{
+public class MapaActivity extends FragmentActivity implements Actualizable, 
+	ActualizablePersona{
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
 	private ManejadorBDWeb mw;
@@ -98,13 +99,13 @@ public class MapaActivity extends FragmentActivity implements Actualizable{
 		Personas pNuevas = ml.obtenerPersonasNuevas();
 		Iterator<Persona> it = pNuevas.iterator();
 		while (it.hasNext()) {
-			mw.insertar(it.next(), this);
+			mw.insertar(it.next(), this, this);
 		}
 
 		Personas pModificadas = ml.obtenerPersonasModificadas();
 		it = pModificadas.iterator();
 		while (it.hasNext()) {
-			mw.insertar(it.next(), this);
+			mw.insertar(it.next(), this, this);
 		}		
 	}
 
@@ -192,10 +193,11 @@ public class MapaActivity extends FragmentActivity implements Actualizable{
 
 		if (c.moveToFirst()) {
 			do {
-				int id = c.getInt(c.getColumnIndex("id"));
+//				int id = c.getInt(c.getColumnIndex("id"));
+				String str = c.getString(c.getColumnIndex("estado"));
 				double latitud = c.getDouble(c.getColumnIndex("latitud"));
 				double longitud = c.getDouble(c.getColumnIndex("longitud"));
-				dibujarMarcador(id, new LatLng(latitud, longitud));
+				dibujarMarcador(str, new LatLng(latitud, longitud));
 			} while (c.moveToNext());
 		}
 	}
@@ -203,12 +205,12 @@ public class MapaActivity extends FragmentActivity implements Actualizable{
 	/**
 	 * Dibuja un marcador en el mapa
 	 */
-	private void dibujarMarcador(int id, LatLng point) { // TODO: drag true
+	private void dibujarMarcador(String str, LatLng point) { // TODO: drag true
 		Marker marcador = mapa.addMarker(new MarkerOptions().position(point)
 				.draggable(false).title("Sin datos"));
 
 		//FIXME una vez subido a la BDWeb tampoco cambia de color
-		if (id == -1) { // si es una perosona nueva, no gauardada en la BDWeb
+		if (str.compareTo(Utils.EST_NUEVO) == 0) { // si es una perosona nueva, no gauardada en la BDWeb
 			marcador.setIcon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
 		} else {
@@ -235,7 +237,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable{
 						.getDouble(Utils.KEY_LATITUD);
 				Double longitud = intent.getExtras().getDouble(
 						Utils.KEY_LONGITUD);
-				dibujarMarcador(-1, new LatLng(latitud, longitud));
+				dibujarMarcador(Utils.EST_NUEVO, new LatLng(latitud, longitud));
 			}
 			break;
 		}
@@ -279,5 +281,12 @@ public class MapaActivity extends FragmentActivity implements Actualizable{
 	@Override
 	public void Actualizar() {
 		this.cargarMarcadores();		
+	}
+
+	@Override
+	public void ActualizarPersona(Persona unaPersona) {
+		this.ml.guardarPersona(unaPersona);
+		this.cargarMarcadores();
+		
 	}	
 }
