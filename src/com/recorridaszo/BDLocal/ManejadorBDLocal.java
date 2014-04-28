@@ -107,7 +107,10 @@ public class ManejadorBDLocal {
 		if (db != null) {
 			String[] args = new String[] { String.valueOf(latLng.latitude),
 					String.valueOf(latLng.longitude) };
-			db.delete("Personas", "latitud=? AND longitud=?", args);
+			//Actualizar, utilizando argumentos
+			ContentValues valores = new ContentValues();
+			valores.put("estado", Utils.EST_BORRADO);
+			db.update("Personas", valores, "latitud=? AND longitud=?", args);
 			return 0;
 		}
 		return -1;
