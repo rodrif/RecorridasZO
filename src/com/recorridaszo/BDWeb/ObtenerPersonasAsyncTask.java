@@ -92,6 +92,8 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			String descripcion= "";
 			String latitudS = "";
 			String longitudS = "";
+			String ultMod = "";
+			String estado = "";	
 			
 			//String ultMod= "";
 			Persona personaTemp = null;
@@ -109,10 +111,10 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	                latitudS = json_data.getString("latitud");
 	                longitudS = json_data.getString("longitud");
 	       
-	                //FIXME falta agregar los ultimos dos parametros
+
 	                personaTemp = new Persona(id, nombre, apellido, direccion,
 	                		zona, descripcion, new LatLng(Double.parseDouble(latitudS),
-	                				Double.parseDouble(longitudS)), "NS", "NS");
+	                				Double.parseDouble(longitudS)), ultMod, estado);
 	                
 	                ml.guardarPersona(personaTemp);
 

@@ -214,14 +214,18 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 				.draggable(false).title("Sin datos"));
 
 		//FIXME una vez subido a la BDWeb tampoco cambia de color
-		if (str.compareTo(Utils.EST_NUEVO) == 0) { // si es una perosona nueva, no gauardada en la BDWeb
+		if (str.equals(Utils.EST_NUEVO)) { // si es una perosona nueva, no gauardada en la BDWeb
 			marcador.setIcon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-		} else {
-			marcador.setIcon(BitmapDescriptorFactory
-					.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+		} else if (str.equals(Utils.EST_ACTUALIZADO)){
+			 		marcador.setIcon(BitmapDescriptorFactory
+						.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));				
+			}else {
+				marcador.setIcon(BitmapDescriptorFactory
+						.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));				
+			}
 		}
-	}
+	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
