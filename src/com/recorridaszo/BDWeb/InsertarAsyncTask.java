@@ -99,7 +99,8 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 			result = sb.toString();
 			
 			this.persona.setId(Integer.parseInt(result));
-			this.persona.setEstado(Utils.EST_ACTUALIZADO);
+			if(!this.persona.getEstado().equals(Utils.EST_BORRADO))
+				this.persona.setEstado(Utils.EST_ACTUALIZADO);
 						
 			Log.d(Utils.APPTAG, "jsonString: "+result);
 		}catch (Exception e) {

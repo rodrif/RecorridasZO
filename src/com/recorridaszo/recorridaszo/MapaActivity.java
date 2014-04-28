@@ -99,6 +99,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	}
 
 	public void onBotonSubirClick() {
+		//FIXME se podran subir todos juntos??? Revisar
 		Personas pNuevas = ml.obtenerPersonasNuevas();
 		Iterator<Persona> it = pNuevas.iterator();
 		while (it.hasNext()) {
@@ -110,6 +111,12 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		while (it.hasNext()) {
 			mw.insertar(it.next(), this, this);
 		}
+		
+		Personas pBorradas = ml.obtenerPersonasBorradas();
+		it = pBorradas.iterator();
+		while (it.hasNext()) {
+			mw.insertar(it.next(), this, this);
+		}		
 		//TODO falta subir las borradas
 	}
 
@@ -213,7 +220,6 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		Marker marcador = mapa.addMarker(new MarkerOptions().position(point)
 				.draggable(false).title("Sin datos"));
 
-		//FIXME una vez subido a la BDWeb tampoco cambia de color
 		if (str.equals(Utils.EST_NUEVO)) { // si es una perosona nueva, no gauardada en la BDWeb
 			marcador.setIcon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
