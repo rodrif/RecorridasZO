@@ -129,6 +129,7 @@ public class Persona {
 	public JSONObject toJson() {
 		JSONObject json = new JSONObject();
 		try {
+			json.put("id", this.id);
 			json.put("nombre", this.nombre);
 			json.put("apellido", this.apellido);
 			json.put("direccion", this.direccion);
