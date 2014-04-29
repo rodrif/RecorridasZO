@@ -6,6 +6,8 @@ import java.util.Locale;
 
 public final class Utils {
 
+//	public static final String WEB = "http://pruebazo";
+	public static final String WEB = "http://recorridaszo";
 	public static final String APPTAG = "RecorridasZO";
 	public static final String[] camposBD = new String[] { "id", "nombre",
 			"apellido", "direccion", "zona", "descripcion", "latitud",
@@ -22,11 +24,11 @@ public final class Utils {
 	public static final int MENU_MAPA_BORRARDBLOCAL = 3;
 	public static final int MENU_MAPA_SUBIRALSERVER = 4;
 	public static final String KEY_LATITUD = "com.recorridaszo.recorridaszo.KEY_LATITUD";
-	public static final String KEY_LONGITUD = "com.recorridaszo.recorridaszo.KEY_LONGITUD";
-	public static final String WEB_INSERTAR = "http://pruebazo.atwebpages.com/insertar.php";
-	public static final String WEB_BORRAR = "http://pruebazo.atwebpages.com/borrar.php";
-	public static final String WEB_ACTUALIZAR = "http://pruebazo.atwebpages.com/actualizar.php";
-	public static final String WEB_CARGAR_PERSONAS_PRUEBA = "http://pruebazo.atwebpages.com/inicializar.php";
+	public static final String KEY_LONGITUD = "com.recorridaszo.recorridaszo.KEY_LONGITUD";	
+	public static final String WEB_INSERTAR = Utils.WEB + ".atwebpages.com/insertar.php";
+	public static final String WEB_BORRAR = Utils.WEB + ".atwebpages.com/borrar.php";
+	public static final String WEB_ACTUALIZAR = Utils.WEB + ".atwebpages.com/actualizar.php";
+	public static final String WEB_CARGAR_PERSONAS_PRUEBA = Utils.WEB + ".atwebpages.com/inicializar.php";
 	public final static int REQ_CODE_FORMULARIO = 9000;
 
 	public static String getDateTime() {
