@@ -15,7 +15,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logosi"
+        android:icon="@drawable/logosisinfondo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
