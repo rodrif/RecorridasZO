@@ -30,4 +30,8 @@
     <string name="servicio_no_disponible">Servicio no disponible</string>
     <string name="direccion_invalida">Dirección Inválida</string>
     <string name="error_conexion">Error de conexión</string>
+    <string name="SubirAlServidor">Subir al servidor</string>
+    <string name="Sincronizar">Sincronizar</string>
+    <string name="BorrarDBLocal">Borrar DBLocal</string>
+    <string name="RefrescarPantalla">Refrescar Pantalla</string>
 </resources>

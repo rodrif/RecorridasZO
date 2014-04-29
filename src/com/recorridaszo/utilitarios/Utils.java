@@ -19,7 +19,7 @@ public final class Utils {
 	public static final String EST_NUEVO = "Nuevo";
 	public static final int ZOOM_CERCA = 15;
 	public static final int ZOOM_LEJOS = 10;
-	public static final int MENU_MAPA_ACTUALIZAR = 1;
+	public static final int MENU_MAPA_SINCRONIZAR = 1;
 	public static final int MENU_MAPA_REFRESCAR_PANTALLA = 2;
 	public static final int MENU_MAPA_BORRARDBLOCAL = 3;
 	public static final int MENU_MAPA_SUBIRALSERVER = 4;

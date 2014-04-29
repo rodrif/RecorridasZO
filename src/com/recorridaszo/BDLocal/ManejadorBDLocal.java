@@ -64,7 +64,7 @@ public class ManejadorBDLocal {
 		return -1;
 	}
 
-	public int guardarPersona(Persona persona) {
+	public synchronized int guardarPersona(Persona persona) {
 		if (db != null) {
 			// Creamos el registro a insertar como objeto ContentValues
 			ContentValues nuevoRegistro = CargadorPersona
