@@ -71,7 +71,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			Log.e("pass 1", "connection success ");
 		} catch (Exception e) {
 			Log.e(Utils.APPTAG, "Fail 1 (obtenerPersonasTask): " + e.toString());
-			return localContext.getString(R.string.error_coneccion);
+			return localContext.getString(R.string.error_conexion);
 		}
 
 		try {
@@ -126,7 +126,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			Log.d("pass 2", "connection success ");
 		} catch (Exception e) {
 			Log.e(Utils.APPTAG, "Fail 1 (obtenerPersonasTask): " + e.toString());
-			return localContext.getString(R.string.error_coneccion);
+			return localContext.getString(R.string.error_conexion);
 		}
 		return "Fin de bajada de personas";
 	}

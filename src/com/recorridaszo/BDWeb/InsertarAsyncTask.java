@@ -85,7 +85,7 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 			Log.d(Utils.APPTAG, "connection success ");
 		} catch (Exception e) {
 			Log.e(Utils.APPTAG, "Fail 1 (insertarTask): " + e.toString());
-			return localContext.getString(R.string.error_coneccion);
+			return localContext.getString(R.string.error_conexion);
 		}
 		
 		try {
@@ -105,7 +105,7 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 			Log.d(Utils.APPTAG, "jsonString: "+result);
 		}catch (Exception e) {
 			Log.e(Utils.APPTAG, "Fail 2 (insertarTask): " + e.toString());
-			return localContext.getString(R.string.error_coneccion);
+			return localContext.getString(R.string.error_conexion);
 		}
 		
 		return "Subida correcta";	//TODO: desharcodear
