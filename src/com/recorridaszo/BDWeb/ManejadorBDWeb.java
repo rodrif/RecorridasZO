@@ -81,6 +81,17 @@ public class ManejadorBDWeb {
 			Log.e("Fail 2", e.toString());
 		}
 	}
+	
+	public void borrarDBWEB() {
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(Utils.WEB_BORRAR);
+			HttpResponse response = httpclient.execute(httppost);
+			Log.e(Utils.APPTAG, "connection success borrarDBWeb ");
+		} catch (Exception e) {
+			Log.e(Utils.APPTAG, e.toString());
+		}		
+	}
 
 	
 	public String insertar(Persona persona, Context ctx, ActualizablePersona aPersona) {
