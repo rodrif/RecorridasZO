@@ -20,7 +20,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/nombre"
-            android:inputType="textCapWords|textPersonName" />
+            android:inputType="textCapWords|textPersonName" >
+
+            <requestFocus />
+        </EditText>
 
         <EditText
             android:id="@+id/eTApellido"
@@ -44,10 +47,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/zona"
-            android:inputType="textCapWords" >
-
-            <requestFocus />
-        </EditText>
+            android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/eTDescripcion"
@@ -63,7 +63,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:text="@string/boton_ok" />
-
     </LinearLayout>
 
 </ScrollView>
