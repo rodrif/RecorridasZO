@@ -266,14 +266,14 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE, "Subir al servidor")
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE, R.string.SubirAlServidor)
         .setIcon(android.R.drawable.ic_menu_preferences);
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_ACTUALIZAR, Menu.NONE, "Actualizar")
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_SINCRONIZAR, Menu.NONE, R.string.Sincronizar)
 	            .setIcon(android.R.drawable.ic_menu_preferences);
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA,
-	    		Menu.NONE, "Refrescar Pantalla")
-	            .setIcon(android.R.drawable.ic_menu_compass);
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE, "Borrar DBLocal")
+/*	    menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA,
+	    		Menu.NONE, R.string.RefrescarPantalla)
+	            .setIcon(android.R.drawable.ic_menu_compass);*/
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE, R.string.BorrarDBLocal)
         .setIcon(android.R.drawable.ic_menu_compass);	    
 	    return true;
 	}	
@@ -281,15 +281,16 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
-	        case Utils.MENU_MAPA_ACTUALIZAR:
+	        case Utils.MENU_MAPA_SINCRONIZAR:
 	            ml.borrarTodo();
 	            mw.obtenerPersonasDBWeb(this, this);	           
 	            return true;
-	        case Utils.MENU_MAPA_REFRESCAR_PANTALLA:
+/*	        case Utils.MENU_MAPA_REFRESCAR_PANTALLA:
 	        	this.cargarMarcadores();
-	            return true;
+	            return true;*/
 	        case Utils.MENU_MAPA_BORRARDBLOCAL:
-		        ml.borrarTodo();   
+		        ml.borrarTodo();
+		        this.cargarMarcadores();
 	            return true;
 	        case Utils.MENU_MAPA_SUBIRALSERVER:
 	        	this.onBotonSubirClick();   
