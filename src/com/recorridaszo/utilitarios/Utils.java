@@ -6,8 +6,8 @@ import java.util.Locale;
 
 public final class Utils {
 
-	public static final String WEB = "http://pruebazo";
-//	public static final String WEB = "http://recorridaszo";
+//	public static final String WEB = "http://pruebazo";
+	public static final String WEB = "http://recorridaszo";
 	public static final String APPTAG = "RecorridasZO";
 	public static final String[] camposBD = new String[] { "id", "nombre",
 			"apellido", "direccion", "zona", "descripcion", "latitud",

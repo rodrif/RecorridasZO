@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import android.content.Context;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Address;
@@ -282,7 +283,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case Utils.MENU_MAPA_SINCRONIZAR:
-	            ml.borrarTodo();
+	            ml.eliminarPersonasActualizadas();
 	            mw.obtenerPersonasDBWeb(this, this);	           
 	            return true;
 /*	        case Utils.MENU_MAPA_REFRESCAR_PANTALLA:

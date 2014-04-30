@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -27,11 +28,12 @@ import com.recorridaszo.utilitarios.Utils;
 public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	// Store the context passed to the AsyncTask when the system
 	// instantiates it.
-	Context localContext;
-	InputStream is;
-	String line;
-	String result;
-	Actualizable actualizable;
+	private ProgressDialog pDialog = null;
+	private Context localContext;
+	private InputStream is;
+	private String line;
+	private String result;
+	private Actualizable actualizable;	
 
 	// Constructor called by the system to instantiate the task
 	public ObtenerPersonasAsyncTask(Context context, Actualizable actualizable) {
@@ -41,6 +43,11 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 		// Set a Context for the background task
 		this.localContext = context;
 		this.actualizable = actualizable;
+		pDialog = new ProgressDialog(this.localContext);
+        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pDialog.setMessage("Sincronizando...");
+        pDialog.setCancelable(false);
+        pDialog.setMax(100);
 	}
 
 	
@@ -49,7 +56,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	}	
     @Override
     protected void onPreExecute() {
-
+    	pDialog.show();
     }
 
 	/**
@@ -128,7 +135,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			Log.e(Utils.APPTAG, "Fail 1 (obtenerPersonasTask): " + e.toString());
 			return localContext.getString(R.string.error_conexion);
 		}
-		return "Fin de bajada de personas";
+		return "Sincronizacion finalizada";
 	}
 
 	/**
@@ -137,7 +144,8 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	 * thread.
 	 */
 	@Override
-	protected void onPostExecute(String resultado) {	
+	protected void onPostExecute(String resultado) {
+		pDialog.dismiss();
 		Toast toast =
 				Toast.makeText(this.localContext,
 						resultado, Toast.LENGTH_LONG);
