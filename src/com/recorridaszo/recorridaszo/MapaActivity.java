@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import android.content.Context;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Address;
@@ -274,8 +273,8 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 /*	    menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA,
 	    		Menu.NONE, R.string.RefrescarPantalla)
 	            .setIcon(android.R.drawable.ic_menu_compass);*/
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE, R.string.BorrarDBLocal)
-        .setIcon(android.R.drawable.ic_menu_compass);	    
+/*	    menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE, R.string.BorrarDBLocal)
+        .setIcon(android.R.drawable.ic_menu_compass);	*/    
 	    return true;
 	}	
 
