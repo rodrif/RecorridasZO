@@ -266,10 +266,10 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE, R.string.SubirAlServidor)
-        .setIcon(android.R.drawable.ic_menu_preferences);
 	    menu.add(Menu.NONE, Utils.MENU_MAPA_SINCRONIZAR, Menu.NONE, R.string.Sincronizar)
-	            .setIcon(android.R.drawable.ic_menu_preferences);
+        .setIcon(android.R.drawable.ic_menu_compass);		
+	    menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE, R.string.SubirAlServidor)
+        .setIcon(android.R.drawable.ic_menu_compass);
 /*	    menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA,
 	    		Menu.NONE, R.string.RefrescarPantalla)
 	            .setIcon(android.R.drawable.ic_menu_compass);*/
