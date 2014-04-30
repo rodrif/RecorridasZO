@@ -27,7 +27,8 @@
 
         <activity
             android:name="com.recorridaszo.recorridaszo.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,19 +37,23 @@
         </activity>
         <activity
             android:name="com.recorridaszo.recorridaszo.MapaActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name="com.recorridaszo.recorridaszo.VerPersona"
-            android:label="@string/title_activity_ver_persona" >
+            android:label="@string/title_activity_ver_persona"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name="com.recorridaszo.recorridaszo.FormularioActivity"
-            android:label="@string/title_activity_formulario" >
+            android:label="@string/title_activity_formulario" 
+            android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity
             android:name="com.recorridaszo.recorridaszo.FormularioFragment"
-            android:label="@string/title_activity_formulario_fragment" >
+            android:label="@string/title_activity_formulario_fragment"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
     </application>
 
