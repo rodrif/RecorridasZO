@@ -4,13 +4,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.utilitarios.Utils;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -57,13 +55,6 @@ public class VerPersona extends FragmentActivity {
 	public void onPause() {
 		super.onPause();
 		ml.desconectarse();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.ver_persona, menu);
-		return true;
 	}
 
 	public void onClickEditar(View v) {

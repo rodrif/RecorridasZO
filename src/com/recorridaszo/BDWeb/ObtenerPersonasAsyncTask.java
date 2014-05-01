@@ -25,7 +25,7 @@ import com.recorridaszo.persona.Persona;
 import com.recorridaszo.recorridaszo.R;
 import com.recorridaszo.utilitarios.Utils;
 
-public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
+public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String> {
 	// Store the context passed to the AsyncTask when the system
 	// instantiates it.
 	private ProgressDialog pDialog = null;
@@ -33,7 +33,7 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	private InputStream is;
 	private String line;
 	private String result;
-	private Actualizable actualizable;	
+	private Actualizable actualizable;
 
 	// Constructor called by the system to instantiate the task
 	public ObtenerPersonasAsyncTask(Context context, Actualizable actualizable) {
@@ -44,20 +44,21 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 		this.localContext = context;
 		this.actualizable = actualizable;
 		pDialog = new ProgressDialog(this.localContext);
-        pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        pDialog.setMessage("Sincronizando...");
-        pDialog.setCancelable(false);
-        pDialog.setMax(100);
+		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		pDialog.setMessage("Sincronizando...");
+		pDialog.setCancelable(false);
+		pDialog.setMax(100);
 	}
 
-	
 	public ObtenerPersonasAsyncTask(Context context) {
 		this(context, null);
-	}	
-    @Override
-    protected void onPreExecute() {
-    	pDialog.show();
-    }
+	}
+
+	@Override
+	protected void onPreExecute() {
+		if (pDialog != null)
+			pDialog.show();
+	}
 
 	/**
 	 * Get a geocoding service instance, pass latitude and longitude to it,
@@ -65,13 +66,14 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	 */
 	@Override
 	protected String doInBackground(Context... params) {
-		//FIXME Falta pedir datos a partir de una fecha determinada.
-//		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//		nameValuePairs.add(new BasicNameValuePair("id", id));
+		// FIXME Falta pedir datos a partir de una fecha determinada.
+		// ArrayList<NameValuePair> nameValuePairs = new
+		// ArrayList<NameValuePair>();
+		// nameValuePairs.add(new BasicNameValuePair("id", id));
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpPost httppost = new HttpPost(Utils.WEB_ACTUALIZAR);
-//			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			// httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
@@ -90,45 +92,46 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 			}
 			is.close();
 			result = sb.toString();
-			
+
 			JSONArray jArray = new JSONArray(result);
-			JSONObject json_data=null;
-			int id= 0;
-			String nombre="";
-			String apellido ="";
-			String direccion= "";
-			String zona= "";
-			String descripcion= "";
+			JSONObject json_data = null;
+			int id = 0;
+			String nombre = "";
+			String apellido = "";
+			String direccion = "";
+			String zona = "";
+			String descripcion = "";
 			String latitudS = "";
 			String longitudS = "";
 			String ultMod = "";
-			String estado = "";	
-			
-			//String ultMod= "";
+			String estado = "";
+
+			// String ultMod= "";
 			Persona personaTemp = null;
 			ManejadorBDLocal ml = ManejadorBDLocal.getInstance();
 			ml.conectarse(localContext);
-			
-	        for(int i=0;i<jArray.length();i++){
-	                json_data = jArray.getJSONObject(i);
-	                id= json_data.getInt("id");
-	                nombre=json_data.getString("nombre");
-	                apellido=json_data.getString("apellido");
-	                direccion=json_data.getString("direccion");
-	                zona=json_data.getString("zona");
-	                descripcion=json_data.getString("descripcion");
-	                latitudS = json_data.getString("latitud");
-	                longitudS = json_data.getString("longitud");
-	                estado = json_data.getString("estado");
-	                ultMod = json_data.getString("ultMod");
 
-	                personaTemp = new Persona(id, nombre, apellido, direccion,
-	                		zona, descripcion, new LatLng(Double.parseDouble(latitudS),
-	                				Double.parseDouble(longitudS)), ultMod, estado);
-	                
-	                ml.guardarPersona(personaTemp);
+			for (int i = 0; i < jArray.length(); i++) {
+				json_data = jArray.getJSONObject(i);
+				id = json_data.getInt("id");
+				nombre = json_data.getString("nombre");
+				apellido = json_data.getString("apellido");
+				direccion = json_data.getString("direccion");
+				zona = json_data.getString("zona");
+				descripcion = json_data.getString("descripcion");
+				latitudS = json_data.getString("latitud");
+				longitudS = json_data.getString("longitud");
+				estado = json_data.getString("estado");
+				ultMod = json_data.getString("ultMod");
 
-	        }	     
+				personaTemp = new Persona(id, nombre, apellido, direccion,
+						zona, descripcion, new LatLng(
+								Double.parseDouble(latitudS),
+								Double.parseDouble(longitudS)), ultMod, estado);
+
+				ml.guardarPersona(personaTemp);
+
+			}
 
 			Log.d("pass 2", "connection success ");
 		} catch (Exception e) {
@@ -145,12 +148,13 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String>{
 	 */
 	@Override
 	protected void onPostExecute(String resultado) {
-		pDialog.dismiss();
-		Toast toast =
-				Toast.makeText(this.localContext,
-						resultado, Toast.LENGTH_LONG);
-			toast.show();
-			if(this.actualizable != null)
-				this.actualizable.Actualizar();
+		if (pDialog != null) {
+			pDialog.dismiss();
+		}
+		Toast toast = Toast.makeText(this.localContext, resultado,
+				Toast.LENGTH_LONG);
+		toast.show();
+		if (this.actualizable != null)
+			this.actualizable.Actualizar();
 	}
 }
