@@ -43,11 +43,13 @@ public class ObtenerPersonasAsyncTask extends AsyncTask<Context, Void, String> {
 		// Set a Context for the background task
 		this.localContext = context;
 		this.actualizable = actualizable;
-		pDialog = new ProgressDialog(this.localContext);
-		pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		pDialog.setMessage("Sincronizando...");
-		pDialog.setCancelable(false);
-		pDialog.setMax(100);
+		if (actualizable != null) {
+			pDialog = new ProgressDialog(this.localContext);
+			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pDialog.setMessage("Sincronizando...");
+			pDialog.setCancelable(false);
+			pDialog.setMax(100);
+		}
 	}
 
 	public ObtenerPersonasAsyncTask(Context context) {

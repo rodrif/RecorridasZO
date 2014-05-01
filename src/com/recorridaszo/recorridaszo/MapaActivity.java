@@ -1,6 +1,5 @@
 package com.recorridaszo.recorridaszo;
 
-
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -26,10 +25,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.interfaces.Actualizable;
@@ -38,8 +35,8 @@ import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.utilitarios.Utils;
 
-public class MapaActivity extends FragmentActivity implements Actualizable, 
-	ActualizablePersona{
+public class MapaActivity extends FragmentActivity implements Actualizable,
+		ActualizablePersona {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
 	private ManejadorBDWeb mw;
@@ -99,7 +96,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	}
 
 	public void onBotonSubirClick() {
-		//FIXME se podran subir todos juntos??? Revisar
+		// FIXME se podran subir todos juntos??? Revisar
 		Personas pNuevas = ml.obtenerPersonasNuevas();
 		Iterator<Persona> it = pNuevas.iterator();
 		while (it.hasNext()) {
@@ -111,12 +108,12 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		while (it.hasNext()) {
 			mw.insertar(it.next(), this, this);
 		}
-		
+
 		Personas pBorradas = ml.obtenerPersonasBorradas();
 		it = pBorradas.iterator();
 		while (it.hasNext()) {
 			mw.insertar(it.next(), this, this);
-		}		
+		}
 
 	}
 
@@ -204,11 +201,11 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 
 		if (c.moveToFirst()) {
 			do {
-//				int id = c.getInt(c.getColumnIndex("id"));
+				// int id = c.getInt(c.getColumnIndex("id"));
 				String estado = c.getString(c.getColumnIndex("estado"));
 				double latitud = c.getDouble(c.getColumnIndex("latitud"));
 				double longitud = c.getDouble(c.getColumnIndex("longitud"));
-				if(!estado.equals(Utils.EST_BORRADO))
+				if (!estado.equals(Utils.EST_BORRADO))
 					dibujarMarcador(estado, new LatLng(latitud, longitud));
 			} while (c.moveToNext());
 		}
@@ -217,28 +214,11 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	/**
 	 * Dibuja un marcador en el mapa
 	 */
-	private void dibujarMarcador(String str, LatLng point) { // TODO: drag true
-		Marker marcador = mapa.addMarker(new MarkerOptions().position(point)
-				.draggable(false).title("Sin datos"));
-
-		if (str.equals(Utils.EST_NUEVO)) { // si es una perosona nueva, no gauardada en la BDWeb
-			marcador.setIcon(BitmapDescriptorFactory
-					.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-		} else if (str.equals(Utils.EST_ACTUALIZADO)){
-			 		marcador.setIcon(BitmapDescriptorFactory
-						.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));				
-			}else if (str.equals(Utils.EST_MODIFICADO)){
-				marcador.setIcon(BitmapDescriptorFactory
-						.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));				
-			}else{
-				marcador.setIcon(BitmapDescriptorFactory
-						.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-				Log.e(Utils.APPTAG, "Estado inexistente");
-			}
-		
-
-		}
-	
+	private void dibujarMarcador(String estado, LatLng point) {
+		// TODO: drag true
+		mapa.addMarker(MarcadorOptionsFactory.crearOpciones(
+				estado, point));
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
@@ -263,52 +243,59 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 			break;
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_SINCRONIZAR, Menu.NONE, R.string.Sincronizar)
-        .setIcon(android.R.drawable.ic_menu_compass);		
-	    menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE, R.string.SubirAlServidor)
-        .setIcon(android.R.drawable.ic_menu_compass);
-/*	    menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA,
-	    		Menu.NONE, R.string.RefrescarPantalla)
-	            .setIcon(android.R.drawable.ic_menu_compass);*/
-/*	    menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE, R.string.BorrarDBLocal)
-        .setIcon(android.R.drawable.ic_menu_compass);	*/    
-	    return true;
-	}	
+		menu.add(Menu.NONE, Utils.MENU_MAPA_SINCRONIZAR, Menu.NONE,
+				R.string.Sincronizar).setIcon(
+				android.R.drawable.ic_menu_compass);
+		menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE,
+				R.string.SubirAlServidor).setIcon(
+				android.R.drawable.ic_menu_compass);
+		/*
+		 * menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA, Menu.NONE,
+		 * R.string.RefrescarPantalla)
+		 * .setIcon(android.R.drawable.ic_menu_compass);
+		 */
+		/*
+		 * menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE,
+		 * R.string.BorrarDBLocal) .setIcon(android.R.drawable.ic_menu_compass);
+		 */
+		return true;
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case Utils.MENU_MAPA_SINCRONIZAR:
-	            ml.eliminarPersonasActualizadas();
-	            mw.obtenerPersonasDBWeb(this, this);	           
-	            return true;
-/*	        case Utils.MENU_MAPA_REFRESCAR_PANTALLA:
-	        	this.cargarMarcadores();
-	            return true;*/
-	        case Utils.MENU_MAPA_BORRARDBLOCAL:
-		        ml.borrarTodo();
-		        this.cargarMarcadores();
-	            return true;
-	        case Utils.MENU_MAPA_SUBIRALSERVER:
-	        	this.onBotonSubirClick();   
-	            return true;	            
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		switch (item.getItemId()) {
+		case Utils.MENU_MAPA_SINCRONIZAR:
+			ml.eliminarPersonasActualizadas();
+			mw.obtenerPersonasDBWeb(this, this);
+			return true;
+			/*
+			 * case Utils.MENU_MAPA_REFRESCAR_PANTALLA: this.cargarMarcadores();
+			 * return true;
+			 */
+		case Utils.MENU_MAPA_BORRARDBLOCAL:
+			ml.borrarTodo();
+			this.cargarMarcadores();
+			return true;
+		case Utils.MENU_MAPA_SUBIRALSERVER:
+			this.onBotonSubirClick();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
 	public void Actualizar() {
-		this.cargarMarcadores();		
+		this.cargarMarcadores();
 	}
 
 	@Override
 	public void ActualizarPersona(Persona unaPersona) {
 		this.ml.guardarPersona(unaPersona);
 		this.cargarMarcadores();
-		
-	}	
+
+	}
 }
