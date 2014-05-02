@@ -62,11 +62,8 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
     		progressDialog.show();
     }
 
-	/**
-	 * Get a geocoding service instance, pass latitude and longitude to it,
-	 * format the returned address, and return the address to the UI thread.
-	 */
-	@Override
+
+    @Override
 	protected String doInBackground(Context... params) {
 		JSONObject jsonObject = persona.toJson();
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();

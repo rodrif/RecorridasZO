@@ -44,6 +44,7 @@ public class ManejadorBDLocal {
 		this.db = null;
 	}
 
+	//TODO: cambiarlo por uno q devuelva Personas
 	public Cursor selectTodo() {
 		if (db != null) {
 			String[] campos = Utils.camposBD;
@@ -73,19 +74,16 @@ public class ManejadorBDLocal {
 			// si estaba en la BDLocal
 			if (obtenerPersona(persona.getUbicacion()) != null) {
 				actualizarPersona(persona);
+			} else {
+				// Insertamos el registro en la base de datos
+				if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
+					db.insert(Utils.TPersonas, null, nuevoRegistro);
+					Log.d(Utils.APPTAG,
+							"Se guardo persona con id: " + persona.getId());
+				}
 			}
 
-			// Insertamos el registro en la base de datos
-			long res = -1;
-			if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
-				res = db.insert(Utils.TPersonas, null, nuevoRegistro);
-				Log.d(Utils.APPTAG,
-						"Se guardo persona con id: " + persona.getId());
-			}
-
-			if (res != -1)
-				return 0;
-			return -1;
+			return 0;
 		}
 		return -1;
 	}
@@ -124,8 +122,6 @@ public class ManejadorBDLocal {
 		}
 		return null;
 	}
-	
-	
 
 	private synchronized int eliminarPersonas(String estado) {
 		if (db != null) {
@@ -137,10 +133,10 @@ public class ManejadorBDLocal {
 		}
 		return -1;
 	}
-	
+
 	public synchronized int eliminarPersonasActualizadas() {
 		int resultado;
-		
+
 		resultado = eliminarPersonas(Utils.EST_ACTUALIZADO);
 		return resultado;
 	}

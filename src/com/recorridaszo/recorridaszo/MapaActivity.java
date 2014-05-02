@@ -31,6 +31,7 @@ import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.interfaces.Actualizable;
 import com.recorridaszo.interfaces.ActualizablePersona;
+import com.recorridaszo.interfaces.IManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.utilitarios.Utils;
@@ -39,7 +40,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		ActualizablePersona {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
-	private ManejadorBDWeb mw;
+	private IManejadorBDWeb mw;
 	private Address direccion;
 	boolean dirEncontrada;
 
