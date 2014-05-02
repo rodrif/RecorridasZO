@@ -87,7 +87,18 @@ public class ManejadorBDLocal {
 		}
 		return -1;
 	}
-
+	
+	public synchronized int guardarPersonas(Personas personas) {
+		Iterator<Persona> it = personas.iterator();
+		if (db != null) {
+			while (it.hasNext()) {
+				this.guardarPersona(it.next());
+			}
+			return 0;
+		}
+		return -1;
+	}
+	
 	public int actualizarPersona(Persona persona) {
 		if (db != null) {
 			String[] args = new String[] {
@@ -182,6 +193,21 @@ public class ManejadorBDLocal {
 		}
 		return null;
 	}
+	
+	public Personas obtenerPersonas() {
+		if (db != null) {
+			Personas personas = new Personas();
+			Cursor c = this.selectTodo();
+			Personas todasPersonas = CargadorPersona.cargarPersonas(c);
+
+			for (Iterator<Persona> it = todasPersonas.iterator(); it.hasNext();) {
+				Persona p = it.next();
+				personas.addPersona(p);
+			}
+			return personas;
+		}
+		return null;
+	}	
 
 	public Personas obtenerPersonasNuevas() {
 		return this.obtenerPersonasSegunEstado(Utils.EST_NUEVO);
@@ -193,6 +219,10 @@ public class ManejadorBDLocal {
 
 	public Personas obtenerPersonasBorradas() {
 		return this.obtenerPersonasSegunEstado(Utils.EST_BORRADO);
+	}
+
+	public Personas obtenerPersonasActualizadas() {
+		return this.obtenerPersonasSegunEstado(Utils.EST_ACTUALIZADO);
 	}
 
 }

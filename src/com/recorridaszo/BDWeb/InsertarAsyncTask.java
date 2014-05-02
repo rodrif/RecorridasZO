@@ -19,8 +19,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.recorridaszo.interfaces.ActualizablePersona;
+import com.recorridaszo.interfaces.ActualizablePersonas;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.persona.Personas;
 import com.recorridaszo.recorridaszo.R;
 import com.recorridaszo.utilitarios.Utils;
 
@@ -31,32 +32,32 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 	// instantiates it.
 	Context localContext;
 	ProgressDialog progressDialog;
-	Persona persona;
+	Personas personas;
 	InputStream is;
 	String line;
 	String result;
-	ActualizablePersona actualizable;
+	ActualizablePersonas actualizable;
 	
 
 	// Constructor called by the system to instantiate the task
-	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog
-			,ActualizablePersona actualizable) {
+	public InsertarAsyncTask(Personas personas, Context context, ProgressDialog pDialog
+			,ActualizablePersonas actualizable) {
 		// Required by the semantics of AsyncTask
 		super();
 
 		// Set a Context for the background task
 		this.localContext = context;
-		this.persona = persona;
+		this.personas = personas;
 		if(pDialog != null)
 			this.progressDialog = pDialog;
 		this.actualizable = actualizable;
 	}
 
-	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog) {
-		this(persona, context, pDialog, null);
+	public InsertarAsyncTask(Personas personas, Context context, ProgressDialog pDialog) {
+		this(personas, context, pDialog, null);
 	}	
 	
-    @Override
+	@Override
     protected void onPreExecute() {
     	if(progressDialog != null)
     		progressDialog.show();
@@ -65,14 +66,15 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 
     @Override
 	protected String doInBackground(Context... params) {
-		JSONObject jsonObject = persona.toJson();
+    	//FIXME
+/*		JSONObject jsonObject = persona.toJson();
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("persona", jsonObject.toString()));
 		Log.d(Utils.APPTAG, "jsonString Mandado a servidor: "+ jsonObject.toString());
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(Utils.WEB_INSERTAR);
+			HttpPost httppost = new HttpPost(Utils.WEB_INSERTAR_PERSONAS);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 //			StringEntity se = new StringEntity(jsonObject.toString());
 //			httppost.setEntity(se);
@@ -103,7 +105,7 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 		}catch (Exception e) {
 			Log.e(Utils.APPTAG, "Fail 2 (insertarTask): " + e.toString());
 			return localContext.getString(R.string.error_conexion);
-		}
+		}*/
 		
 		return "Subida correcta";	//TODO: desharcodear
 	}
@@ -123,6 +125,6 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 						resultado, Toast.LENGTH_LONG);
 			toast.show();
 		if(this.actualizable != null)
-			this.actualizable.ActualizarPersona(this.persona);	
+			this.actualizable.ActualizarPersonas(this.personas);	
 	}
 }

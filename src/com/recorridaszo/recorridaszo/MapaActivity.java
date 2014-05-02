@@ -30,14 +30,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.interfaces.Actualizable;
-import com.recorridaszo.interfaces.ActualizablePersona;
+import com.recorridaszo.interfaces.ActualizablePersonas;
 import com.recorridaszo.interfaces.IManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.utilitarios.Utils;
 
 public class MapaActivity extends FragmentActivity implements Actualizable,
-		ActualizablePersona {
+		ActualizablePersonas {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
 	private IManejadorBDWeb mw;
@@ -97,25 +97,8 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	}
 
 	public void onBotonSubirClick() {
-		// FIXME se podran subir todos juntos??? Revisar
 		Personas pNuevas = ml.obtenerPersonasNuevas();
-		Iterator<Persona> it = pNuevas.iterator();
-		while (it.hasNext()) {
-			mw.insertar(it.next(), this, this);
-		}
-
-		Personas pModificadas = ml.obtenerPersonasModificadas();
-		it = pModificadas.iterator();
-		while (it.hasNext()) {
-			mw.insertar(it.next(), this, this);
-		}
-
-		Personas pBorradas = ml.obtenerPersonasBorradas();
-		it = pBorradas.iterator();
-		while (it.hasNext()) {
-			mw.insertar(it.next(), this, this);
-		}
-
+			mw.insertar(pNuevas, this, this);
 	}
 
 	public void onBotonBuscarClick(View view) {
@@ -294,9 +277,12 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	}
 
 	@Override
-	public void ActualizarPersona(Persona unaPersona) {
-		this.ml.guardarPersona(unaPersona);
+	public void ActualizarPersonas(Personas personas) {
+		Iterator<Persona> it = personas.iterator();
+		while (it.hasNext()){
+			this.ml.guardarPersona(it.next());	
+		}		
 		this.cargarMarcadores();
-
 	}
+
 }

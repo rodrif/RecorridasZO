@@ -4,7 +4,7 @@ import java.util.Iterator;
 import android.content.Context;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
 import com.recorridaszo.interfaces.Actualizable;
-import com.recorridaszo.interfaces.ActualizablePersona;
+import com.recorridaszo.interfaces.ActualizablePersonas;
 import com.recorridaszo.interfaces.IManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
@@ -42,10 +42,8 @@ public class ManejadorBDWebMock implements IManejadorBDWeb{
 		id = 0;
 	}
 
-	@Override
-	public String insertar(Persona persona, Context ctx,
-			ActualizablePersona aPersona) {
-
+	
+	private String insertar(Persona persona) {		
 		if(persona.getEstado().equals(Utils.EST_NUEVO)) {
 			id++;
 			persona.setEstado(Utils.EST_ACTUALIZADO);
@@ -65,5 +63,22 @@ public class ManejadorBDWebMock implements IManejadorBDWeb{
 		
 		return "ok";
 	}
+
+	@Override
+	public String insertar(Personas personas, Context ctx,
+			ActualizablePersonas aPersonas) {
+		
+		Persona auxPersona ;
+		Personas pResultado= new Personas();
+		Iterator<Persona> it = personas.iterator();
+		while(it.hasNext()) {
+			auxPersona = it.next();
+			auxPersona.setEstado(Utils.EST_ACTUALIZADO);
+			pResultado.addPersona(auxPersona);
+		}	
+		aPersonas.ActualizarPersonas(pResultado);
+		return null;
+	}
+
 
 }

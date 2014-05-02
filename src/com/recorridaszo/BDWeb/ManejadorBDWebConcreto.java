@@ -1,15 +1,19 @@
 package com.recorridaszo.BDWeb;
 
 import java.io.InputStream;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.content.Context;
 import android.util.Log;
+
 import com.recorridaszo.interfaces.Actualizable;
-import com.recorridaszo.interfaces.ActualizablePersona;
+import com.recorridaszo.interfaces.ActualizablePersonas;
 import com.recorridaszo.interfaces.IManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
+import com.recorridaszo.persona.Personas;
 import com.recorridaszo.utilitarios.Utils;
 
 
@@ -48,11 +52,13 @@ public class ManejadorBDWebConcreto implements IManejadorBDWeb {
 		}		
 	}
 	
-	public String insertar(Persona persona, Context ctx, ActualizablePersona aPersona) {
-		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null,aPersona);
+	public String insertar(Personas personas, Context ctx, ActualizablePersonas aPersonas) {
+		InsertarAsyncTask at = new InsertarAsyncTask(personas, ctx, null,aPersonas);
 		at.execute(ctx);
 		return "bien";//FIXME pase lo que pase siempre retorna bien
-	}
+	}	
+
+
 /* TODO: no se usa
 	public Persona buscar(LatLng latLng) {
 		Persona perResultado = null;
