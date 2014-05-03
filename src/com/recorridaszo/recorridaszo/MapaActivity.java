@@ -3,8 +3,8 @@ package com.recorridaszo.recorridaszo;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import android.content.Context;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Address;
@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
@@ -46,10 +45,9 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
-
+		
 		mapa = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 
@@ -180,7 +178,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		}
 	}
 
-	public void clickEnMapa(LatLng point) {
+	public void clickEnMapa(LatLng point) {		
 		Log.d(Utils.APPTAG, "Lanzando Formulario activity");
 		Intent intent = new Intent(this, FormularioActivity.class);
 		intent.putExtra(Utils.KEY_LATITUD, point.latitude);

@@ -34,4 +34,5 @@
     <string name="Sincronizar">Sincronizar</string>
     <string name="BorrarDBLocal">Borrar DBLocal</string>
     <string name="RefrescarPantalla">Refrescar Pantalla</string>
+    <string name="dispositivo_no_soportado">Dispositivo no soportado</string>
 </resources>
