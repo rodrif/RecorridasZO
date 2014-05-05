@@ -235,16 +235,10 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 				android.R.drawable.ic_menu_compass);
 		menu.add(Menu.NONE, Utils.MENU_MAPA_SUBIRALSERVER, Menu.NONE,
 				R.string.SubirAlServidor).setIcon(
-				android.R.drawable.ic_menu_compass);
-		/*
-		 * menu.add(Menu.NONE, Utils.MENU_MAPA_REFRESCAR_PANTALLA, Menu.NONE,
-		 * R.string.RefrescarPantalla)
-		 * .setIcon(android.R.drawable.ic_menu_compass);
-		 */
-		/*
-		 * menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE,
-		 * R.string.BorrarDBLocal) .setIcon(android.R.drawable.ic_menu_compass);
-		 */
+				android.R.drawable.ic_menu_compass);		
+		 menu.add(Menu.NONE, Utils.MENU_MAPA_BORRARDBLOCAL, Menu.NONE,
+		 R.string.BorrarDBLocal) .setIcon(android.R.drawable.ic_menu_compass);
+		 
 		return true;
 	}
 
@@ -255,10 +249,6 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 			ml.eliminarPersonasActualizadas();
 			mw.obtenerPersonasDBWeb(this, this);
 			return true;
-			/*
-			 * case Utils.MENU_MAPA_REFRESCAR_PANTALLA: this.cargarMarcadores();
-			 * return true;
-			 */
 		case Utils.MENU_MAPA_BORRARDBLOCAL:
 			ml.borrarTodo();
 			this.cargarMarcadores();
@@ -284,5 +274,4 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		}		
 		this.cargarMarcadores();
 	}
-
 }

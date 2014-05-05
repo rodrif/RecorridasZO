@@ -46,6 +46,23 @@ public class Persona {
 		this(-1, "", "", "", "", "", latLng, Utils.getDateTime(), Utils.EST_NUEVO);
 	}
 
+	public Persona(JSONObject jsonObject) {
+		try {
+			this.id = Integer.parseInt(jsonObject.getString("id"));
+			this.nombre = jsonObject.getString("nombre");
+			this.apellido = jsonObject.getString("apellido");
+			this.descripcion = jsonObject.getString("descripcion");
+			this.estado = jsonObject.getString("estado");
+			this.direccion = jsonObject.getString("direccion");
+			this.ubicacion = new LatLng(Integer.parseInt(jsonObject.getString("latitud")),
+					Integer.parseInt(jsonObject.getString("longitud")));
+			this.ultMod = jsonObject.getString("ultMo");
+			this.zona = jsonObject.getString("zona");	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}

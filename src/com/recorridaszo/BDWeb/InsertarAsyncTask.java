@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -12,7 +14,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
+import org.json.JSONArray;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -67,10 +69,12 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
     @Override
 	protected String doInBackground(Context... params) {
     	//FIXME
-/*		JSONObject jsonObject = persona.toJson();
+    	JSONArray jsonArray = this.personas.toJsonArray();
+		Persona unaPersona;
+		Iterator<Persona> it;
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("persona", jsonObject.toString()));
-		Log.d(Utils.APPTAG, "jsonString Mandado a servidor: "+ jsonObject.toString());
+		nameValuePairs.add(new BasicNameValuePair("personas", jsonArray.toString()));
+		Log.d(Utils.APPTAG, "jsonArrayString Mandado a servidor: "+ jsonArray.toString());
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
@@ -96,17 +100,25 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 			}
 			is.close();
 			result = sb.toString();
-			
-			this.persona.setId(Integer.parseInt(result));
+			/////////////////////////////////////////////////////
+			JSONArray aux  = new JSONArray(result);
+			this.personas = new Personas(aux);
+			it = this.personas.iterator();
+			while (it.hasNext()) {
+				unaPersona = it.next();
+				if(!unaPersona.getEstado().equals(Utils.EST_BORRADO))
+					unaPersona.setEstado(Utils.EST_ACTUALIZADO);				
+			}			
+			////////////////////////////////////////////////////
+/*			this.persona.setId(Integer.parseInt(result));
 			if(!this.persona.getEstado().equals(Utils.EST_BORRADO))
-				this.persona.setEstado(Utils.EST_ACTUALIZADO);
+				this.persona.setEstado(Utils.EST_ACTUALIZADO);*/
 						
 			Log.d(Utils.APPTAG, "jsonString: "+result);
 		}catch (Exception e) {
 			Log.e(Utils.APPTAG, "Fail 2 (insertarTask): " + e.toString());
 			return localContext.getString(R.string.error_conexion);
-		}*/
-		
+		}		
 		return "Subida correcta";	//TODO: desharcodear
 	}
 

@@ -16,6 +16,19 @@ public class Personas {
 		personas = new ArrayList<Persona>();
 	}
 	
+	public Personas(JSONArray aux) {
+		personas = new ArrayList<Persona>();
+		Persona auxPersona;
+		try {
+			for (int i = 0; i < aux.length(); i++) {
+				auxPersona = new Persona(aux.getJSONObject(i));
+				personas.add(auxPersona);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void addPersona(Persona persona) {
 		personas.add(persona);
 	}
@@ -56,8 +69,8 @@ public class Personas {
 		
 		for(Persona persona : personas) {
 		    try {
-				jsonObject.put("id", Integer.toString(persona.getId()));
-			} catch (JSONException e) {
+				jsonObject = persona.toJson();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		    resultado.put(jsonObject);
