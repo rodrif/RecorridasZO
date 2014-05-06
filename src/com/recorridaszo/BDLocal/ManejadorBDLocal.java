@@ -194,5 +194,20 @@ public class ManejadorBDLocal {
 	public Personas obtenerPersonasBorradas() {
 		return this.obtenerPersonasSegunEstado(Utils.EST_BORRADO);
 	}
+	
+	public String getUltFechaMod() {
+		if (db != null) {
+			String[] campos = Utils.camposBD;
+
+			Cursor c = db.query("Personas", campos, null,
+					null, null, null, "ultMod DESC", "1");
+			
+			Persona persona = CargadorPersona.cargarPersona(c);
+			
+			return persona.getUltMod();
+		}
+		
+		return "";//TODO
+	}
 
 }
