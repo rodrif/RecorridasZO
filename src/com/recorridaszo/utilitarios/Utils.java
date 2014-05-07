@@ -18,6 +18,7 @@ public final class Utils {
 	public static final String EST_BORRADO = "Borrado";
 	public static final String EST_MODIFICADO = "Modificado";
 	public static final String EST_NUEVO = "Nuevo";
+	public static final String FECHA_CERO = "0000-00-00T00:00:00-0000";
 	public static final int ZOOM_CERCA = 15;
 	public static final int ZOOM_LEJOS = 10;
 	public static final int MENU_MAPA_SINCRONIZAR = 1;

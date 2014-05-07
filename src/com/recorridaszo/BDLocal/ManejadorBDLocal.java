@@ -204,10 +204,13 @@ public class ManejadorBDLocal {
 			
 			Persona persona = CargadorPersona.cargarPersona(c);
 			
+			if(persona == null)
+				return Utils.FECHA_CERO;
+			
 			return persona.getUltMod();
 		}
 		
-		return "";//TODO
+		return Utils.FECHA_CERO;
 	}
 
 }
