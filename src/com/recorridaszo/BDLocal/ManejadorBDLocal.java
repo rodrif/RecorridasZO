@@ -73,7 +73,7 @@ public class ManejadorBDLocal {
 
 			// si estaba en la BDLocal
 			if (obtenerPersona(persona.getUbicacion()) != null) {
-				actualizarPersona(persona);
+				actualizarPersona(persona);	
 			} else {
 				// Insertamos el registro en la base de datos
 				if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
@@ -81,21 +81,23 @@ public class ManejadorBDLocal {
 					Log.d(Utils.APPTAG,
 							"Se guardo persona con id: " + persona.getId());
 				}
-			}
-
+			}			
+			
 			return 0;
 		}
 		return -1;
 	}
 
 	public int actualizarPersona(Persona persona) {
-		if (db != null) {
+		Persona personaAActualizar = obtenerPersona(persona.getUbicacion());		
+		
+		if (db != null && personaAActualizar != null) {
 			String[] args = new String[] {
-					String.valueOf(persona.getLatitud()),
-					String.valueOf(persona.getLongitud()) };
+					String.valueOf(personaAActualizar.getLatitud()),
+					String.valueOf(personaAActualizar.getLongitud()) };
 			// Actualizar, utilizando argumentos
 			ContentValues valores = CargadorPersona
-					.cargarContentValues(persona);
+					.cargarContentValues(personaAActualizar);
 			db.update("Personas", valores, "latitud=? AND longitud=?", args);
 
 			return 0;
