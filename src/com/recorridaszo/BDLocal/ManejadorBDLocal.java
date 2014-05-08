@@ -44,7 +44,7 @@ public class ManejadorBDLocal {
 		this.db = null;
 	}
 
-	//TODO: cambiarlo por uno q devuelva Personas
+	// TODO: cambiarlo por uno q devuelva Personas
 	public Cursor selectTodo() {
 		if (db != null) {
 			String[] campos = Utils.camposBD;
@@ -105,7 +105,7 @@ public class ManejadorBDLocal {
 	}
 
 	public Persona obtenerPersona(LatLng latLng) {
-		if (db != null) {
+/*		if (db != null) { //FIXME: revisar q este bien arreglar por Gonzalo
 			String[] campos = Utils.camposBD;
 			String[] args = new String[] { String.valueOf(latLng.latitude),
 					String.valueOf(latLng.longitude) };
@@ -113,13 +113,24 @@ public class ManejadorBDLocal {
 			Cursor c = db.query("Personas", campos, "latitud=? AND longitud=?",
 					args, null, null, null);
 
-			Persona persona = CargadorPersona.cargarPersona(c);
-			Log.d(Utils.APPTAG,
-					"latitud buscada: " + Double.toString(latLng.latitude));
-			Log.d(Utils.APPTAG,
-					"longitud guardada: " + Double.toString(latLng.longitude));
+			Persona persona = CargadorPersona.cargarPersona(c);			
+
 			return persona;
-		}
+		}*/
+		
+		Cursor c = this.selectTodo();
+		Personas personas = CargadorPersona.cargarPersonas(c);
+		Iterator<Persona> it = personas.iterator();
+		
+		while(it.hasNext()) {
+			Persona posiblePersona = it.next();
+			
+			if(((Math.abs(posiblePersona.getLatitud() - posiblePersona.getLatitud()) <= Utils.PRECISION)) &&
+				(Math.abs(posiblePersona.getLongitud() - posiblePersona.getLongitud()) <= Utils.PRECISION)) {
+					return posiblePersona;
+				}
+		}		
+		
 		return null;
 	}
 
@@ -194,22 +205,22 @@ public class ManejadorBDLocal {
 	public Personas obtenerPersonasBorradas() {
 		return this.obtenerPersonasSegunEstado(Utils.EST_BORRADO);
 	}
-	
+
 	public String getUltFechaMod() {
 		if (db != null) {
 			String[] campos = Utils.camposBD;
 
-			Cursor c = db.query("Personas", campos, null,
-					null, null, null, "ultMod DESC", "1");
-			
+			Cursor c = db.query("Personas", campos, null, null, null, null,
+					"ultMod DESC", "1");
+
 			Persona persona = CargadorPersona.cargarPersona(c);
-			
-			if(persona == null)
+
+			if (persona == null)
 				return Utils.FECHA_CERO;
-			
+
 			return persona.getUltMod();
 		}
-		
+
 		return Utils.FECHA_CERO;
 	}
 

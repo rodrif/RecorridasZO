@@ -7,8 +7,8 @@ import java.util.Locale;
 
 public final class Utils {
 
-	public static final String WEB = "http://pruebazo";
-//	public static final String WEB = "http://recorridaszo";
+//	public static final String WEB = "http://pruebazo";
+	public static final String WEB = "http://recorridaszo";
 	public static final String APPTAG = "RecorridasZO";
 	public static final String[] camposBD = new String[] { "id", "nombre",
 			"apellido", "direccion", "zona", "descripcion", "latitud",
@@ -33,6 +33,7 @@ public final class Utils {
 	public static final String WEB_ACTUALIZAR = Utils.WEB + ".atwebpages.com/actualizar.php";
 	public static final String WEB_CARGAR_PERSONAS_PRUEBA = Utils.WEB + ".atwebpages.com/inicializar.php";
 	public final static int REQ_CODE_FORMULARIO = 9000;
+	public static final double PRECISION = 0.0000000000001;
 
 	public static String getDateTime() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -40,4 +41,5 @@ public final class Utils {
 		Date date = new Date();
 		return dateFormat.format(date);
 	}
+
 }
