@@ -125,8 +125,8 @@ public class ManejadorBDLocal {
 		while(it.hasNext()) {
 			Persona posiblePersona = it.next();
 			
-			if(((Math.abs(posiblePersona.getLatitud() - posiblePersona.getLatitud()) <= Utils.PRECISION)) &&
-				(Math.abs(posiblePersona.getLongitud() - posiblePersona.getLongitud()) <= Utils.PRECISION)) {
+			if(((Math.abs(posiblePersona.getLatitud() - latLng.latitude) <= Utils.PRECISION)) &&
+				(Math.abs(posiblePersona.getLongitud() - latLng.longitude) <= Utils.PRECISION)) {
 					return posiblePersona;
 				}
 		}		
