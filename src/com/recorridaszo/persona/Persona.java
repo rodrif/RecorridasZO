@@ -1,5 +1,7 @@
 package com.recorridaszo.persona;
 
+import java.math.BigDecimal;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +32,8 @@ public class Persona {
 		this.descripcion = descripcion;
 		this.ubicacion = ubicacion;
 		this.ultMod = ultMod;
-		this.estado = estado;
+		this.estado = estado;		
+		this.corregirUbicacion();
 	}
 
 	public Persona(String nombre, String apellido, String direccion,
@@ -116,6 +119,7 @@ public class Persona {
 
 	public void setUbicacion(LatLng ubicacion) {
 		this.ubicacion = ubicacion;
+		this.corregirUbicacion();
 	}
 
 	public void setUltMod(String ultMod) {
@@ -124,6 +128,17 @@ public class Persona {
 	
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+	
+	private void corregirUbicacion() {
+		BigDecimal lat = new BigDecimal(this.getLatitud());
+		BigDecimal roundOffLat = lat.setScale(14, BigDecimal.ROUND_HALF_EVEN);
+		BigDecimal lng = new BigDecimal(this.getLongitud());
+		BigDecimal roundOffLng = lng.setScale(14, BigDecimal.ROUND_HALF_EVEN);
+		LatLng nuevaUbicacion = new LatLng(roundOffLat.doubleValue(),
+				roundOffLng.doubleValue());
+
+		this.ubicacion = nuevaUbicacion;
 	}
 
 	public JSONObject toJson() {

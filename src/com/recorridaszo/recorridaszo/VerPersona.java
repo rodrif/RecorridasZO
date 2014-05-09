@@ -32,6 +32,9 @@ public class VerPersona extends FragmentActivity {
 
 		ml.conectarse(this);
 		Persona persona = ml.obtenerPersona(latLng);
+		
+		if(persona == null)
+			finish();
 
 		TextView nombre = (TextView) findViewById(R.id.textViewNombre);
 		nombre.setText(persona.getNombre());

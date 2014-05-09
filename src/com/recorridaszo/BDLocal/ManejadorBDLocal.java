@@ -1,14 +1,11 @@
 package com.recorridaszo.BDLocal;
 
-import java.math.BigDecimal;
 import java.util.Iterator;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.persona.CargadorPersona;
 import com.recorridaszo.persona.Persona;
@@ -67,8 +64,6 @@ public class ManejadorBDLocal {
 	}
 
 	public synchronized int guardarPersona(Persona persona) {
-		corregirUbicacion(persona);
-
 		if (db != null) {
 			// si estaba en la BDLocal
 			if (obtenerPersona(persona.getUbicacion()) != null) {
@@ -88,17 +83,6 @@ public class ManejadorBDLocal {
 			return 0;
 		}
 		return -1;
-	}
-
-	private void corregirUbicacion(Persona persona) {
-		BigDecimal lat = new BigDecimal(persona.getLatitud());
-		BigDecimal roundOffLat = lat.setScale(14, BigDecimal.ROUND_HALF_EVEN);
-		BigDecimal lng = new BigDecimal(persona.getLongitud());
-		BigDecimal roundOffLng = lng.setScale(14, BigDecimal.ROUND_HALF_EVEN);
-		LatLng nuevaUbicacion = new LatLng(roundOffLat.doubleValue(),
-				roundOffLng.doubleValue());
-
-		persona.setUbicacion(nuevaUbicacion);
 	}
 
 	public int actualizarPersona(Persona persona) {
