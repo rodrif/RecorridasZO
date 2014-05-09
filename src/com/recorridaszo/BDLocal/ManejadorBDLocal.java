@@ -42,17 +42,19 @@ public class ManejadorBDLocal {
 		this.db = null;
 	}
 
-	// TODO: cambiarlo por uno q devuelva Personas
-	public Cursor selectTodo() {
-		if (db != null) {
+	public Personas selectTodoPersonas() {
+		try {
 			String[] campos = Utils.camposBD;
 
 			Cursor c = db.query(Utils.TPersonas, campos, null, null, null,
 					null, null);
+			
+			return CargadorPersona.cargarPersonas(c);
 
-			return c;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Personas();
 		}
-		return null;
 	}
 
 	public int borrarTodo() {
@@ -64,31 +66,33 @@ public class ManejadorBDLocal {
 	}
 
 	public synchronized int guardarPersona(Persona persona) {
-		if (db != null) {
+		try {
 			// si estaba en la BDLocal
 			if (obtenerPersona(persona.getUbicacion()) != null) {
 				actualizarPersona(persona);
-			} else {
-				// Insertamos el registro en la base de datos
-				if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
-					// TODO: crear un metodo insertar
-					// Creamos el registro a insertar como objeto ContentValues
-					ContentValues nuevoRegistro = CargadorPersona
-							.cargarContentValues(persona);
-					db.insert(Utils.TPersonas, null, nuevoRegistro);
-					Log.d(Utils.APPTAG,
-							"Se guardo persona con id: " + persona.getId());
-				}
+			} else if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
+				insertarPersona(persona);
 			}
 			return 0;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
-		return -1;
 	}
 
-	public int actualizarPersona(Persona persona) {
+	private void insertarPersona(Persona persona) {
+		// Creamos el registro a insertar como objeto ContentValues
+		ContentValues nuevoRegistro = CargadorPersona
+				.cargarContentValues(persona);
+		db.insert(Utils.TPersonas, null, nuevoRegistro);
+		Log.d(Utils.APPTAG, "Se guardo persona con id: " + persona.getId());
+	}
+
+	private int actualizarPersona(Persona persona) {
 		Persona personaAActualizar = obtenerPersona(persona.getUbicacion());
 
-		if (db != null && personaAActualizar != null) {
+		try {
 			String[] args = new String[] {
 					String.valueOf(personaAActualizar.getLatitud()),
 					String.valueOf(personaAActualizar.getLongitud()) };
@@ -98,18 +102,17 @@ public class ManejadorBDLocal {
 			// Actualizar, utilizando argumentos
 			ContentValues valores = CargadorPersona
 					.cargarContentValues(persona);
-			db.update("Personas", valores,
-					"latitud=? AND longitud=?", args);
+			db.update("Personas", valores, "latitud=? AND longitud=?", args);
 
 			return 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
-
-		return -1;
 	}
 
 	public Persona obtenerPersona(LatLng latLng) {
-		Cursor c = this.selectTodo();
-		Personas personas = CargadorPersona.cargarPersonas(c);
+		Personas personas = this.selectTodoPersonas();
 		Iterator<Persona> it = personas.iterator();
 
 		while (it.hasNext()) {
@@ -126,14 +129,17 @@ public class ManejadorBDLocal {
 	}
 
 	private synchronized int eliminarPersonas(String estado) {
-		if (db != null) {
+		try {
 			String[] args = new String[] { estado };
 
 			db.delete("Personas", "estado=?", args);
 
 			return 0;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
-		return -1;
 	}
 
 	public synchronized int eliminarPersonasActualizadas() {
@@ -144,35 +150,34 @@ public class ManejadorBDLocal {
 	}
 
 	public synchronized int eliminarPersona(LatLng latLng) {
-		// REVISAR
-		if (db != null) {
+		try {
 			Persona persona = this.obtenerPersona(latLng);
-			
-			String[] args = new String[] { String.valueOf(persona.getLatitud()),
+
+			String[] args = new String[] {
+					String.valueOf(persona.getLatitud()),
 					String.valueOf(persona.getLongitud()) };
 
-			if (persona != null) {
-				if (persona.getEstado().equals(Utils.EST_NUEVO)
-						|| persona.getEstado().equals(Utils.EST_BORRADO)) {
-					db.delete("Personas", "latitud=? AND longitud=?", args);
-				} else {
-					// Actualizar, utilizando argumentos
-					ContentValues valores = new ContentValues();
-					valores.put("estado", Utils.EST_BORRADO);
-					db.update("Personas", valores, "latitud=? AND longitud=?",
-							args);
-					return 0;
-				}
+			if (persona.getEstado().equals(Utils.EST_NUEVO)
+					|| persona.getEstado().equals(Utils.EST_BORRADO)) {
+				db.delete("Personas", "latitud=? AND longitud=?", args);
+			} else {
+				// Actualizar, utilizando argumentos
+				ContentValues valores = new ContentValues();
+				valores.put("estado", Utils.EST_BORRADO);
+				db.update("Personas", valores, "latitud=? AND longitud=?", args);
 			}
+			return 0;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
-		return -1;
 	}
 
 	private Personas obtenerPersonasSegunEstado(String estado) {
-		if (db != null) {
+		try {
 			Personas personas = new Personas();
-			Cursor c = this.selectTodo();
-			Personas todasPersonas = CargadorPersona.cargarPersonas(c);
+			Personas todasPersonas = this.selectTodoPersonas();
 
 			for (Iterator<Persona> it = todasPersonas.iterator(); it.hasNext();) {
 				Persona p = it.next();
@@ -182,8 +187,11 @@ public class ManejadorBDLocal {
 				}
 			}
 			return personas;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	public Personas obtenerPersonasNuevas() {
@@ -199,7 +207,7 @@ public class ManejadorBDLocal {
 	}
 
 	public String getUltFechaMod() {
-		if (db != null) {
+		try {
 			String[] campos = Utils.camposBD;
 
 			Cursor c = db.query("Personas", campos, null, null, null, null,
@@ -211,9 +219,10 @@ public class ManejadorBDLocal {
 				return Utils.FECHA_CERO;
 
 			return persona.getUltMod();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Utils.FECHA_CERO;
 		}
-
-		return Utils.FECHA_CERO;
 	}
-
 }

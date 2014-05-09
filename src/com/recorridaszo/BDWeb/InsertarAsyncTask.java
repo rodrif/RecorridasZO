@@ -105,7 +105,7 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 			return localContext.getString(R.string.error_conexion);
 		}
 		
-		return "Subida correcta";	//TODO: desharcodear
+		return localContext.getString(R.string.subida_correcta);
 	}
 
 	/**

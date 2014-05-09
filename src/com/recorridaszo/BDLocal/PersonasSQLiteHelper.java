@@ -11,11 +11,6 @@ public class PersonasSQLiteHelper extends SQLiteOpenHelper {
 			+ " nombre TEXT, apellido TEXT, direccion TEXT, zona TEXT, descripcion TEXT,"
 			+ " latitud REAL, longitud REAL, ultMod TEXT, estado TEXT, PRIMARY KEY ( latitud, longitud))";
 
-	/*
-	 * String sqlCreate = "CREATE TABLE Personas (id INTEGER," +
-	 * " nombre TEXT, apellido TEXT, direccion TEXT, zona TEXT, descripcion TEXT,"
-	 * + " latitud REAL, longitud REAL, ultMod TEXT, estado TEXT)";
-	 */// TODO: agregar PRIMARY KEY ( column1, column2))
 
 	public PersonasSQLiteHelper(Context contexto, String nombre,
 			CursorFactory factory, int version) {

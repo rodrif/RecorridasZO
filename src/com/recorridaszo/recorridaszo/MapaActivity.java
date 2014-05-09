@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -47,7 +46,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
-		
+
 		mapa = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map)).getMap();
 
@@ -178,7 +177,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		}
 	}
 
-	public void clickEnMapa(LatLng point) {		
+	public void clickEnMapa(LatLng point) {
 		Log.d(Utils.APPTAG, "Lanzando Formulario activity");
 		Intent intent = new Intent(this, FormularioActivity.class);
 		intent.putExtra(Utils.KEY_LATITUD, point.latitude);
@@ -196,17 +195,15 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 
 	public synchronized void cargarMarcadores() {
 		this.mapa.clear();
-		Cursor c = ml.selectTodo();
+		Personas todasPersonas = ml.selectTodoPersonas();
 
-		if (c.moveToFirst()) {
-			do {
-				// int id = c.getInt(c.getColumnIndex("id"));
-				String estado = c.getString(c.getColumnIndex("estado"));
-				double latitud = c.getDouble(c.getColumnIndex("latitud"));
-				double longitud = c.getDouble(c.getColumnIndex("longitud"));
-				if (!estado.equals(Utils.EST_BORRADO))
-					dibujarMarcador(estado, new LatLng(latitud, longitud));
-			} while (c.moveToNext());
+		for (Iterator<Persona> it = todasPersonas.iterator(); it.hasNext();) {
+			Persona p = it.next();
+			String estado = p.getEstado();
+			double latitud = p.getLatitud();
+			double longitud = p.getLongitud();
+			if (!estado.equals(Utils.EST_BORRADO))
+				dibujarMarcador(estado, new LatLng(latitud, longitud));
 		}
 	}
 
@@ -215,8 +212,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	 */
 	private void dibujarMarcador(String estado, LatLng point) {
 		// TODO: drag true
-		mapa.addMarker(MarcadorOptionsFactory.crearOpciones(
-				estado, point));
+		mapa.addMarker(MarcadorOptionsFactory.crearOpciones(estado, point));
 	}
 
 	@Override

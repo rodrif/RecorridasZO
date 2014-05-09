@@ -11,7 +11,7 @@ public class CargadorPersona {
 
 	}
 
-	//Pre: el cursor solo tiene 1 persona
+	// Pre: el cursor solo tiene 1 persona
 	public static Persona cargarPersona(Cursor c) {
 		if (c.getCount() == 0) {
 			return null;
@@ -20,22 +20,27 @@ public class CargadorPersona {
 			return obtenerPersonaPosAct(c);
 		}
 	}
-	
-	//para un cursor con una o mas personas
+
+	// para un cursor con una o mas personas
 	public static Personas cargarPersonas(Cursor c) {
-		Personas personas = new Personas();		
-		
-		if(c.getCount() > 0) {
-			c.moveToFirst();
-			do {
-				Persona persona = obtenerPersonaPosAct(c);
-				personas.addPersona(persona);
-			} while (c.moveToNext());			
+		Personas personas = new Personas();
+
+		try {
+			if (c.getCount() > 0) {
+				c.moveToFirst();
+				do {
+					Persona persona = obtenerPersonaPosAct(c);
+					personas.addPersona(persona);
+				} while (c.moveToNext());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return personas;
 		}
-		
+
 		return personas;
 	}
-	
+
 	private static Persona obtenerPersonaPosAct(Cursor c) {
 		int id = c.getInt(c.getColumnIndex("id"));
 		String nombre = c.getString(c.getColumnIndex("nombre"));
@@ -49,11 +54,11 @@ public class CargadorPersona {
 		LatLng ubicacion = new LatLng(latitud, longitud);
 		String estado = c.getString(c.getColumnIndex("estado"));
 
-		Persona persona = new Persona(id, nombre, apellido, direccion,
-				zona, descripcion, ubicacion, ultMod, estado);
-		return persona;			
+		Persona persona = new Persona(id, nombre, apellido, direccion, zona,
+				descripcion, ubicacion, ultMod, estado);
+		return persona;
 	}
-	
+
 	public static ContentValues cargarContentValues(Persona persona) {
 		ContentValues nuevoRegistro = new ContentValues();
 		nuevoRegistro.put("id", persona.getId());
@@ -68,8 +73,8 @@ public class CargadorPersona {
 		}
 		nuevoRegistro.put("ultMod", persona.getUltMod());
 		nuevoRegistro.put("estado", persona.getEstado());
-		
-		return nuevoRegistro;		
+
+		return nuevoRegistro;
 	}
 
 }
