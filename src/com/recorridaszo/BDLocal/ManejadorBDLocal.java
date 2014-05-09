@@ -67,22 +67,21 @@ public class ManejadorBDLocal {
 
 	public synchronized int guardarPersona(Persona persona) {
 		if (db != null) {
-			// Creamos el registro a insertar como objeto ContentValues
-			ContentValues nuevoRegistro = CargadorPersona
-					.cargarContentValues(persona);
-
 			// si estaba en la BDLocal
 			if (obtenerPersona(persona.getUbicacion()) != null) {
 				actualizarPersona(persona);	
 			} else {
 				// Insertamos el registro en la base de datos
 				if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
+					//TODO: crear un metodo insertar
+					// Creamos el registro a insertar como objeto ContentValues
+					ContentValues nuevoRegistro = CargadorPersona
+							.cargarContentValues(persona);
 					db.insert(Utils.TPersonas, null, nuevoRegistro);
 					Log.d(Utils.APPTAG,
 							"Se guardo persona con id: " + persona.getId());
 				}
 			}			
-			
 			return 0;
 		}
 		return -1;
@@ -95,31 +94,37 @@ public class ManejadorBDLocal {
 			String[] args = new String[] {
 					String.valueOf(personaAActualizar.getLatitud()),
 					String.valueOf(personaAActualizar.getLongitud()) };
+			
+			Log.e(Utils.APPTAG, "args0" + args[0]);
+			Log.e(Utils.APPTAG, "args1" + args[1]);
+			Log.e(Utils.APPTAG, "persona.getLatitud()1 " + persona.getLatitud());
+			Log.e(Utils.APPTAG, "persona.getL()1 " + persona.getLongitud());
+			
+			persona.setUbicacion(personaAActualizar.getUbicacion());
+			
+			Log.e(Utils.APPTAG, "persona.getLatitud() " + persona.getLatitud());
+			Log.e(Utils.APPTAG, "persona.getL()1 " + persona.getLongitud());
+			
 			// Actualizar, utilizando argumentos
 			ContentValues valores = CargadorPersona
-					.cargarContentValues(personaAActualizar);
-			db.update("Personas", valores, "latitud=? AND longitud=?", args);
+					.cargarContentValues(persona);
+			int res = db.update("Personas", valores, "latitud=? AND longitud=?", args);
+			
+			Log.e(Utils.APPTAG, "valores " + valores.getAsDouble("latitud"));
+			Log.e(Utils.APPTAG, "valores " + valores.getAsDouble("longitud"));
+			Log.e(Utils.APPTAG, "personaAActualizar.getLatitud() " + personaAActualizar.getLatitud());
+			Log.e(Utils.APPTAG, "personaAActualizar.getL() " + personaAActualizar.getLongitud());
+			Log.e(Utils.APPTAG, "db.update " + res);
 
 			return 0;
 		}
+		
+		Log.e(Utils.APPTAG, "persona aactualizar == null");
 
 		return -1;
 	}
 
-	public Persona obtenerPersona(LatLng latLng) {
-/*		if (db != null) { //FIXME: revisar q este bien arreglar por Gonzalo
-			String[] campos = Utils.camposBD;
-			String[] args = new String[] { String.valueOf(latLng.latitude),
-					String.valueOf(latLng.longitude) };
-
-			Cursor c = db.query("Personas", campos, "latitud=? AND longitud=?",
-					args, null, null, null);
-
-			Persona persona = CargadorPersona.cargarPersona(c);			
-
-			return persona;
-		}*/
-		
+	public Persona obtenerPersona(LatLng latLng) {		
 		Cursor c = this.selectTodo();
 		Personas personas = CargadorPersona.cargarPersonas(c);
 		Iterator<Persona> it = personas.iterator();
@@ -155,6 +160,7 @@ public class ManejadorBDLocal {
 	}
 
 	public synchronized int eliminarPersona(LatLng latLng) {
+		//REVISAR la consulta
 		if (db != null) {
 			String[] args = new String[] { String.valueOf(latLng.latitude),
 					String.valueOf(latLng.longitude) };

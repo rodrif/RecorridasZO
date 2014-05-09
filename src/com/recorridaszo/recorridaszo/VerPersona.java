@@ -32,7 +32,6 @@ public class VerPersona extends FragmentActivity {
 
 		ml.conectarse(this);
 		Persona persona = ml.obtenerPersona(latLng);
-		Log.e(Utils.APPTAG, "Lat problema = " + latLng.latitude);
 
 		TextView nombre = (TextView) findViewById(R.id.textViewNombre);
 		nombre.setText(persona.getNombre());
