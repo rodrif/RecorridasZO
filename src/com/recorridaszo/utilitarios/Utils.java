@@ -40,6 +40,5 @@ public final class Utils {
 				"yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
 		Date date = new Date();
 		return dateFormat.format(date);
-	}
-
+	}	
 }

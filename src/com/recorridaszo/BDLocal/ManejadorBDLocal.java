@@ -1,5 +1,6 @@
 package com.recorridaszo.BDLocal;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 
 import android.content.ContentValues;
@@ -66,14 +67,16 @@ public class ManejadorBDLocal {
 	}
 
 	public synchronized int guardarPersona(Persona persona) {
+		corregirUbicacion(persona);
+
 		if (db != null) {
 			// si estaba en la BDLocal
 			if (obtenerPersona(persona.getUbicacion()) != null) {
-				actualizarPersona(persona);	
+				actualizarPersona(persona);
 			} else {
 				// Insertamos el registro en la base de datos
 				if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
-					//TODO: crear un metodo insertar
+					// TODO: crear un metodo insertar
 					// Creamos el registro a insertar como objeto ContentValues
 					ContentValues nuevoRegistro = CargadorPersona
 							.cargarContentValues(persona);
@@ -81,63 +84,60 @@ public class ManejadorBDLocal {
 					Log.d(Utils.APPTAG,
 							"Se guardo persona con id: " + persona.getId());
 				}
-			}			
+			}
 			return 0;
 		}
 		return -1;
 	}
 
+	private void corregirUbicacion(Persona persona) {
+		BigDecimal lat = new BigDecimal(persona.getLatitud());
+		BigDecimal roundOffLat = lat.setScale(14, BigDecimal.ROUND_HALF_EVEN);
+		BigDecimal lng = new BigDecimal(persona.getLongitud());
+		BigDecimal roundOffLng = lng.setScale(14, BigDecimal.ROUND_HALF_EVEN);
+		LatLng nuevaUbicacion = new LatLng(roundOffLat.doubleValue(),
+				roundOffLng.doubleValue());
+
+		persona.setUbicacion(nuevaUbicacion);
+	}
+
 	public int actualizarPersona(Persona persona) {
-		Persona personaAActualizar = obtenerPersona(persona.getUbicacion());		
-		
+		Persona personaAActualizar = obtenerPersona(persona.getUbicacion());
+
 		if (db != null && personaAActualizar != null) {
 			String[] args = new String[] {
 					String.valueOf(personaAActualizar.getLatitud()),
 					String.valueOf(personaAActualizar.getLongitud()) };
-			
-			Log.e(Utils.APPTAG, "args0" + args[0]);
-			Log.e(Utils.APPTAG, "args1" + args[1]);
-			Log.e(Utils.APPTAG, "persona.getLatitud()1 " + persona.getLatitud());
-			Log.e(Utils.APPTAG, "persona.getL()1 " + persona.getLongitud());
-			
+
 			persona.setUbicacion(personaAActualizar.getUbicacion());
-			
-			Log.e(Utils.APPTAG, "persona.getLatitud() " + persona.getLatitud());
-			Log.e(Utils.APPTAG, "persona.getL()1 " + persona.getLongitud());
-			
+
 			// Actualizar, utilizando argumentos
 			ContentValues valores = CargadorPersona
 					.cargarContentValues(persona);
-			int res = db.update("Personas", valores, "latitud=? AND longitud=?", args);
-			
-			Log.e(Utils.APPTAG, "valores " + valores.getAsDouble("latitud"));
-			Log.e(Utils.APPTAG, "valores " + valores.getAsDouble("longitud"));
-			Log.e(Utils.APPTAG, "personaAActualizar.getLatitud() " + personaAActualizar.getLatitud());
-			Log.e(Utils.APPTAG, "personaAActualizar.getL() " + personaAActualizar.getLongitud());
-			Log.e(Utils.APPTAG, "db.update " + res);
+			db.update("Personas", valores,
+					"latitud=? AND longitud=?", args);
 
 			return 0;
 		}
-		
-		Log.e(Utils.APPTAG, "persona aactualizar == null");
 
 		return -1;
 	}
 
-	public Persona obtenerPersona(LatLng latLng) {		
+	public Persona obtenerPersona(LatLng latLng) {
 		Cursor c = this.selectTodo();
 		Personas personas = CargadorPersona.cargarPersonas(c);
 		Iterator<Persona> it = personas.iterator();
-		
-		while(it.hasNext()) {
+
+		while (it.hasNext()) {
 			Persona posiblePersona = it.next();
-			
-			if(((Math.abs(posiblePersona.getLatitud() - latLng.latitude) <= Utils.PRECISION)) &&
-				(Math.abs(posiblePersona.getLongitud() - latLng.longitude) <= Utils.PRECISION)) {
-					return posiblePersona;
-				}
-		}		
-		
+
+			if (((Math.abs(posiblePersona.getLatitud() - latLng.latitude) <= Utils.PRECISION))
+					&& (Math.abs(posiblePersona.getLongitud()
+							- latLng.longitude) <= Utils.PRECISION)) {
+				return posiblePersona;
+			}
+		}
+
 		return null;
 	}
 
@@ -160,12 +160,12 @@ public class ManejadorBDLocal {
 	}
 
 	public synchronized int eliminarPersona(LatLng latLng) {
-		//REVISAR la consulta
+		// REVISAR
 		if (db != null) {
-			String[] args = new String[] { String.valueOf(latLng.latitude),
-					String.valueOf(latLng.longitude) };
-
 			Persona persona = this.obtenerPersona(latLng);
+			
+			String[] args = new String[] { String.valueOf(persona.getLatitud()),
+					String.valueOf(persona.getLongitud()) };
 
 			if (persona != null) {
 				if (persona.getEstado().equals(Utils.EST_NUEVO)
