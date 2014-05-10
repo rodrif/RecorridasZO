@@ -4,6 +4,8 @@ import java.io.InputStream;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import com.recorridaszo.interfaces.Actualizable;
@@ -49,7 +51,7 @@ public class ManejadorBDWebConcreto implements IManejadorBDWeb {
 	}
 	
 	public String insertar(Persona persona, Context ctx, ActualizablePersona aPersona) {
-		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null,aPersona);
+		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, true,aPersona);
 		at.execute(ctx);
 		return "bien";//FIXME pase lo que pase siempre retorna bien
 	}

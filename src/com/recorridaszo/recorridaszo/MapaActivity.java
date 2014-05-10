@@ -22,7 +22,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -36,13 +35,12 @@ import com.recorridaszo.persona.Personas;
 import com.recorridaszo.utilitarios.Utils;
 
 public class MapaActivity extends FragmentActivity implements Actualizable,
-		ActualizablePersona, OnMarkerDragListener {
+		ActualizablePersona {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
 	private IManejadorBDWeb mw;
 	private Address direccion;
-	private boolean dirEncontrada;
-	private LatLng inicioDrag;
+	boolean dirEncontrada;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +62,6 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 				return true;
 			}
 		});
-
-		mapa.setOnMarkerDragListener(this);
 
 		centrarCamara(-34.6209083, -58.4587529, Utils.ZOOM_LEJOS);
 		Log.d(Utils.APPTAG, "onCreate MapaActivity");
@@ -125,6 +121,10 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		String direccion = et.getText().toString();
 		miTarea.execute(direccion);
 	}
+	
+	public void onBotonCentrarClick(View view) {
+//TODO obtener LatLng del usuario
+	}	
 
 	protected class GetLatLngTask extends AsyncTask<String, Void, String> {
 		// Store the context passed to the AsyncTask when the system
@@ -296,30 +296,5 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		this.ml.guardarPersona(unaPersona);
 		this.cargarMarcadores();
 
-	}
-
-	@Override
-	public void onMarkerDragStart(Marker marker) {
-		this.inicioDrag = marker.getPosition();
-	}
-
-	@Override
-	public void onMarkerDragEnd(Marker marker) {
-		try {
-			Persona persona = ml.obtenerPersona(this.inicioDrag);
-			persona.setUbicacion(marker.getPosition());
-			ml.guardarPersona(persona);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.e(Utils.APPTAG, "perosona null en drag end");
-		}
-		finally {
-			cargarMarcadores();
-		}
-	}
-
-	@Override
-	public void onMarkerDrag(Marker marker) {
-		// no hago nada
 	}
 }
