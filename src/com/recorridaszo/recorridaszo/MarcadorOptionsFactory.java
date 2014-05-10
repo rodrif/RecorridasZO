@@ -13,9 +13,9 @@ public class MarcadorOptionsFactory {
 	}
 
 	public static MarkerOptions crearOpciones(String estado, LatLng point) {
-		
+		//REVISAR
 		MarkerOptions opciones = new MarkerOptions().position(point)
-				.draggable(false).title("Sin datos");
+				.draggable(true).title("Sin datos");
 		
 		// si es una perosona nueva, no gauardada en la BDWeb
 		if (estado.equals(Utils.EST_NUEVO)) {
