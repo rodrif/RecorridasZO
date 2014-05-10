@@ -26,16 +26,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
+import com.recorridaszo.BDWeb.CentrarAsyncTask;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.interfaces.Actualizable;
 import com.recorridaszo.interfaces.ActualizablePersona;
+import com.recorridaszo.interfaces.Centrable;
 import com.recorridaszo.interfaces.IManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.utilitarios.Utils;
 
 public class MapaActivity extends FragmentActivity implements Actualizable,
-		ActualizablePersona {
+		ActualizablePersona, Centrable {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
 	private IManejadorBDWeb mw;
@@ -123,7 +125,9 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	}
 	
 	public void onBotonCentrarClick(View view) {
-//TODO obtener LatLng del usuario
+		CentrarAsyncTask cAT = new CentrarAsyncTask(this);
+		//FIXME revisar por que le paso dos veces el contexto(this)
+		cAT.execute(this);
 	}	
 
 	protected class GetLatLngTask extends AsyncTask<String, Void, String> {
@@ -296,5 +300,10 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		this.ml.guardarPersona(unaPersona);
 		this.cargarMarcadores();
 
+	}
+
+	@Override
+	public void centrar(LatLng latLng) {
+		this.centrar(latLng);		
 	}
 }

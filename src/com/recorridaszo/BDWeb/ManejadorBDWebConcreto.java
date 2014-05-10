@@ -4,8 +4,6 @@ import java.io.InputStream;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import com.recorridaszo.interfaces.Actualizable;
