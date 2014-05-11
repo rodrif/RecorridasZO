@@ -125,9 +125,8 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	}
 	
 	public void onBotonCentrarClick(View view) {
-		CentrarAsyncTask cAT = new CentrarAsyncTask(this);
-		//FIXME revisar por que le paso dos veces el contexto(this)
-		cAT.execute(this);
+		CentrarAsyncTask cAT = new CentrarAsyncTask(this, this);
+		cAT.execute();
 	}	
 
 	protected class GetLatLngTask extends AsyncTask<String, Void, String> {
@@ -304,6 +303,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 
 	@Override
 	public void centrar(LatLng latLng) {
-		this.centrar(latLng);		
+		this.centrarCamara(latLng.latitude, latLng.longitude, Utils.ZOOM_LEJOS);
+		Log.d(Utils.APPTAG, "Camara centrada en lat: " + latLng.latitude);
 	}
 }

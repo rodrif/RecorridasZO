@@ -1,99 +1,85 @@
 package com.recorridaszo.BDWeb;
 
-import java.util.List;
-
 import android.content.Context;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.interfaces.Centrable;
 import com.recorridaszo.utilitarios.Utils;
 
 
-public class CentrarAsyncTask extends AsyncTask<Context, Void, LatLng>  implements LocationListener{
+public class CentrarAsyncTask extends AsyncTask<Void, Void, String> implements GooglePlayServicesClient.ConnectionCallbacks,
+GooglePlayServicesClient.OnConnectionFailedListener{
 	Context localContext;
 	private Centrable centrable = null;
 	private Location location = null;
-	private LocationManager lm = null;
+	private LocationClient mLocationClient;
 	
-	public CentrarAsyncTask(Context context){
-		this.localContext = context;  	 
+	public CentrarAsyncTask(Context context, Centrable centrable){
+		super();
+		this.localContext = context;
+		this.centrable = centrable;
+		this.mLocationClient = new LocationClient(localContext, this, this);
+		
 	}
 	
 	public CentrarAsyncTask(){
-		this(null);
+		this(null, null);
 	}
 	
 	@Override
-	protected LatLng doInBackground(Context... params) {
-		String bestProvider;
-		lm = (LocationManager) this.localContext.getSystemService(Context.LOCATION_SERVICE);
+	protected String doInBackground(Void... params) {
+		mLocationClient.connect();
 
-		//Lista de proveedores
-		List<String> listaProviders = lm.getAllProviders();		
-		Log.d(Utils.APPTAG, listaProviders.toString());
-		
-		//Elijo proveedor segun criterio de busqueda
-	    Criteria criteria = new Criteria();
-	    criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-	    bestProvider = lm.getBestProvider(criteria, true);
-	    Log.d(Utils.APPTAG, "Utilizando proveedor: " + bestProvider);
-	    //Me registro a los updates
-	    
-	    //Nos registramos para recibir actualizaciones de la posición
-	    
-	    lm.requestLocationUpdates(bestProvider, 0,0,this);
-     
-	    for(int i = 0; i < Utils.CANTIDAD_INTENTOS_UBICACION; i++){
-	    	 try {
-	    		 Thread.sleep(1000);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
-             }
-	    	 if(this.location != null)
-	    		 return new LatLng(this.location.getLatitude(), this.location.getLongitude());	    	 
-	     }	     
-	     return null;
+		//FIXME mejorar
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 	@Override
-	protected void onPostExecute(LatLng resultado) {
-		//Me desregistro
-		this.lm.removeUpdates(this);
-		
+	protected  void onPostExecute(String str) {		
 		String msg = "Ubicación no encontrada";
-		if(resultado != null) {
+		if(this.location != null) {
 			msg = "Ubicación encontrada";
-			if(this.centrable != null)
-				this.centrable.centrar(resultado);	
-		}		
+			if(this.centrable != null) {
+				this.centrable.centrar(new LatLng(this.location.getLatitude(), this.location.getLongitude()));	
+				Log.d(Utils.APPTAG, "centrar camara");
+			}
+		}
+		
+		Log.d(Utils.APPTAG, "Lat: " +this.location.getLatitude());
 		
 		Toast toast =
 				Toast.makeText(this.localContext,
 						msg, Toast.LENGTH_LONG);
 			toast.show();	
-	}
-	
+		mLocationClient.disconnect();		
+	}	
+
+
 	@Override
-	public void onLocationChanged(Location location) {
-		this.location = location;
+	public void onConnected(Bundle arg0) {
+		this.location = mLocationClient.getLastLocation();
+		
 	}
 
 	@Override
-	public void onProviderDisabled(String provider) {		
+	public void onDisconnected() {
+		
 	}
 
 	@Override
-	public void onProviderEnabled(String provider) {		
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
+	public void onConnectionFailed(ConnectionResult arg0) {
+		
 	}	
 }
