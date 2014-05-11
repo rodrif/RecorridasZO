@@ -8,21 +8,19 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.recorridaszo.interfaces.Centrable;
-import com.recorridaszo.utilitarios.LocationListenerEx;
 import com.recorridaszo.utilitarios.Utils;
 
 
-public class CentrarAsyncTask extends AsyncTask<Context, Void, LatLng>  {
+public class CentrarAsyncTask extends AsyncTask<Context, Void, LatLng>  implements LocationListener{
 	Context localContext;
 	private Centrable centrable = null;
-	Location location = null;
-	LocationListener locListener = null;
-	LocationManager lm = null;
+	private Location location = null;
+	private LocationManager lm = null;
 	
 	public CentrarAsyncTask(Context context){
 		this.localContext = context;  	 
@@ -49,8 +47,8 @@ public class CentrarAsyncTask extends AsyncTask<Context, Void, LatLng>  {
 	    //Me registro a los updates
 	    
 	    //Nos registramos para recibir actualizaciones de la posición
-	    this.locListener = new LocationListenerEx(new Location(bestProvider));	  
-	    lm.requestLocationUpdates(bestProvider, 0,0,locListener);
+	    
+	    lm.requestLocationUpdates(bestProvider, 0,0,this);
      
 	    for(int i = 0; i < Utils.CANTIDAD_INTENTOS_UBICACION; i++){
 	    	 try {
@@ -58,17 +56,16 @@ public class CentrarAsyncTask extends AsyncTask<Context, Void, LatLng>  {
              } catch (InterruptedException e) {
                  e.printStackTrace();
              }
-	    	 if(!(this.location.getLatitude() == 0.0 && this.location.getLongitude() == 0.0))
+	    	 if(this.location != null)
 	    		 return new LatLng(this.location.getLatitude(), this.location.getLongitude());	    	 
-	     }     
-	     
+	     }	     
 	     return null;
 	}
 	
 	@Override
 	protected void onPostExecute(LatLng resultado) {
 		//Me desregistro
-		this.lm.removeUpdates(locListener);
+		this.lm.removeUpdates(this);
 		
 		String msg = "Ubicación no encontrada";
 		if(resultado != null) {
@@ -82,4 +79,21 @@ public class CentrarAsyncTask extends AsyncTask<Context, Void, LatLng>  {
 						msg, Toast.LENGTH_LONG);
 			toast.show();	
 	}
+	
+	@Override
+	public void onLocationChanged(Location location) {
+		this.location = location;
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}	
 }
