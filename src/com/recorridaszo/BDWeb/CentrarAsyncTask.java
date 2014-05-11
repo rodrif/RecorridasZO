@@ -57,8 +57,6 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 			}
 		}
 		
-		Log.d(Utils.APPTAG, "Lat: " +this.location.getLatitude());
-		
 		Toast toast =
 				Toast.makeText(this.localContext,
 						msg, Toast.LENGTH_LONG);
