@@ -222,7 +222,6 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	 * Dibuja un marcador en el mapa
 	 */
 	private void dibujarMarcador(String estado, LatLng point) {
-		// TODO: drag true
 		mapa.addMarker(MarcadorOptionsFactory.crearOpciones(estado, point));
 	}
 
