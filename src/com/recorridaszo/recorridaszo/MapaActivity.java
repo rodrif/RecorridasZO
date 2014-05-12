@@ -303,7 +303,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 
 	@Override
 	public void centrar(LatLng latLng) {
-		this.centrarCamara(latLng.latitude, latLng.longitude, Utils.ZOOM_LEJOS);
+		this.centrarCamara(latLng.latitude, latLng.longitude, Utils.ZOOM_CERCA);
 		Log.d(Utils.APPTAG, "Camara centrada en lat: " + latLng.latitude);
 	}
 }
