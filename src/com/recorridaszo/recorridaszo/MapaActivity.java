@@ -27,21 +27,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.recorridaszo.BDLocal.ManejadorBDLocal;
+import com.recorridaszo.BDWeb.CentrarAsyncTask;
 import com.recorridaszo.BDWeb.ManejadorBDWeb;
 import com.recorridaszo.interfaces.Actualizable;
 import com.recorridaszo.interfaces.ActualizablePersona;
+import com.recorridaszo.interfaces.Centrable;
 import com.recorridaszo.interfaces.IManejadorBDWeb;
 import com.recorridaszo.persona.Persona;
 import com.recorridaszo.persona.Personas;
 import com.recorridaszo.utilitarios.Utils;
 
 public class MapaActivity extends FragmentActivity implements Actualizable,
-		ActualizablePersona, OnMarkerDragListener {
+		ActualizablePersona, Centrable, OnMarkerDragListener {
 	private GoogleMap mapa = null;
 	private ManejadorBDLocal ml;
 	private IManejadorBDWeb mw;
 	private Address direccion;
-	private boolean dirEncontrada;
+	boolean dirEncontrada;
 	private LatLng inicioDrag;
 
 	@Override
@@ -64,7 +66,7 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 				return true;
 			}
 		});
-
+		
 		mapa.setOnMarkerDragListener(this);
 
 		centrarCamara(-34.6209083, -58.4587529, Utils.ZOOM_LEJOS);
@@ -125,6 +127,11 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 		String direccion = et.getText().toString();
 		miTarea.execute(direccion);
 	}
+	
+	public void onBotonCentrarClick(View view) {
+		CentrarAsyncTask cAT = new CentrarAsyncTask(this, this);
+		cAT.execute();
+	}	
 
 	protected class GetLatLngTask extends AsyncTask<String, Void, String> {
 		// Store the context passed to the AsyncTask when the system
@@ -311,8 +318,14 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	public void onMarkerDragEnd(Marker marker) {
 		try {//REVISAR
 			Persona persona = ml.obtenerPersona(this.inicioDrag);
+
+			if(persona.getEstado().equals(Utils.EST_NUEVO))
+				ml.eliminarPersona(persona.getUbicacion());
+			else
+				persona.setEstado(Utils.EST_MODIFICADO);
+			
 			persona.setUbicacion(marker.getPosition());
-			ml.guardarPersona(persona);
+			ml.guardarPersona(persona);			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(Utils.APPTAG, "perosona null en drag end");
@@ -324,5 +337,10 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 	@Override
 	public void onMarkerDrag(Marker marker) {
 		// no hago nada
+	}
+	
+	public void centrar(LatLng latLng) {
+		this.centrarCamara(latLng.latitude, latLng.longitude, Utils.ZOOM_LEJOS);
+		Log.d(Utils.APPTAG, "Camara centrada en lat: " + latLng.latitude);
 	}
 }

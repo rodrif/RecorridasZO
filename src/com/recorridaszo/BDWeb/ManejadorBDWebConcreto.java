@@ -49,7 +49,7 @@ public class ManejadorBDWebConcreto implements IManejadorBDWeb {
 	}
 	
 	public String insertar(Persona persona, Context ctx, ActualizablePersona aPersona) {
-		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, null,aPersona);
+		InsertarAsyncTask at = new InsertarAsyncTask(persona, ctx, true,aPersona);
 		at.execute(ctx);
 		return "bien";//FIXME pase lo que pase siempre retorna bien
 	}

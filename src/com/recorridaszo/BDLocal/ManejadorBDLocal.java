@@ -48,7 +48,7 @@ public class ManejadorBDLocal {
 
 			Cursor c = db.query(Utils.TPersonas, campos, null, null, null,
 					null, null);
-			
+
 			return CargadorPersona.cargarPersonas(c);
 
 		} catch (Exception e) {
@@ -79,14 +79,15 @@ public class ManejadorBDLocal {
 			return -1;
 		}
 	}
-	
-	private boolean estaEnlaBDLocal(Persona persona) {//TODO
+
+	private boolean estaEnlaBDLocal(Persona persona) {
 		boolean resultado = false;
-		
-		if(obtenerPersona(persona.getUbicacion()) != null)
+
+		if (obtenerPersona(persona.getUbicacion()) != null)
 			return true;
-		
-		//obtenerPersonaPorId
+
+		if (obtenerPersonaPorId(persona.getId()) != null)
+			return true;
 		
 		return resultado;
 	}
@@ -100,6 +101,13 @@ public class ManejadorBDLocal {
 	}
 
 	private int actualizarPersona(Persona persona) {
+		if (obtenerPersona(persona.getUbicacion()) != null)
+			return actualizarPersonaPorUbicacion(persona);
+		else
+			return actualizarPersonaPorId(persona);
+	}
+
+	private int actualizarPersonaPorUbicacion(Persona persona) {
 		Persona personaAActualizar = obtenerPersona(persona.getUbicacion());
 
 		try {
@@ -121,6 +129,22 @@ public class ManejadorBDLocal {
 		}
 	}
 
+	private int actualizarPersonaPorId(Persona persona) {
+		try {
+			String[] args = new String[] { String.valueOf(persona.getId()) };
+
+			// Actualizar, utilizando argumentos
+			ContentValues valores = CargadorPersona
+					.cargarContentValues(persona);
+			int res = db.update("Personas", valores, "id=?", args);
+			Log.e(Utils.APPTAG, "actualizarPersonaPorId res = " + res);
+			return 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
 	public Persona obtenerPersona(LatLng latLng) {
 		Personas personas = this.selectTodoPersonas();
 		Iterator<Persona> it = personas.iterator();
@@ -135,6 +159,23 @@ public class ManejadorBDLocal {
 			}
 		}
 
+		return null;
+	}
+
+	public Persona obtenerPersonaPorId(int id) {
+		if(id == -1)
+			return null;
+		
+		Personas personas = this.selectTodoPersonas();
+		Iterator<Persona> it = personas.iterator();
+
+		while (it.hasNext()) {
+			Persona posiblePersona = it.next();
+
+			if (posiblePersona.getId() == id) {
+				return posiblePersona;
+			}
+		}
 		return null;
 	}
 

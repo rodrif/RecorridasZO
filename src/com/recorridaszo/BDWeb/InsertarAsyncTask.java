@@ -30,7 +30,7 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 	// Store the context passed to the AsyncTask when the system
 	// instantiates it.
 	Context localContext;
-	ProgressDialog progressDialog;
+	ProgressDialog pDialog = null;
 	Persona persona;
 	InputStream is;
 	String line;
@@ -39,7 +39,7 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 	
 
 	// Constructor called by the system to instantiate the task
-	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog
+	public InsertarAsyncTask(Persona persona, Context context, Boolean dialog
 			,ActualizablePersona actualizable) {
 		// Required by the semantics of AsyncTask
 		super();
@@ -47,19 +47,24 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 		// Set a Context for the background task
 		this.localContext = context;
 		this.persona = persona;
-		if(pDialog != null)
-			this.progressDialog = pDialog;
+		if(dialog) {
+			pDialog = new ProgressDialog(this.localContext);
+			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pDialog.setMessage("Subiendo al servidor...");
+			pDialog.setCancelable(false);
+			pDialog.setMax(100);
+		}
 		this.actualizable = actualizable;
 	}
 
-	public InsertarAsyncTask(Persona persona, Context context, ProgressDialog pDialog) {
-		this(persona, context, pDialog, null);
+	public InsertarAsyncTask(Persona persona, Context context, Boolean dialog) {
+		this(persona, context, dialog, null);
 	}	
 	
     @Override
     protected void onPreExecute() {
-    	if(progressDialog != null)
-    		progressDialog.show();
+    	if(pDialog != null)
+    		pDialog.show();
     }
 
 
@@ -115,8 +120,8 @@ public class InsertarAsyncTask extends AsyncTask<Context, Void, String> {
 	 */
 	@Override
 	protected void onPostExecute(String resultado) {
-		if(progressDialog != null)
-			progressDialog.dismiss();
+		if(pDialog != null)
+			pDialog.dismiss();
 		
 		Toast toast =
 				Toast.makeText(this.localContext,

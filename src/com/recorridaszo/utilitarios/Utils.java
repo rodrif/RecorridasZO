@@ -34,6 +34,7 @@ public final class Utils {
 	public static final String WEB_CARGAR_PERSONAS_PRUEBA = Utils.WEB + ".atwebpages.com/inicializar.php";
 	public final static int REQ_CODE_FORMULARIO = 9000;
 	public static final double PRECISION = 0.0000000000002;
+	public static final int CANTIDAD_INTENTOS_UBICACION = 5;
 
 	public static String getDateTime() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
