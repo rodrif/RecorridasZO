@@ -67,8 +67,7 @@ public class ManejadorBDLocal {
 
 	public synchronized int guardarPersona(Persona persona) {
 		try {
-			// si estaba en la BDLocal
-			if (obtenerPersona(persona.getUbicacion()) != null) {
+			if (estaEnlaBDLocal(persona)) {
 				actualizarPersona(persona);
 			} else if (!persona.getEstado().equals(Utils.EST_BORRADO)) {
 				insertarPersona(persona);
@@ -79,6 +78,17 @@ public class ManejadorBDLocal {
 			e.printStackTrace();
 			return -1;
 		}
+	}
+	
+	private boolean estaEnlaBDLocal(Persona persona) {//TODO
+		boolean resultado = false;
+		
+		if(obtenerPersona(persona.getUbicacion()) != null)
+			return true;
+		
+		//obtenerPersonaPorId
+		
+		return resultado;
 	}
 
 	private void insertarPersona(Persona persona) {

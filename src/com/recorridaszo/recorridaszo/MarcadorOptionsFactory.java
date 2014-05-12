@@ -13,10 +13,11 @@ public class MarcadorOptionsFactory {
 	}
 
 	public static MarkerOptions crearOpciones(String estado, LatLng point) {
-		//REVISAR
+		// REVISAR
 		MarkerOptions opciones = new MarkerOptions().position(point)
-				.draggable(true).title("Sin datos");
-		
+				.draggable(true).title(String.valueOf(point.latitude))
+				.snippet(String.valueOf(point.longitude));
+
 		// si es una perosona nueva, no gauardada en la BDWeb
 		if (estado.equals(Utils.EST_NUEVO)) {
 			opciones.icon(BitmapDescriptorFactory
@@ -32,8 +33,8 @@ public class MarcadorOptionsFactory {
 					.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 			Log.e(Utils.APPTAG, "Estado inexistente");
 		}
-		
-		return opciones;		
+
+		return opciones;
 	}
 
 }

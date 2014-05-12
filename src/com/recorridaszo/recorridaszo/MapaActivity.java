@@ -300,20 +300,23 @@ public class MapaActivity extends FragmentActivity implements Actualizable,
 
 	@Override
 	public void onMarkerDragStart(Marker marker) {
-		this.inicioDrag = marker.getPosition();
+		//en marker Title esta la latitud original de la persona
+		//en marker Snippet esta la longitud original de la persona
+		LatLng posInicial = new LatLng(Double.valueOf(marker.getTitle()),
+				Double.valueOf(marker.getSnippet()));
+		this.inicioDrag = posInicial;
 	}
 
 	@Override
 	public void onMarkerDragEnd(Marker marker) {
-		try {
+		try {//REVISAR
 			Persona persona = ml.obtenerPersona(this.inicioDrag);
 			persona.setUbicacion(marker.getPosition());
 			ml.guardarPersona(persona);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(Utils.APPTAG, "perosona null en drag end");
-		}
-		finally {
+		} finally {
 			cargarMarcadores();
 		}
 	}
